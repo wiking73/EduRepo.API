@@ -1,0 +1,6 @@
+@EduRepo.API_HostAddress = http://localhost:5199
+
+GET {{EduRepo.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
