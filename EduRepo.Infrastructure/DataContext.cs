@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using EduRepo.Domain;
 
 
-namespace Bikes.Infrastructure
+namespace EduRepo.Infrastructure
 {
     public class DataContext : DbContext
     {
@@ -17,5 +17,5 @@ namespace Bikes.Infrastructure
         public DbSet<Uczestnictwo> Uczestnictwa { get; set; }
     }
         
-}
+
 }
