@@ -1,7 +1,10 @@
-﻿namespace EduRepo.Domain
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EduRepo.Domain
 {
     public class Zadanie
     {
+        [Key]
         public int IdZadania { get; set; }
         public int IdKursu { get; set; }
         public Kurs Kurs { get; set; }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using EduRepo.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,5 +28,16 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var context = services.GetRequiredService<DataContext>();
+    context.Database.Migrate();
 
+}
+catch (Exception ex)
+{
+    var message = ex.ToString();
+}
 app.Run();

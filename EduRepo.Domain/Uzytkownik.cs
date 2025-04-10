@@ -1,7 +1,10 @@
-﻿namespace EduRepo.Domain
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EduRepo.Domain
 {
     public class Uzytkownik
     {
+        [Key]
         public int IdUzytkownika { get; set; }
         public string Login { get; set; }
         public string Haslo { get; set; }
@@ -20,6 +23,7 @@
    
     public class Uczestnictwo
     {
+        [Key]
         public int IdKursu { get; set; }
         public Kurs Kurs { get; set; }
 

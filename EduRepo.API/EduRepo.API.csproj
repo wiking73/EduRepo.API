@@ -16,7 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\EduRepo.Application\EduRepo.Application.csproj" />
+    <ProjectReference Include="..\EduRepo.Infrastructure\EduRepo.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
