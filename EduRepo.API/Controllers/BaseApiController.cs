@@ -1,4 +1,4 @@
-﻿/*
+﻿
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +10,6 @@ namespace EduRepo.API.Controllers
     {
 
 
-        
+
     }
-}*/
+}
