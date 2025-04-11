@@ -1,30 +1,64 @@
 ﻿using EduRepo.Domain;
 using EduRepo.Infrastructure;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using EduRepo.Application.Odpowiedzi;
 
 namespace EduRepo.API.Controllers
 {
     public class OdpowiedzController : BaseApiController
     {
-        private readonly DataContext _context;
-        public OdpowiedzController(DataContext context)
+        private readonly IMediator _mediator;
+
+        public OdpowiedzController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
+
 
         [HttpGet]
-        public async Task<ActionResult<List<Odpowiedz>>> GetOdpowiedz()
+        public async Task<ActionResult<List<Odpowiedz>>> GetOdpowiedzi()
         {
-            return await _context.Odpowiedzi.ToListAsync();
+            return await _mediator.Send(new List.Query());
         }
-        [HttpGet("Odpowiedz/{id}")]
 
-        public async Task<ActionResult<Odpowiedz>> GetOdpowiedzi(Guid id)
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Odpowiedz>> GetOdpowiedz(Guid id)
         {
-            return await _context.Odpowiedzi.FindAsync(id);
+            var result = await _mediator.Send(new Details.Query { Id = id });
+            if (result == null) return NotFound();
+            return result;
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> CreateOdpowiedz([FromBody] CreateCommand command)
+        {
+
+            var result = await _mediator.Send(new CreateCommand { });
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
+        [HttpPut("{id}")]
+
+        public async Task<IActionResult> UpdateOdpowiedz(int id, [FromBody] EditCommand command)
+        {
+            var result = await _mediator.Send( new EditCommand { IdOdpowiedzi = id });
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+
+        public async Task<IActionResult> DeleteOdpowiedz(int id)
+        {
+            var result = await _mediator.Send(new DeleteCommand { Id = id });
+            if (result == null) return NotFound();
+            return Ok(result);
         }
     }
 }
+

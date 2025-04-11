@@ -5,17 +5,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using EduRepo.Infrastructure;
 
-namespace EduRepo.Application.Zadania
+namespace EduRepo.Application.Kursy
 {
     public class CreateCommand : IRequest<Unit>
     {
-        public Kurs Kurs { get; set; }
-
+        public int IdKursu { get; set; }
         public string Nazwa { get; set; }
-        public string Tresc { get; set; }
-        public DateTime TerminOddania { get; set; }
-        public string PlikPomocniczy { get; set; }
-        public bool CzyObowiazkowe { get; set; }
+        public string OpisKursu { get; set; }
+        public string RokAkademicki { get; set; }
+        public string Klasa { get; set; }
+        public bool CzyZarchiwizowany { get; set; }
     }
      
       
@@ -32,19 +31,19 @@ namespace EduRepo.Application.Zadania
 
         public async Task<Unit> Handle(CreateCommand request, CancellationToken cancellationToken)
         {
-            var zadanie = new Zadanie
+            var kurs = new Kurs
             {
                 
-                Kurs = request.Kurs,
                 Nazwa = request.Nazwa,
-                Tresc = request.Tresc,
-                TerminOddania = request.TerminOddania,
-                PlikPomocniczy = request.PlikPomocniczy,
-                CzyObowiazkowe = request.CzyObowiazkowe,
+                OpisKursu  = request.OpisKursu,
+                RokAkademicki = request.RokAkademicki,
+                Klasa = request.Klasa,
+                CzyZarchiwizowany = request.CzyZarchiwizowany,
+
                 
             };
 
-            _context.Zadania.Add(zadanie);
+            _context.Kursy.Add(kurs);
 
             var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 

@@ -32,24 +32,29 @@ namespace EduRepo.API.Controllers
         }
         [HttpPost]
         
-        public async Task<IActionResult> CreateZadanie([FromBody] Command command)
+        public async Task<IActionResult> CreateZadanie([FromBody] CreateCommand command)
         {
 
-            return HandleResult(await _mediator.Send(command));
+            var result = await _mediator.Send(new CreateCommand { });
+            if (result == null) return NotFound();
+            return Ok(result);
         }
         [HttpPut("{id}")]
        
         public async Task<IActionResult> UpdateZadanie(Guid id, [FromBody] EditCommand command)
         {
-            command.Id = id;
-            return HandleResult(await _mediator.Send(command));
+            var result = await _mediator.Send(new EditCommand { Id = id });
+            if (result == null) return NotFound();
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]
         
         public async Task<IActionResult> DeleteZadanie(int id)
         {
-            return HandleResult(await _mediator.Send(new DeleteCommand { Id = id }));
+            var result = await _mediator.Send(new DeleteCommand { Id = id });
+            if (result == null) return NotFound();
+            return Ok(result);
         }
     }
 }
