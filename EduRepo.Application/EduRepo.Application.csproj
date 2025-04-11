@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EduRepo.Domain\EduRepo.Domain.csproj" />
     <ProjectReference Include="..\EduRepo.Infrastructure\EduRepo.Infrastructure.csproj" />
   </ItemGroup>

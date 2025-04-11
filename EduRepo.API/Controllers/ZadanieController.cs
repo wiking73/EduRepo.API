@@ -1,29 +1,55 @@
 ﻿using EduRepo.Domain;
-using EduRepo.Infrastructure;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
+using EduRepo.Application.Zadania;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EduRepo.API.Controllers
 {
     public class ZadanieController : BaseApiController
     {
-        private readonly DataContext _context;
-        public ZadanieController(DataContext context)
+        private readonly IMediator _mediator;
+
+        public ZadanieController(IMediator mediator)
         {
-            _context = context;
-        }
-        [HttpGet]
-        public async Task<ActionResult<List<Zadanie>>> GetZadanie()
-        {
-            return await _context.Zadania.ToListAsync();
-        }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Zadanie>> GetZadania(Guid id)
-        {
-            return await _context.Zadania.FindAsync(id);
+            _mediator = mediator;
         }
 
+        
+        [HttpGet]
+        public async Task<ActionResult<List<Zadanie>>> GetZadania()
+        {
+            return await _mediator.Send(new List.Query());
+        }
+
+        
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Zadanie>> GetZadanie(Guid id)
+        {
+            var result = await _mediator.Send(new Details.Query { Id = id });
+            if (result == null) return NotFound();
+            return result;
+        }
+        [HttpPost]
+        
+        public async Task<IActionResult> CreateZadanie([FromBody] Command command)
+        {
+
+            return HandleResult(await _mediator.Send(command));
+        }
+        [HttpPut("{id}")]
+       
+        public async Task<IActionResult> UpdateZadanie(Guid id, [FromBody] EditCommand command)
+        {
+            command.Id = id;
+            return HandleResult(await _mediator.Send(command));
+        }
+
+        [HttpDelete("{id}")]
+        
+        public async Task<IActionResult> DeleteZadanie(int id)
+        {
+            return HandleResult(await _mediator.Send(new DeleteCommand { Id = id }));
+        }
     }
 }
