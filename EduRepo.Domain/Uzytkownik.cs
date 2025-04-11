@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using Microsoft.AspNetCore.Identity;
 namespace EduRepo.Domain
 {
-    public class Uzytkownik
+    public class Uzytkownik : IdentityUser
     {
         [Key]
         public int IdUzytkownika { get; set; }

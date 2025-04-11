@@ -20,7 +20,7 @@ namespace EduRepo.API.Controllers
         {
             return await _context.Uczestnictwa.ToListAsync();
         }
-        [HttpGet("Uczestnicwto/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Uczestnictwo>> GetUczestnictwa(Guid id)
         {
             return await _context.Uczestnictwa.FindAsync(id);

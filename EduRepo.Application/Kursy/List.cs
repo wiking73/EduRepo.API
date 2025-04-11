@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace EduRepo.Application.Kursy
 {
-    public class List {
+    public class List
+    {
         public class Query : IRequest<List<Kurs>> { }
 
         public class Handler : IRequestHandler<Query, List<Kurs>>
@@ -27,5 +28,5 @@ namespace EduRepo.Application.Kursy
             }
         }
     }
-  
+
 }

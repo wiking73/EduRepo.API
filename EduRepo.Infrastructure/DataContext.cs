@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using EduRepo.Domain;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace EduRepo.Infrastructure
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<Uzytkownik>
     {
         public DataContext(DbContextOptions<DataContext> options)
              : base(options) { }

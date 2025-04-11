@@ -24,7 +24,7 @@ namespace EduRepo.API.Controllers
 
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<Zadanie>> GetZadanie(Guid id)
+        public async Task<ActionResult<Zadanie>> GetZadanie(int id)
         {
             var result = await _mediator.Send(new Details.Query { Id = id });
             if (result == null) return NotFound();
@@ -41,7 +41,7 @@ namespace EduRepo.API.Controllers
         }
         [HttpPut("{id}")]
        
-        public async Task<IActionResult> UpdateZadanie(Guid id, [FromBody] EditCommand command)
+        public async Task<IActionResult> UpdateZadanie(int id, [FromBody] EditCommand command)
         {
             var result = await _mediator.Send(new EditCommand { Id = id });
             if (result == null) return NotFound();

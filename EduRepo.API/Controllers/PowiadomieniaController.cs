@@ -20,7 +20,7 @@ namespace EduRepo.API.Controllers
         {
             return await _context.Powiadomienia.ToListAsync();
         }
-        [HttpGet("Powiadomienia/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<PowiadomienieBrakOdpowiedzi>> GetPowiadomienia(Guid id)
         {
             return await _context.Powiadomienia.FindAsync(id);

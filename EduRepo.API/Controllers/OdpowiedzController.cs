@@ -26,14 +26,14 @@ namespace EduRepo.API.Controllers
         }
 
 
-        [HttpGet("{id}")]
+/*        [HttpGet("{id}")]
         public async Task<ActionResult<Odpowiedz>> GetOdpowiedz(Guid id)
         {
-            var result = await _mediator.Send(new Details.Query { Id = id });
+            var result = await _mediator.Send(new List.Query { Id = id });
             if (result == null) return NotFound();
             return result;
-        }
-        [HttpPost]
+        }*/
+       /* [HttpPost]
 
         public async Task<IActionResult> CreateOdpowiedz([FromBody] CreateCommand command)
         {
@@ -58,7 +58,7 @@ namespace EduRepo.API.Controllers
             var result = await _mediator.Send(new DeleteCommand { Id = id });
             if (result == null) return NotFound();
             return Ok(result);
-        }
+        }*/
     }
 }
 

@@ -1,26 +1,23 @@
-﻿using EduRepo.Domain;
+﻿/*using EduRepo.Domain;
 using EduRepo.Infrastructure;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using EduRepo.Infrastructure;
 
 namespace EduRepo.Application.Kursy
 {
     public class CreateCommand : IRequest<Unit>
     {
-        public int IdKursu { get; set; }
         public string Nazwa { get; set; }
         public string OpisKursu { get; set; }
         public string RokAkademicki { get; set; }
         public string Klasa { get; set; }
         public bool CzyZarchiwizowany { get; set; }
-    }
-     
-      
-    
 
-    public class Handler : IRequestHandler<CreateCommand,  Unit> 
+        public int IdWlasciciela { get; set; }
+    }
+
+    public class Handler : IRequestHandler<CreateCommand, Unit>
     {
         private readonly DataContext _context;
 
@@ -31,25 +28,31 @@ namespace EduRepo.Application.Kursy
 
         public async Task<Unit> Handle(CreateCommand request, CancellationToken cancellationToken)
         {
-            var kurs = new Kurs
+            
+            if (request.IdWlasciciela == 0)
             {
                 
+                throw new ArgumentException("IdWlasciciela jest wymagane.");
+            }
+
+            
+            var kurs = new Kurs
+            {
                 Nazwa = request.Nazwa,
-                OpisKursu  = request.OpisKursu,
+                OpisKursu = request.OpisKursu,
                 RokAkademicki = request.RokAkademicki,
                 Klasa = request.Klasa,
                 CzyZarchiwizowany = request.CzyZarchiwizowany,
-
-                
+                IdWlasciciela = request.IdWlasciciela,  
             };
 
+           
             _context.Kursy.Add(kurs);
 
+           
             var result = await _context.SaveChangesAsync(cancellationToken) > 0;
-
-            
-
             return Unit.Value;
         }
     }
 }
+*/

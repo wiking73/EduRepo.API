@@ -11,7 +11,7 @@ namespace EduRepo.Application.Zadania
    
         public class EditCommand : IRequest<Unit>
         {
-            public Guid Id { get; set; }
+            public int Id { get; set; }
             public string Nazwa { get; set; }
             public string Tresc { get; set; }
             public DateTime TerminOddania { get; set; }

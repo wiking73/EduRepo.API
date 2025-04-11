@@ -16,7 +16,7 @@ namespace EduRepo.Application.Kursy
     {
         public class Query : IRequest<Kurs>
         {
-            public Guid Id { get; set; }
+            public  int Id { get; set; }
         }
 
 
