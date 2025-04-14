@@ -1,0 +1,437 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap&subset=latin-ext');
+
+.main-container {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 0%;
+    text-align: center;
+    background: linear-gradient(135deg, #f06, #f79);
+    color: white;
+}
+
+
+.header-logo {
+    top: 40%;
+    width: 130%;
+    object-fit: cover;
+    background-size: cover;
+    margin: auto;
+    padding: 0;
+    border: white;
+    min-height: 50vh;
+    position: relative;
+}
+
+
+.logo-container {
+    position: relative;
+    align-items: center;
+    height: auto;
+}
+
+.napis1 {
+    position: absolute;
+    top: 0vw;
+    color: white;
+    left: 1%;
+    font-size: 1.3vw;
+    color: gray;
+}
+
+h1 {
+    font-family: "Playfair Display", serif;
+    font-style: initial;
+    font-size: 5vw;
+    left: 25%;
+    position: absolute;
+    top: 10vh;
+    margin-left: 30%;
+    color: rgb( 86, 101, 115);
+    border: black;
+}
+
+h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 4vw;
+    color: white;
+    font-style: normal;
+    position: absolute;
+    left: 10%;
+    top: 3%;
+    margin-right: 30%;
+}
+
+h18 {
+    font-family: "Playfair Display", serif;
+    font-size: 2.5vw;
+    color: white;
+    font-style: normal;
+    position: absolute;
+    left: 15%;
+    top: 14%;
+    margin-right: 30%;
+}
+
+
+.header-container {
+    position: relative;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.box {
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    color: white;
+    background-color: transparent;
+    font-style: normal;
+    position: absolute;
+    padding: 10px;
+    top: 10%;
+    left: 0%;
+    font-size: 40px;
+    cursor: pointer;
+    border-color: transparent;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+.buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5vw;
+    padding: 0.5vw;
+}
+
+.custom-button2 {
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    color: white;
+    background-color: transparent;
+    padding: 0.5vw;
+    font-size: 2vw;
+    top: 15vw;
+    cursor: pointer;
+    border-radius: 5px;
+    border-color: transparent;
+    transition: box-shadow 0.3s ease;
+}
+
+
+
+.custom-button9 {
+    font-family: "Playfair Display", serif;
+    font-size: 2.5vw;
+    color: white;
+    font-style: normal;
+    position: absolute;
+    left: 37%;
+    top: 30%;
+}
+
+.custom-button10 {
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    color: white;
+    background-color: transparent;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 5px;
+    transition: box-shadow 0.3s ease;
+}
+
+.custom-buttonWiadomosci {
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    color: white;
+    background-color: transparent;
+    font-style: normal;
+    position: absolute;
+    padding: 10px;
+    top: 10%;
+    left: 40%;
+    font-size: 40px;
+    cursor: pointer;
+    border-color: transparent;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+.custom-button2:hover {
+    background-color: gray;
+}
+
+
+
+
+.custom-scroll-button {
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    color: white;
+    background-color: transparent;
+    font-style: normal;
+    position: absolute;
+    padding: 10px;
+    top: 35vw;
+    left: 40%;
+    font-size: 2.5vw;
+    cursor: pointer;
+    border-color: transparent;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+.custom-button10:hover {
+    background-color: gray;
+}
+
+.custom-scroll-button:hover {
+    background-color: gray;
+    transform: translateY(-5px) scale(1.1);
+    background-color: gray;
+}
+
+.square-overlay {
+    position: absolute;
+    width: 100%;
+    height: 2%;
+    background-color: transparent;
+    top: 0%;
+    margin-left: 0%;
+    align-items: center;
+}
+
+.square-overlay2 {
+    position: absolute;
+    width: 100%;
+    height: 300%;
+    background-color: grey;
+    top: 30%;
+    margin-left: 0%;
+    align-items: center;
+}
+
+.bike-list-container2 {
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    color: white;
+    width: 60%;
+    height: 300px;
+    min-height: 200px;
+    position: absolute;
+    top: 35%;
+    left: 20%;
+    background-color: transparent;
+    font-style: normal;
+    font-size: 30px;
+    cursor: pointer;
+    border-color: transparent;
+    transition: box-shadow 0.3s ease;
+}
+
+.bike-grid2 {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-column-gap: 5%;
+    grid-row-gap: 15%;
+}
+
+.bike-card2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 190%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.bike-item2 {
+    justify-content: space-between;
+    font-family: "Playfair Display", serif;
+    font-size: 1.5vw;
+    font-weight: 400;
+    height: 13px;
+    color: black;
+    display: flex;
+}
+
+.bike-item-button, .bike-item-button2 {
+    border: none;
+    color: white;
+    border-radius: 25px;
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-size: 1.5vw;
+    padding: 15%;
+    display: inline-block;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.bike-item-button2 {
+    display: flow;
+    border: none;
+    background-color: gray;
+    color: black;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .bike-item-button2:hover {
+        transform: translateY(-5px) scale(1.1);
+        background-color: white;
+    }
+
+
+
+@media (max-width: 1370px) {
+    .header-logo {
+        min-height: 40vh;
+    }
+
+
+    .bike-grid2 {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-column-gap: auto;
+        grid-row-gap: 20%;
+    }
+}
+
+
+@media (max-width: 540px) {
+
+
+
+    .bike-grid2 {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-column-gap: 5%;
+        grid-row-gap: 5%;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .header-logo {
+        min-height: 20vh;
+    }
+
+
+    h2 {
+        top: 6%;
+        font-size: 1.5rem;
+    }
+
+    h18 {
+        top: 15%;
+        font-size: 1rem;
+    }
+
+    .custom-button2 {
+        font-size: 1rem;
+        border-color: white;
+    }
+
+    .buttons-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+        padding: 30px;
+    }
+
+    .custom-scroll-button {
+        font-size: 0.9rem;
+        padding: 5px 10px;
+        top: 20%;
+    }
+
+    .bike-grid2 {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        grid-column-gap: 5%;
+        grid-row-gap: 10%;
+    }
+
+
+
+
+    .header-logo {
+        top: 40%;
+        width: 100%;
+        object-fit: cover;
+        background-size: cover;
+        margin: auto;
+        padding: 0;
+        border: white;
+        min-height: 200vh;
+        position: relative;
+    }
+
+
+
+    .square-overlay2 {
+        position: absolute;
+        width: 100%;
+        min-height: 1000px;
+        height: 400%;
+        background-color: grey;
+        top: 30%;
+    }
+
+    .bike-list-container2 {
+        font-family: "Playfair Display", serif;
+        font-weight: 400;
+        color: white;
+        width: 60%;
+        height: 300px;
+        min-height: 200px;
+        position: absolute;
+        top: 40%;
+        left: 20%;
+        background-color: transparent;
+        font-style: normal;
+        font-size: 50px;
+        cursor: pointer;
+        border-color: transparent;
+        transition: box-shadow 0.3s ease;
+    }
+
+
+
+    .custom-button9 {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        color: white;
+        font-style: normal;
+        position: absolute;
+        left: 20%;
+        top: 33%;
+    }
+
+    .bike-item2 {
+        font-size: 1rem;
+    }
+
+    .napis1 {
+        position: absolute;
+        top: 0vw;
+        color: white;
+        left: 1%;
+        font-size: 3.3vw;
+        color: gray;
+    }
+}

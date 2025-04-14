@@ -24,4 +24,10 @@
     <ProjectReference Include="..\EduRepo.Infrastructure\EduRepo.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="edurepo\src\Models\" />
+    <Folder Include="edurepo\src\Components\" />
+    <Folder Include="edurepo\src\Routes\" />
+  </ItemGroup>
+
 </Project>
