@@ -2,17 +2,24 @@ using Microsoft.EntityFrameworkCore;
 using EduRepo.Infrastructure;
 using EduRepo.Application.Zadania;
 using EduRepo.API.Controllers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(opt =>
+{ 
+var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+opt.Filters.Add(new AuthorizeFilter(policy));
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
     {
     c.CustomSchemaIds(type => type.FullName);
 });
-//builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddMediatR(cfg =>
 cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
 builder.Services.AddCors(opt =>
@@ -36,7 +43,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

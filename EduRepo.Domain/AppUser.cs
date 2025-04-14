@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 namespace EduRepo.Domain
 {
-    public class AppUSer : IdentityUser
+    public class AppUser : IdentityUser
     {
-        [Key]
+        
         
         public string UserName { get; set; }
         public string Haslo { get; set; }
