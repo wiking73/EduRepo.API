@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using EduRepo.Domain;
@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EduRepo.Application.Kursy
 {
-   
-        public class EditCommand : IRequest<Unit>
-        {
+
+    public class EditCommand : IRequest<Unit>
+    {
         public int IdKursu { get; set; }
         public string Nazwa { get; set; }
         public string OpisKursu { get; set; }
@@ -19,18 +19,18 @@ namespace EduRepo.Application.Kursy
         public bool CzyZarchiwizowany { get; set; }
     }
 
-        public class EditHandler : IRequestHandler<EditCommand, Unit>
+    public class EditHandler : IRequestHandler<EditCommand, Unit>
+    {
+        private readonly DataContext _context;
+
+        public EditHandler(DataContext context)
         {
-            private readonly DataContext _context;
+            _context = context;
+        }
 
-            public EditHandler(DataContext context)
-            {
-                _context = context;
-            }
-
-            public async Task<Unit> Handle(EditCommand request, CancellationToken cancellationToken)
-            {
-                var kurs = await _context.Kursy.FindAsync(new object[] { request.IdKursu }, cancellationToken);
+        public async Task<Unit> Handle(EditCommand request, CancellationToken cancellationToken)
+        {
+            var kurs = await _context.Kursy.FindAsync(new object[] { request.IdKursu }, cancellationToken);
 
 
             //////////////////!!!!!!!!!!!!!!!!!!!!!!!
@@ -40,12 +40,11 @@ namespace EduRepo.Application.Kursy
             kurs.Klasa = request.Klasa;
             kurs.CzyZarchiwizowany = request.CzyZarchiwizowany;
 
-                await _context.SaveChangesAsync(cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
 
-                
-                return Unit.Value;
-            }
+
+            return Unit.Value;
         }
-    
+    }
+
 }
-*/

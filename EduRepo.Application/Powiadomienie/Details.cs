@@ -7,20 +7,20 @@ using EduRepo.Domain;
 using EduRepo.Infrastructure;
 using MediatR;
 
-namespace EduRepo.Application.Odpowiedzi
+namespace EduRepo.Application.Powiadomienia
 {
 
 
 
     public class Details
     {
-        public class Query : IRequest<Odpowiedz>
+        public class Query : IRequest<PowiadomienieBrakOdpowiedzi>
         {
-            public int Id { get; set; }
+            public  int Id { get; set; }
         }
 
 
-        public class Handler : IRequestHandler<Query, Odpowiedz>
+        public class Handler : IRequestHandler<Query, PowiadomienieBrakOdpowiedzi>
         {
             private readonly DataContext _context;
 
@@ -29,11 +29,11 @@ namespace EduRepo.Application.Odpowiedzi
                 _context = context;
             }
 
-            public async Task<Odpowiedz> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<PowiadomienieBrakOdpowiedzi> Handle(Query request, CancellationToken cancellationToken)
             {
 
 
-                return await _context.Odpowiedzi.FindAsync(request.Id);
+                return await _context.Powiadomienia.FindAsync(request.Id);
             }
         }
     }

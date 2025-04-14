@@ -1,4 +1,4 @@
-﻿/*using EduRepo.Domain;
+﻿using EduRepo.Domain;
 using EduRepo.Infrastructure;
 using MediatR;
 using System.Threading;
@@ -9,23 +9,23 @@ namespace EduRepo.Application.Odpowiedzi
 {
     public class CreateCommand : IRequest<Unit>
     {
-        public int IdOdpowiedzi { get; set; }
+       // public int IdOdpowiedzi { get; set; }
         public int IdZadania { get; set; }
-        public Zadanie Zadanie { get; set; }
+     //   public Zadanie Zadanie { get; set; }
 
-        public int IdUzytkownika { get; set; }
-        public Uzytkownik Uzytkownik { get; set; }
+      //  public int IdUzytkownika { get; set; }
+        
 
         public DateTime DataOddania { get; set; }
         public string KomentarzNauczyciela { get; set; }
         public string NazwaPliku { get; set; }
         public string Ocena { get; set; }
     }
-     
-      
-    
 
-    public class Handler : IRequestHandler<CreateCommand,  Unit> 
+
+
+
+    public class Handler : IRequestHandler<CreateCommand, Unit>
     {
         private readonly DataContext _context;
 
@@ -38,23 +38,23 @@ namespace EduRepo.Application.Odpowiedzi
         {
             var odpowiedz = new Odpowiedz
             {
-                
-                Zadanie = request.Zadanie,
-                Uzytkownik = request.Uzytkownik,
+
+                IdZadania = request.IdZadania,
+                //Uzytkownik = request.Uzytkownik,
                 DataOddania = request.DataOddania,
                 KomentarzNauczyciela = request.KomentarzNauczyciela,
                 NazwaPliku = request.NazwaPliku,
                 Ocena = request.Ocena,
-                
+
             };
 
             _context.Odpowiedzi.Add(odpowiedz);
 
             var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-            
+
 
             return Unit.Value;
         }
     }
-}*/
+}

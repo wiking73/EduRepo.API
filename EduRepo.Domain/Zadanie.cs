@@ -7,8 +7,7 @@ namespace EduRepo.Domain
         [Key]
         public int IdZadania { get; set; }
         public int IdKursu { get; set; }
-        public Kurs Kurs { get; set; }
-
+       // public Kurs Kurs { get; set; }
         public string Nazwa { get; set; }
         public string Tresc { get; set; }
         public DateTime TerminOddania { get; set; }
@@ -16,7 +15,7 @@ namespace EduRepo.Domain
         public bool CzyObowiazkowe { get; set; }
 
         public ICollection<Odpowiedz> Odpowiedzi { get; set; }
-        public ICollection<PowiadomienieBrakOdpowiedzi> Powiadomienia { get; set; }
+       // public ICollection<PowiadomienieBrakOdpowiedzi> Powiadomienia { get; set; }
 
     }
 }

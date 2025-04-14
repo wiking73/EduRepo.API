@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using EduRepo.Infrastructure;
 using MediatR;
 
-namespace EduRepo.Application.Zadania
+namespace EduRepo.Application.Powiadomienia
 {
     public class DeleteCommand : IRequest<Unit>
     {
@@ -22,14 +22,14 @@ namespace EduRepo.Application.Zadania
 
         public async Task<Unit> Handle(DeleteCommand request, CancellationToken cancellationToken)
         {
-            var kurs = await _context.Kursy.FindAsync(request.Id);
+            var powiadomienia = await _context.Powiadomienia.FindAsync(request.Id);
 
-            if (kurs == null)
+            if (powiadomienia == null)
             {
                 throw new KeyNotFoundException($"Kurs with ID {request.Id} not found.");
             }
 
-            _context.Kursy.Remove(kurs);
+            _context.Powiadomienia.Remove(powiadomienia);
 
             await _context.SaveChangesAsync(cancellationToken);
 

@@ -35,7 +35,7 @@ namespace EduRepo.API.Controllers
         public async Task<IActionResult> CreateZadanie([FromBody] CreateCommand command)
         {
 
-            var result = await _mediator.Send(new CreateCommand { });
+            var result = await _mediator.Send(command);
             if (result == null) return NotFound();
             return Ok(result);
         }

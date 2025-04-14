@@ -12,9 +12,9 @@ namespace EduRepo.Domain
         public string Klasa { get; set; }
         public bool CzyZarchiwizowany { get; set; }
 
-        public int IdWlasciciela { get; set; }
-        public Uzytkownik Wlasciciel { get; set; }
-        public ICollection<Uczestnictwo> Uczestnicy { get; set; }
+        //public int IdWlasciciela { get; set; }
+       // public Uzytkownik Wlasciciel { get; set; }
+      //  public ICollection<Uczestnictwo> Uczestnicy { get; set; }
         public ICollection<Zadanie> Zadania { get; set; }
 
     }

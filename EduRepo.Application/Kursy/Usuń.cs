@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using EduRepo.Infrastructure;
@@ -11,37 +11,30 @@ namespace EduRepo.Application.Kursy
         public int Id { get; set; }
     }
 
-public class Delete
+    public class DeleteCommandHandler : IRequestHandler<DeleteCommand, Unit>
     {
-        public class Command : IRequest<Unit>
+        private readonly DataContext _context;
+
+        public DeleteCommandHandler(DataContext context)
         {
-            public Guid Id { get; set; }
+            _context = context;
         }
 
-        public class Handler : IRequestHandler<Command, Unit>
+        public async Task<Unit> Handle(DeleteCommand request, CancellationToken cancellationToken)
         {
-            private readonly DataContext _context;
+            var kurs = await _context.Kursy.FindAsync(request.Id);
 
-            public Handler(DataContext context)
+            if (kurs == null)
             {
-                _context = context;
+                throw new KeyNotFoundException($"Kurs with ID {request.Id} not found.");
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
-            {
-                var kurs = await _context.Kursy.FindAsync(request.Id);
+            _context.Kursy.Remove(kurs);
 
+            await _context.SaveChangesAsync(cancellationToken);
 
-
-                _context.Kursy.Remove(kurs);
-
-                var result = await _context.SaveChangesAsync(cancellationToken) > 0;
-
-               
-
-                return Unit.Value;
-            }
+            return Unit.Value;
         }
     }
+
 }
-*/

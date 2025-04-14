@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 namespace EduRepo.Domain
 {
@@ -34,3 +34,4 @@ namespace EduRepo.Domain
     }
    
 }
+*/

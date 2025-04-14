@@ -3,16 +3,20 @@ using EduRepo.Application.Kursy;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using EduRepo.Infrastructure;
 
 namespace EduRepo.API.Controllers
 {
     public class KursController : BaseApiController
     {
         private readonly IMediator _mediator;
+        private readonly DataContext _context;
 
-        public KursController(IMediator mediator)
+        public KursController(IMediator mediator, DataContext context)
         {
             _mediator = mediator;
+            _context = context;
         }
 
 
@@ -26,20 +30,25 @@ namespace EduRepo.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Kurs>> GetKurs(int id)
         {
-            var result = await _mediator.Send(new Details.Query { Id = id });
-            if (result == null) return NotFound();
-            return result;
+            var kurs = await _context.Kursy
+        .Include(k => k.Zadania)
+        .FirstOrDefaultAsync(k => k.IdKursu == id);
+
+            if (kurs == null)
+                return NotFound();
+
+            return Ok(kurs);
         }
-     // [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> CreateKurs([FromBody] CreateCommand command)
         {
-            var result = await _mediator.Send(new CreateCommand { });
+            var result = await _mediator.Send(command);
             if (result == null) return NotFound();
             return Ok(result);
         }
 
-        //[HttpPut("{id}")]
-        /*
+        [HttpPut("{id}")]
+
 
         public async Task<IActionResult> UpdateKurs(int id, [FromBody] EditCommand command)
         {
@@ -49,12 +58,18 @@ namespace EduRepo.API.Controllers
         }
 
         [HttpDelete("{id}")]
-
         public async Task<IActionResult> DeleteKurs(int id)
         {
-            var result = await _mediator.Send(new DeleteCommand { Id = id });
-            if (result == null) return NotFound();
-            return Ok(result);
-        }*/
+            try
+            {
+                await _mediator.Send(new DeleteCommand { Id = id });
+                return Ok();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
     }
 }

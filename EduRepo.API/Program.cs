@@ -8,8 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddSwaggerGen(c =>
+    {
+    c.CustomSchemaIds(type => type.FullName);
+});
+//builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddMediatR(cfg =>
 cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
 builder.Services.AddCors(opt =>
@@ -42,11 +45,14 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<DataContext>();
+   // await Seed.SeedData(context);
     context.Database.Migrate();
+ 
 
 }
 catch (Exception ex)
 {
     var message = ex.ToString();
 }
+
 app.Run();
