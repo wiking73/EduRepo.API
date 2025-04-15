@@ -1,7 +1,9 @@
-/*import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from 'react';
 import { Button, Container, Menu } from 'semantic-ui-react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import '../Styles/Header.css';
+import './Styles/Header.css';
+
 
 const NavBar: React.FC = () => {
     const navigate = useNavigate();
@@ -18,12 +20,7 @@ const NavBar: React.FC = () => {
         navigate('/login');
     };
 
-    const scrollToNewModels = () => {
-        const element = document.getElementById('new-models');
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+
 
     return (
 
@@ -108,4 +105,4 @@ const NavBar: React.FC = () => {
     );
 };
 
-export default NavBar;*/
+export default NavBar;

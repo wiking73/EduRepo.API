@@ -1,7 +1,7 @@
-import logo from './logo.svg';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
-import NavBar from './Components/Navbar.tsx';
-import 'semantic-ui-css/semantic.min.css';
+
+import NavBar from './Navbar';
 
 function App() {
     return (
