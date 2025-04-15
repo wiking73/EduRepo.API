@@ -1,4 +1,6 @@
-﻿namespace EduRepo.API.Dto
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EduRepo.API.Dto
 {
     public class UserDto
     {
@@ -16,5 +18,16 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
+        public string Username { get; internal set; }
     }
+    public class ChangePasswordDto
+    {
+        [Required]
+        public string CurrentPassword { get; set; }
+
+        [Required]
+        [MinLength(6, ErrorMessage = "Nowe hasło musi mieć co najmniej 6 znaków.")]
+        public string NewPassword { get; set; }
+    }
+
 }

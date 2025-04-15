@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using EduRepo.API.Controllers;
 using System.ComponentModel.DataAnnotations;
 using EduRepo.Infrastructure;
-
+using EduRepo.API.Dto;
 
 namespace EduRepo.Api.Controllers
 {
@@ -52,7 +52,7 @@ namespace EduRepo.Api.Controllers
                 UserName = registerDto.Username,
                 Email = registerDto.Email,
                 PasswordHash = passwordHash,
-                PhoneNumber = registerDto.PhoneNumber
+                
             };
 
             _context.Users.Add(user);
@@ -161,20 +161,7 @@ namespace EduRepo.Api.Controllers
 
 
 
-        // DTO dla rejestracji
-        public class RegisterDto
-        {
-            [Required]
 
-            public string Username { get; set; }
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
-            [Required]
-            public string Password { get; set; }
-            [Required]
-            public string PhoneNumber { get; set; }
-        }
         [HttpDelete("delete-account")]
         [Authorize]
         public async Task<IActionResult> DeleteAccount()
@@ -199,25 +186,7 @@ namespace EduRepo.Api.Controllers
 
             return Ok("Konto zostało usunięte.");
         }
+        
 
-        // DTO dla logowania
-        public class LoginDto
-        {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
-            [Required]
-            public string Password { get; set; }
-        }
-
-        public class ChangePasswordDto
-        {
-            [Required]
-            public string CurrentPassword { get; set; }
-
-            [Required]
-            [MinLength(6, ErrorMessage = "Nowe hasło musi mieć co najmniej 6 znaków.")]
-            public string NewPassword { get; set; }
-        }
     }
 }
