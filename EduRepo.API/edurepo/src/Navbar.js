@@ -88,7 +88,7 @@ const Logowanie: React.FC = () => {
                 navigate("/dashboard")
 
             }
-        } catch (error: any) {
+        } catch (error) {
             console.error('B³¹d logowania:', error);
             setErrorMessage(
                 error.response?.data?.message ||
