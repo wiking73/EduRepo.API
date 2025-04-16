@@ -8,6 +8,7 @@ using EduRepo.Infrastructure;
 
 namespace EduRepo.API.Controllers
 {
+    [AllowAnonymous]
     public class KursController : BaseApiController
     {
         private readonly IMediator _mediator;

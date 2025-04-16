@@ -4,10 +4,13 @@ using EduRepo.Application.Zadania;
 using EduRepo.API.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using EduRepo.Domain;
+using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<IPasswordHasher<AppUser>, PasswordHasher<AppUser>>();
 
 builder.Services.AddControllers(opt =>
 { 
@@ -22,6 +25,10 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddMediatR(cfg =>
 cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
+
+
+builder.Services.AddScoped<PasswordHasher<AppUser>>();
+builder.Services.AddScoped<TokenService>();
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("CorsPolicy", policy =>
@@ -56,7 +63,7 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<DataContext>();
-   // await Seed.SeedData(context);
+   //await Seed.SeedData(context);
     context.Database.Migrate();
  
 

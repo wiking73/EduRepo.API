@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduRepo.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250414095047_IdentityAdded")]
-    partial class IdentityAdded
+    [Migration("20250416094841_AddKursWlasciciel")]
+    partial class AddKursWlasciciel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,9 +40,8 @@ namespace EduRepo.Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Haslo")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("IsStudent")
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
@@ -115,7 +114,13 @@ namespace EduRepo.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("WlascicielId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("IdKursu");
+
+                    b.HasIndex("WlascicielId");
 
                     b.ToTable("Kursy");
                 });
@@ -337,6 +342,17 @@ namespace EduRepo.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("EduRepo.Domain.Kurs", b =>
+                {
+                    b.HasOne("EduRepo.Domain.AppUser", "Wlasciciel")
+                        .WithMany()
+                        .HasForeignKey("WlascicielId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Wlasciciel");
                 });
 
             modelBuilder.Entity("EduRepo.Domain.Odpowiedz", b =>

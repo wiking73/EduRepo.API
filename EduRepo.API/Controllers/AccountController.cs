@@ -117,7 +117,7 @@ namespace EduRepo.Api.Controllers
             {
                 Username = user.UserName,
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber
+                
             };
 
             return Ok(userProfile);

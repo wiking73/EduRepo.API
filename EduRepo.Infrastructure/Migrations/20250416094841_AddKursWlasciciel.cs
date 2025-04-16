@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EduRepo.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityAdded : Migration
+    public partial class AddKursWlasciciel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,8 +31,8 @@ namespace EduRepo.Infrastructure.Migrations
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
-                    Haslo = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
+                    IsStudent = table.Column<bool>(type: "INTEGER", nullable: false),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
@@ -49,6 +49,21 @@ namespace EduRepo.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Powiadomienia",
+                columns: table => new
+                {
+                    IdPowiadomienia = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IdZadania = table.Column<int>(type: "INTEGER", nullable: false),
+                    DataPowiadomienia = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CzyOdczytane = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Powiadomienia", x => x.IdPowiadomienia);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,6 +172,77 @@ namespace EduRepo.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Kursy",
+                columns: table => new
+                {
+                    IdKursu = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nazwa = table.Column<string>(type: "TEXT", nullable: false),
+                    OpisKursu = table.Column<string>(type: "TEXT", nullable: false),
+                    RokAkademicki = table.Column<string>(type: "TEXT", nullable: false),
+                    Klasa = table.Column<string>(type: "TEXT", nullable: false),
+                    CzyZarchiwizowany = table.Column<bool>(type: "INTEGER", nullable: false),
+                    WlascicielId = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Kursy", x => x.IdKursu);
+                    table.ForeignKey(
+                        name: "FK_Kursy_AspNetUsers_WlascicielId",
+                        column: x => x.WlascicielId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Zadania",
+                columns: table => new
+                {
+                    IdZadania = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IdKursu = table.Column<int>(type: "INTEGER", nullable: false),
+                    Nazwa = table.Column<string>(type: "TEXT", nullable: false),
+                    Tresc = table.Column<string>(type: "TEXT", nullable: false),
+                    TerminOddania = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    PlikPomocniczy = table.Column<string>(type: "TEXT", nullable: false),
+                    CzyObowiazkowe = table.Column<bool>(type: "INTEGER", nullable: false),
+                    KursIdKursu = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Zadania", x => x.IdZadania);
+                    table.ForeignKey(
+                        name: "FK_Zadania_Kursy_KursIdKursu",
+                        column: x => x.KursIdKursu,
+                        principalTable: "Kursy",
+                        principalColumn: "IdKursu");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Odpowiedzi",
+                columns: table => new
+                {
+                    IdOdpowiedzi = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IdZadania = table.Column<int>(type: "INTEGER", nullable: false),
+                    DataOddania = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    KomentarzNauczyciela = table.Column<string>(type: "TEXT", nullable: false),
+                    NazwaPliku = table.Column<string>(type: "TEXT", nullable: false),
+                    Ocena = table.Column<string>(type: "TEXT", nullable: false),
+                    ZadanieIdZadania = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Odpowiedzi", x => x.IdOdpowiedzi);
+                    table.ForeignKey(
+                        name: "FK_Odpowiedzi_Zadania_ZadanieIdZadania",
+                        column: x => x.ZadanieIdZadania,
+                        principalTable: "Zadania",
+                        principalColumn: "IdZadania");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -193,6 +279,21 @@ namespace EduRepo.Infrastructure.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Kursy_WlascicielId",
+                table: "Kursy",
+                column: "WlascicielId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Odpowiedzi_ZadanieIdZadania",
+                table: "Odpowiedzi",
+                column: "ZadanieIdZadania");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Zadania_KursIdKursu",
+                table: "Zadania",
+                column: "KursIdKursu");
         }
 
         /// <inheritdoc />
@@ -214,7 +315,19 @@ namespace EduRepo.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Odpowiedzi");
+
+            migrationBuilder.DropTable(
+                name: "Powiadomienia");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Zadania");
+
+            migrationBuilder.DropTable(
+                name: "Kursy");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

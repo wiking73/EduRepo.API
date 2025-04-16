@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Styles/Login.css';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-
+import { useNavigate } from "react-router-dom";
 
 interface JwtPayload {
     unique_name: string;   
@@ -41,7 +41,7 @@ const Logowanie: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
 
-    
+    const navigate = useNavigate();
 
     const togglePassword = () => {
         setShowPassword(!showPassword);
@@ -77,15 +77,15 @@ const Logowanie: React.FC = () => {
                 const { token, username } = response.data;
                 setSuccessMessage('Zalogowano pomyœlnie.');
                 console.log('Zalogowano:', { token, username });
-
-
+               
+                
                 localStorage.setItem('authToken', token);
                 localStorage.setItem('displayName', username);
 
 
                 const decoded = jwtDecode<JwtPayload>(token);
                 localStorage.setItem('role', decoded.role);
-
+                navigate("/dashboard")
 
             }
         } catch (error: any) {
@@ -134,12 +134,12 @@ const Logowanie: React.FC = () => {
 
     return (
         <div className="login-page">
-            <p className="login-header">{isLogin ? 'Logowanie' : 'Rejestracja'}</p>
+           
             <form
                 onSubmit={isLogin ? handleLogin : handleRegister}
                 className="login-form"
             >
-
+             <p className="login-header">{isLogin ? 'Logowanie' : 'Rejestracja'}</p>
                 <div className="button-container">
                     <button
                         type="button"

@@ -1,15 +1,14 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
 
 import NavBar from './Navbar';
 
 function App() {
+    const token = localStorage.getItem('token'); 
+
     return (
         <>
-            <NavBar />
-            <div style={{ marginTop: '10px' }}>
-                <Outlet />
-            </div>
+            <Outlet />
         </>
     );
 }
