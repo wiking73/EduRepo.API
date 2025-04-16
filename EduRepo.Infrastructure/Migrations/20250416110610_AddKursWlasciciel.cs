@@ -183,17 +183,17 @@ namespace EduRepo.Infrastructure.Migrations
                     RokAkademicki = table.Column<string>(type: "TEXT", nullable: false),
                     Klasa = table.Column<string>(type: "TEXT", nullable: false),
                     CzyZarchiwizowany = table.Column<bool>(type: "INTEGER", nullable: false),
-                    WlascicielId = table.Column<string>(type: "TEXT", nullable: false)
+                    WlascicielId = table.Column<string>(type: "TEXT", nullable: false),
+                    UserNameId = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Kursy", x => x.IdKursu);
                     table.ForeignKey(
-                        name: "FK_Kursy_AspNetUsers_WlascicielId",
-                        column: x => x.WlascicielId,
+                        name: "FK_Kursy_AspNetUsers_UserNameId",
+                        column: x => x.UserNameId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -281,9 +281,9 @@ namespace EduRepo.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Kursy_WlascicielId",
+                name: "IX_Kursy_UserNameId",
                 table: "Kursy",
-                column: "WlascicielId");
+                column: "UserNameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Odpowiedzi_ZadanieIdZadania",

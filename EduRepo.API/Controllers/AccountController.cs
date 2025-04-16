@@ -11,6 +11,7 @@ using EduRepo.API.Controllers;
 using System.ComponentModel.DataAnnotations;
 using EduRepo.Infrastructure;
 using EduRepo.API.Dto;
+using System.Security.Claims;
 
 namespace EduRepo.Api.Controllers
 {
@@ -187,6 +188,7 @@ namespace EduRepo.Api.Controllers
             return Ok("Konto zostało usunięte.");
         }
         
+
 
     }
 }

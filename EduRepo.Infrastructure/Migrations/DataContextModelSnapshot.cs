@@ -111,13 +111,16 @@ namespace EduRepo.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserNameId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("WlascicielId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("IdKursu");
 
-                    b.HasIndex("WlascicielId");
+                    b.HasIndex("UserNameId");
 
                     b.ToTable("Kursy");
                 });
@@ -343,13 +346,11 @@ namespace EduRepo.Infrastructure.Migrations
 
             modelBuilder.Entity("EduRepo.Domain.Kurs", b =>
                 {
-                    b.HasOne("EduRepo.Domain.AppUser", "Wlasciciel")
+                    b.HasOne("EduRepo.Domain.AppUser", "UserName")
                         .WithMany()
-                        .HasForeignKey("WlascicielId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserNameId");
 
-                    b.Navigation("Wlasciciel");
+                    b.Navigation("UserName");
                 });
 
             modelBuilder.Entity("EduRepo.Domain.Odpowiedz", b =>

@@ -14,7 +14,7 @@ namespace EduRepo.Application.Kursy
         public string Klasa { get; set; }
         public bool CzyZarchiwizowany { get; set; }
 
-       // public int IdWlasciciela { get; set; }
+        public string UserId{ get; set; }
     }
 
     public class Handler : IRequestHandler<CreateCommand, Unit>
@@ -38,7 +38,7 @@ namespace EduRepo.Application.Kursy
                 RokAkademicki = request.RokAkademicki,
                 Klasa = request.Klasa,
                 CzyZarchiwizowany = request.CzyZarchiwizowany,
-               // IdWlasciciela = request.IdWlasciciela,
+                WlascicielId = request.UserId,
             };
 
 

@@ -12,8 +12,8 @@ namespace EduRepo.Domain
         public string Klasa { get; set; }
         public bool CzyZarchiwizowany { get; set; }
 
-        public string WlascicielId { get; set; }  // FK
-        public AppUser Wlasciciel { get; set; }
+        public string WlascicielId{ get; set; }  // FK
+        public AppUser UserName { get; set; }
         public ICollection<Zadanie> Zadania { get; set; }
 
     }

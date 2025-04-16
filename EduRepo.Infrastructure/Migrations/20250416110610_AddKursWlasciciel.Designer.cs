@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduRepo.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250416094841_AddKursWlasciciel")]
+    [Migration("20250416110610_AddKursWlasciciel")]
     partial class AddKursWlasciciel
     {
         /// <inheritdoc />
@@ -114,13 +114,16 @@ namespace EduRepo.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserNameId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("WlascicielId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("IdKursu");
 
-                    b.HasIndex("WlascicielId");
+                    b.HasIndex("UserNameId");
 
                     b.ToTable("Kursy");
                 });
@@ -346,13 +349,11 @@ namespace EduRepo.Infrastructure.Migrations
 
             modelBuilder.Entity("EduRepo.Domain.Kurs", b =>
                 {
-                    b.HasOne("EduRepo.Domain.AppUser", "Wlasciciel")
+                    b.HasOne("EduRepo.Domain.AppUser", "UserName")
                         .WithMany()
-                        .HasForeignKey("WlascicielId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserNameId");
 
-                    b.Navigation("Wlasciciel");
+                    b.Navigation("UserName");
                 });
 
             modelBuilder.Entity("EduRepo.Domain.Odpowiedz", b =>
