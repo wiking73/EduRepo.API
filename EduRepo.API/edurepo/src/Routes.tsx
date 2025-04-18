@@ -8,6 +8,7 @@ import CreateKurs from "./CreateKurs";
 import CreateZadanie from "./CreateZadanie";
 import CreateOdpowiedz from "./CreateOdpowiedz";
 import Zarzadzajuzytkownikami from "./ZarzadzajUzytkownikami";
+import EditUser from "./EdytujUsers";
 export const routes: RouteObject[] = [
     {
         path: "/",
@@ -20,7 +21,8 @@ export const routes: RouteObject[] = [
             { path: '/kurs/create', element: <CreateKurs /> },
             { path: 'kurs/:kursId/zadanie/create', element: < CreateZadanie /> },
             { path: `/kurs/:kursId/zadanie/:IdZadania/odpowiedz`, element: <CreateOdpowiedz /> },
-           {path: '/users', element: <Zarzadzajuzytkownikami />}
+            { path: '/users', element: <Zarzadzajuzytkownikami /> },
+            { path: '/edytuj/:userId', element: <EditUser /> }
         ]
     }
 ];

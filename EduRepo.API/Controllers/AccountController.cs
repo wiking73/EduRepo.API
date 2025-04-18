@@ -12,6 +12,8 @@ using System.ComponentModel.DataAnnotations;
 using EduRepo.Infrastructure;
 using EduRepo.API.Dto;
 using System.Security.Claims;
+using MediatR;
+using Microsoft.AspNet.Identity;
 
 namespace EduRepo.Api.Controllers
 {
@@ -203,30 +205,66 @@ namespace EduRepo.Api.Controllers
 
             return Ok(users);
         }
-        [HttpPut("users/{id}/role")]
+       /* [HttpGet("users/{id}")]
+        public async Task<IActionResult> GetUser(int id)
+        {
+            var user = await _context.Users
+                .Where(u => u.Id == id)
+                .Select(u => new
+                {
+                    u.Id,
+                    u.UserName,
+                    u.Email,
+                    u.IsTeacher,
+                    u.IsStudent
+                })
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }*/
+
+        [HttpPut("users/{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ChangeUserRole(int id, [FromBody] string newRole)
+        public async Task<IActionResult> UpdateUser(string id, [FromBody] UpdateUserDto request)
         {
             var user = await _context.Users.FindAsync(id);
+
             if (user == null)
+            {
                 return NotFound("Nie znaleziono użytkownika.");
+            }
 
-            // Lista dozwolonych ról
-            var validRoles = new[] { "Student", "Teacher", "Admin" };
-
-            if (!validRoles.Contains(newRole))
-                return BadRequest("Nieprawidłowa rola.");
-
-            //user.Role = newRole;
+            user.UserName = request.UserName;
+            user.Email = request.Email;
+            user.IsTeacher = request.IsTeacher;
+            user.IsStudent = request.IsStudent;
 
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
-            return Ok($"Rola użytkownika {user.UserName} została zmieniona na {newRole}.");
+            return Ok(new
+            {
+                user.Id,
+                user.UserName,
+                user.Email,
+                user.IsTeacher,
+                user.IsStudent
+            });
         }
+
 
 
 
 
     }
 }
+
+
+   
+
+

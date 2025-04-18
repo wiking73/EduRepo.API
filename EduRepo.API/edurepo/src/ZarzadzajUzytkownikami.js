@@ -1,5 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link, useParams, NavLink } from 'react-router-dom';
+import { Menu, Button, List } from 'semantic-ui-react';
 import axios from 'axios';
 import './Styles/Users.css';
 
@@ -25,22 +26,10 @@ function ZarzadzajUzytkownikami() {
         }
     };
 
-    const handleRoleChange = async (userId, newRole) => {
-        try {
-            const token = localStorage.getItem('token');
-            await axios.put(`https://localhost:7157/api/auth/users/${userId}/role`, newRole, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            fetchUsers(); // Odśwież listę po zmianie roli
-        } catch (err) {
-            console.error('Błąd podczas zmiany roli:', err);
-            alert('Nie udało się zmienić roli użytkownika.');
-        }
+ 
+    const handleEdit = () => {
+        console.log('Dodaj zadanie dla kursu (tylko Admin)');
     };
-
     useEffect(() => {
         fetchUsers();
     }, []);
@@ -60,14 +49,10 @@ function ZarzadzajUzytkownikami() {
                         <p><strong>Email:</strong> {user.email}</p>
                         <p><strong>Aktualna rola:</strong> {currentRole}</p>
 
-                        <select
-                            defaultValue={currentRole}
-                            onChange={(e) => handleRoleChange(user.id, JSON.stringify(e.target.value))}
-                        >
-                            <option value="Student">Student</option>
-                            <option value="Teacher">Teacher</option>
-                            <option value="Admin">Admin</option>
-                        </select>
+ 
+                        <Link to={`/edytuj/${user.id}`} className="edit-button">
+                            Edytuj
+                        </Link>
                     </div>
                 );
             })}

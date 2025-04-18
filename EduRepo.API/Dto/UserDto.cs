@@ -29,5 +29,12 @@ namespace EduRepo.API.Dto
         [MinLength(6, ErrorMessage = "Nowe hasło musi mieć co najmniej 6 znaków.")]
         public string NewPassword { get; set; }
     }
+    public class UpdateUserDto
+    {
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public bool IsTeacher { get; set; }
+        public bool IsStudent { get; set; }
+    }
 
 }
