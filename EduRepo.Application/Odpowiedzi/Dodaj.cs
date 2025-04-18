@@ -1,9 +1,7 @@
 ﻿using EduRepo.Domain;
 using EduRepo.Infrastructure;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using EduRepo.Infrastructure;
+
 
 namespace EduRepo.Application.Odpowiedzi
 {
@@ -11,10 +9,11 @@ namespace EduRepo.Application.Odpowiedzi
     {
        // public int IdOdpowiedzi { get; set; }
         public int IdZadania { get; set; }
-     //   public Zadanie Zadanie { get; set; }
+        //   public Zadanie Zadanie { get; set; }
 
-      //  public int IdUzytkownika { get; set; }
         
+        public string UserId { get; set; }
+        public string Name { get; set; }
 
         public DateTime DataOddania { get; set; }
         public string KomentarzNauczyciela { get; set; }
@@ -40,11 +39,13 @@ namespace EduRepo.Application.Odpowiedzi
             {
 
                 IdZadania = request.IdZadania,
-                //Uzytkownik = request.Uzytkownik,
+               
                 DataOddania = request.DataOddania,
                 KomentarzNauczyciela = request.KomentarzNauczyciela,
                 NazwaPliku = request.NazwaPliku,
                 Ocena = request.Ocena,
+                WlascicielId = request.UserId,
+                UserName = request.Name,
 
             };
 

@@ -23,7 +23,10 @@ namespace EduRepo.API.Controllers
         new Claim(ClaimTypes.Name, user.UserName),
         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),  // Zmienione na user.Id.ToString()
         new Claim(ClaimTypes.Email, user.Email),
-        new Claim(ClaimTypes.Role, user.IsStudent ? "Teacher" : "Student") // Dodajemy rolę
+       new Claim(ClaimTypes.Role,
+    user.IsStudent ? "Student" :
+    user.IsTeacher ? "Teacher" :
+    "Admin")
     };
 
             // Pobierz klucz z konfiguracji (upewnij się, że masz to w appsettings.json)

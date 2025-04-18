@@ -1,37 +1,39 @@
 ﻿body {
 
 }
-.dashboard-container{
-
-
+.dashboard-container {
+    background: gray;
 }
 .username1 {
     
 }
 .title1 {
-   background-color: gray;
-    padding: 20px;
+   background-color: white;
+    padding: 10px;
 }
 h1 {
     font-family: "Playfair Display", serif;
     font-style: initial;
-    font-size: 5vw;
+    font-size: 7vw;
     text-align: center;
     color: white;
     border: black;
+    color: black;
+    
 }
 h2 {
     font-family: "Playfair Display", serif;
     font-style: initial;
     font-size: 5vw;
     text-align: center;
-    color: white;
+    color: black;
     border: black;
 }
 
 .tile-container {
     text-align: center;
-    background-color : dimgray;
+
+    
     color: black;
     border: black;
 

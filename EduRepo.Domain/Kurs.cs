@@ -11,9 +11,9 @@ namespace EduRepo.Domain
         public string RokAkademicki { get; set; }
         public string Klasa { get; set; }
         public bool CzyZarchiwizowany { get; set; }
-
+        //public enum KursStatusDolaczenia { Potwierdzony, Odrzucony }
         public string WlascicielId{ get; set; }  // FK
-        public AppUser UserName { get; set; }
+        public string UserName { get; set; }
         public ICollection<Zadanie> Zadania { get; set; }
 
     }

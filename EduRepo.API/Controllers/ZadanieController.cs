@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EduRepo.API.Controllers
 {
+    [AllowAnonymous]
     public class ZadanieController : BaseApiController
     {
         private readonly IMediator _mediator;
@@ -37,6 +38,7 @@ namespace EduRepo.API.Controllers
 
             var result = await _mediator.Send(command);
             if (result == null) return NotFound();
+
             return Ok(result);
         }
         [HttpPut("{id}")]

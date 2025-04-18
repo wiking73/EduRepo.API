@@ -15,6 +15,9 @@ namespace EduRepo.Application.Zadania
         public DateTime TerminOddania { get; set; }
         public string PlikPomocniczy { get; set; }
         public bool CzyObowiazkowe { get; set; }
+
+        public string UserId { get; set; }
+        public string Name { get; set; }
     }
 
     public class Handler : IRequestHandler<CreateCommand, Unit>
@@ -42,6 +45,8 @@ namespace EduRepo.Application.Zadania
                 TerminOddania = request.TerminOddania,
                 PlikPomocniczy = request.PlikPomocniczy,
                 CzyObowiazkowe = request.CzyObowiazkowe,
+                WlascicielId = request.UserId,
+                UserName = request.Name,
             };
 
             _context.Zadania.Add(zadanie);

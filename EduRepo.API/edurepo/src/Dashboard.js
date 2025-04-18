@@ -10,11 +10,11 @@ const Dashboard: React.FC = () => {
         <>
             <div className="title1">
                 <div className="username1">Witaj, {username}!</div>
-            <h1>EduRepo </h1>
-                <h2>Twoje osobiste repozytorium zadan!</h2>
+           
             </div>
             <div className="dashboard-container">
-
+                <h1>EduRepo </h1>
+                <h2>Twoje osobiste repozytorium zadan!</h2>
             <div className="tile-container">
                 <div className="tile">
                     <Link to="/kursy" className="tile-link">Wyszukaj Kursy</Link>
@@ -23,8 +23,18 @@ const Dashboard: React.FC = () => {
                 <div className="tile">
                     <Link to="/profile" className="tile-link2">Zarzadzaj Profilem</Link>
                 </div>
-            </div>
-        </div></>
+                </div>
+                
+                {role === 'Admin' && (
+                    <div className="tile-container">
+                        <div className="users">
+                            <Link to="/users" className="tile-link2">Zarz¹dzaj U¿ytkownikami</Link>
+                        </div>
+                    </div>
+                )}
+
+                </div>
+        </>
     );
 };
 

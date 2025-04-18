@@ -9,6 +9,7 @@ using EduRepo.Application.Odpowiedzi;
 
 namespace EduRepo.API.Controllers
 {
+    [AllowAnonymous]
     public class OdpowiedzController : BaseApiController
     {
         private readonly IMediator _mediator;

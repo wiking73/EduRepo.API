@@ -1,4 +1,3 @@
-/// <reference path="index.js" />
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, NavLink } from 'react-router-dom';
@@ -21,7 +20,7 @@ const Kursy: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
 
     const token = localStorage.getItem('authToken');
-   // const role = localStorage.getItem('role'); // 'Admin' lub 'User'
+    const role = localStorage.getItem('role');
 
 
     useEffect(() => {
@@ -77,6 +76,7 @@ const Kursy: React.FC = () => {
     }
 
     return (
+
         <div className="bike-list-background">
 
             <div className="bike-list-container">
@@ -84,7 +84,7 @@ const Kursy: React.FC = () => {
                 
                     <div className="bike-list__header">
                         <Menu.Item as={NavLink} to="/kurs/create">
-                            <Button content="Dodaj Rower" size="large" className="custom-button17" onClick={handleAddKurs} />
+                        <Button content="Dodaj Kurs" size="large" className="custom-button17" onClick={handleAddKurs} />
                         </Menu.Item>
                         <Menu.Item as={NavLink} to="/bikes/filtersort">
                             <Button content="Filtrowanie/Sortowanie" size="large" className="custom-button18" />
@@ -97,10 +97,10 @@ const Kursy: React.FC = () => {
                     <div className="bike-grid">
                         {kursy.map((kurs) => (
                             <div className="bike-container" key={kurs.idKursu}>
-                                <div className="bike-card">
-                                    <span className="bike-item">
+                                
+                                    
                                         {kurs.nazwa}
-                                    </span>
+                                   
                                    
                                     <div>
                                         <Link to={`/details/${kurs.idKursu}`} className="bike-item-button">
@@ -116,12 +116,19 @@ const Kursy: React.FC = () => {
                                                     className="bike-item-button2"
                                                 >
                                                     Usuñ
-                                                </button>
+                                            </button>
+                                          {/* Nie zrobione*/}
+                                            <button
+                                                onClick={() => handleDeleteKurs(kurs.idKursu)}
+                                                className="bike-item-button2"
+                                            >
+                                                Zapisz Mnie 
+                                            </button>
                                             </>
                                         
                                     </div>
                                 </div>
-                            </div>
+                            
                         ))}
                     </div>
                 ) : (

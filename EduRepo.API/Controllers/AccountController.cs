@@ -187,7 +187,45 @@ namespace EduRepo.Api.Controllers
 
             return Ok("Konto zostało usunięte.");
         }
-        
+        [HttpGet("users")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _context.Users
+                .Select(u => new
+                {
+                    u.Id,
+                    u.UserName,
+                    u.Email,
+                    u.IsTeacher,
+                    u.IsStudent,
+                })
+                .ToListAsync();
+
+            return Ok(users);
+        }
+        [HttpPut("users/{id}/role")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ChangeUserRole(int id, [FromBody] string newRole)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                return NotFound("Nie znaleziono użytkownika.");
+
+            // Lista dozwolonych ról
+            var validRoles = new[] { "Student", "Teacher", "Admin" };
+
+            if (!validRoles.Contains(newRole))
+                return BadRequest("Nieprawidłowa rola.");
+
+            //user.Role = newRole;
+
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+
+            return Ok($"Rola użytkownika {user.UserName} została zmieniona na {newRole}.");
+        }
+
+
 
 
     }

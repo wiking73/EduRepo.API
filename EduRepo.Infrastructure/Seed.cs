@@ -36,8 +36,7 @@ namespace EduRepo.Infrastructure
 
 
             };
-            if (!userManager.Users.Any())
-            {
+
                 var users = new List<AppUser>
                 {
                     new AppUser
@@ -52,7 +51,7 @@ namespace EduRepo.Infrastructure
                     {
                         UserName = "user",
                         Email = "mail@SD",
-
+                         IsStudent = false,
                     }
                 };
 
@@ -61,8 +60,7 @@ namespace EduRepo.Infrastructure
                     await userManager.CreateAsync(user, "Zaq12wsx");
                     
                 }
-            }
-
+            
 
             await context.Kursy.AddRangeAsync(kursy);
             await context.SaveChangesAsync();

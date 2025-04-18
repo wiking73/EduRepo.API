@@ -1,2 +1,125 @@
-﻿body {
+﻿body{
+    
+
+
 }
+
+
+
+
+
+
+.bike-container {
+   position: relative;
+   align-items: center;
+   left: 50%;
+    top: 10vw; 
+    transform: translateX(-50%);
+    padding: 4vw;
+    max-width: 800vw;
+    width: 70vw;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 1vw;
+}
+
+.bike-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.bike-container p {
+    font-size: 18px;
+    color: #333;
+}
+.bike-item {
+    font-family: Arial, sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 16px;
+}
+
+.bike-item-button, .btn.btn-secondary, .edit-button {
+    display: flow-root;
+    align-items: center;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-size: 16px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    width: 54%;
+}
+
+.bike-item-button2 {
+    display: table-cell;
+    align-items: center;
+    padding: 12px 25px;
+    width: 54%;
+    border: none;
+    background-color: dimgray;
+    color: white;
+    cursor: pointer;
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-size: 16px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+
+
+.edit-button {
+    background-color: gray;
+}
+
+
+.custom-button17 {
+    position: relative;
+    margin: auto;
+    padding: 12px 18px;
+    transition: all 0.2s ease;
+    border: none;
+    font-family: 'Franklin Gothic Medium', Arial;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 20px;
+    background-color: white;
+}
+
+
+
+
+.bike-list__header 
+{
+    background-color: white;
+
+}
+
+
+
+
+.custom-button18 {
+    position: relative;
+    margin: auto;
+    padding: 12px 18px;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    background-color: white;
+    font-family: 'Franklin Gothic Medium', Arial;
+    font-size: 16px;
+}
+
+
+
+

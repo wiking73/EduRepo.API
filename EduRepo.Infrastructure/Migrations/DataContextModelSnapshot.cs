@@ -40,6 +40,9 @@ namespace EduRepo.Infrastructure.Migrations
                     b.Property<bool>("IsStudent")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsTeacher")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
 
@@ -111,7 +114,8 @@ namespace EduRepo.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserNameId")
+                    b.Property<string>("UserName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("WlascicielId")
@@ -119,8 +123,6 @@ namespace EduRepo.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("IdKursu");
-
-                    b.HasIndex("UserNameId");
 
                     b.ToTable("Kursy");
                 });
@@ -146,6 +148,14 @@ namespace EduRepo.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Ocena")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WlascicielId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -206,6 +216,14 @@ namespace EduRepo.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Tresc")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WlascicielId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -342,15 +360,6 @@ namespace EduRepo.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("EduRepo.Domain.Kurs", b =>
-                {
-                    b.HasOne("EduRepo.Domain.AppUser", "UserName")
-                        .WithMany()
-                        .HasForeignKey("UserNameId");
-
-                    b.Navigation("UserName");
                 });
 
             modelBuilder.Entity("EduRepo.Domain.Odpowiedz", b =>

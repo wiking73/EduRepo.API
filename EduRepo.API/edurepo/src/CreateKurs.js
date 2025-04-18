@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
-
 const token = localStorage.getItem('authToken');
+const rola = localStorage.getItem('role');
 function CreateKurs() {
     const [kurs, setKurs] = useState({
         idKursu: "",
@@ -11,23 +11,52 @@ function CreateKurs() {
         opisKursu: "",
         rokAkademicki: "",
         klasa: "",
-        wlascicielUserName: "", 
+        wlascicielUserId: "", 
+        wlascicielUserName: "",
+
     });
 
-
-
-
+    // Stan na nazwisko u¿ytkownika i UserId
+    const [unique_name, setUserName] = useState(null);
+    const [userId, setUserId] = useState(null);
 
     const navigate = useNavigate();
+    console.log(rola);
+    // Funkcja do parsowania tokena
+    const parseJwt = (token) => {
+        if (!token) return null;
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(
+                atob(base64)
+                    .split('')
+                    .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                    .join('')
+            );
+            return JSON.parse(jsonPayload);
+        } catch (e) {
+            return null;
+        }
+    };
 
-    const handleChange = (e: { target: { name: any; value: any; type: any; checked: any; }; }) => {
+    // Pobierz dane u¿ytkownika
+    const fetchUserData = () => {
+        const userData = parseJwt(token);
+        if (!userData || !userData.nameid) {
+            alert("Nie uda³o siê odczytaæ UserId z tokena.");
+            return;
+        }
+        setUserId(userData.nameid);
+        setUserName(userData.unique_name); 
+    };
+
+    // Obs³uga zmiany wartoœci w formularzu
+    const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
 
         let newValue = value;
-        if (type === 'textbox') {
-            newValue = value;
-        }
-        else if (type === 'checkbox') {
+        if (type === 'checkbox') {
             newValue = checked;
         } else if (type === 'number') {
             newValue = value === '' ? '' : parseFloat(value);
@@ -39,89 +68,107 @@ function CreateKurs() {
         });
     };
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    // Obs³uga przesy³ania formularza
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!kurs.nazwa) {
-            alert('Nazwa jest wymagana');
+        const token = localStorage.getItem('authToken');
+        if (!userId) {
+            alert("Nie uda³o siê odczytaæ UserId.");
             return;
         }
-        if (!kurs.opisKursu) {
-            alert('Rozmiar jest wymagany');
-            return;
-        }
-        if (!kurs.rokAkademicki) {
-            alert('Typ roweru jest wymagany');
-            return;
-        }
-        if (!kurs.klasa) {
-            alert('Stawka godzinowa musi byæ wiêksza ni¿ 0');
-            return;
-        }
-
 
         const kursToSend = {
-            ...kurs,
-            Nazwa: kurs.nazwa,
+            nazwa: kurs.nazwa,
             opisKursu: kurs.opisKursu,
             rokAkademicki: kurs.rokAkademicki,
             klasa: kurs.klasa,
+            userId: userId, 
+            name: unique_name,
         };
 
-        console.log('Wysy³ane dane roweru:', kursToSend);
-
-        const token = localStorage.getItem('authToken'); 
-
-        axios
-            .post('https://localhost:7157/api/Kurs', kursToSend, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then(() => {
-                navigate('/');
-            })
+        axios.post('https://localhost:7157/api/Kurs', kursToSend, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            
+        })
+            .then(() => navigate('/dashboard'))
             .catch((error) => {
-                console.error('B³¹d podczas tworzenia roweru:', error);
-                if (error.response && error.response.data) {
-                    alert(`B³¹d: ${error.response.data}`);
-                } else {
-                    alert('Wyst¹pi³ b³¹d podczas tworzenia roweru.');
-                }
+                console.error('B³¹d podczas tworzenia kursu:', error);
+                alert('Wyst¹pi³ b³¹d podczas tworzenia kursu.');
             });
-
     };
 
+    useEffect(() => {
+        fetchUserData(); // Pobierz dane u¿ytkownika po za³adowaniu komponentu
+    }, []);
+
     return (
+        
+        
         <div className="bike-form">
             <h6>Dodaj nowy kurs</h6>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Nazwa:</label>
-                    <input type="text" name="name" value={kurs.nazwa} onChange={handleChange} required />
+                    <input
+                        type="text"
+                        name="nazwa"
+                        value={kurs.nazwa}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div className="form-group">
-                    <label>Rozmiar:</label>
-                    <input type="text" name="name" value={kurs.opisKursu} onChange={handleChange} required />
+                    <label>Opis:</label>
+                    <input
+                        type="text"
+                        name="opisKursu"
+                        value={kurs.opisKursu}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div className="form-group">
-                    <label>Typ roweru:</label>
-                    <input type="text" name="name" value={kurs.rokAkademicki} onChange={handleChange} required />
+                    <label>Rok akademicki:</label>
+                    <input
+                        type="text"
+                        name="rokAkademicki"
+                        value={kurs.rokAkademicki}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
-                
-                
                 <div className="form-group">
-                    <label>Stawka godzinowa (z³):</label>
-                    <input type="text" name="name" value={kurs.klasa} onChange={handleChange} required />
+                    <label>Klasa:</label>
+                    <input
+                        type="text"
+                        name="klasa"
+                        value={kurs.klasa}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
-                
-
+               {/* */}{/* Wyœwietlamy nazwisko u¿ytkownika */}{/*
+                <div className="form-group">
+                    <label>W³aœciciel:</label>
+                    <input
+                        type="text"
+                        value={userName || 'Loading...'}
+                        readOnly
+                    />
+                </div>*/}
+                }
                 <button type="submit" className="btn btn-primary">
-                     Dodaj 
+                    Dodaj
                 </button>
-                <Link to="/kursy" className="btn btn-secondary">
-                    Powrót do listy 
-                </Link>
+                }else
+                {
+                    <Link to="/kursy" className="btn btn-secondary">
+                        Powrót do listy
+                    </Link>
+                }
             </form>
         </div>
     );

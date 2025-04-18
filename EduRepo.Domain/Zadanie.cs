@@ -13,6 +13,9 @@ namespace EduRepo.Domain
         public DateTime TerminOddania { get; set; }
         public string PlikPomocniczy { get; set; }
         public bool CzyObowiazkowe { get; set; }
+        //public Kurs Kurs { get; set; }
+        public string WlascicielId { get; set; }  // FK
+        public string UserName { get; set; }
 
         public ICollection<Odpowiedz> Odpowiedzi { get; set; }
        // public ICollection<PowiadomienieBrakOdpowiedzi> Powiadomienia { get; set; }
