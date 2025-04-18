@@ -205,8 +205,10 @@ namespace EduRepo.Api.Controllers
 
             return Ok(users);
         }
-       /* [HttpGet("users/{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        
+
+        [HttpGet("users/{id}")]
+        public async Task<IActionResult> GetUser(string id)
         {
             var user = await _context.Users
                 .Where(u => u.Id == id)
@@ -222,13 +224,13 @@ namespace EduRepo.Api.Controllers
 
             if (user == null)
             {
-                return NotFound();
+                return NotFound("Nie znaleziono użytkownika.");
             }
 
             return Ok(user);
-        }*/
+        }
 
-        [HttpPut("users/{id}")]
+        [HttpPut("user/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateUser(string id, [FromBody] UpdateUserDto request)
         {

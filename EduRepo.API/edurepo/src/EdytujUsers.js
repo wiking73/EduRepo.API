@@ -62,7 +62,7 @@ function EditUser() {
         const token = localStorage.getItem('authToken'); // Zmienna authToken może mieć inną nazwę, zależnie od tego, jak go przechowujesz
 
         axios
-            .put(`https://localhost:7032/api/Auth/users/${id}`, updatedUser, {
+            .put(`https://localhost:7032/api/Auth/user/${user.id}`, updatedUser, {
                 headers: {
                     'Authorization': `Bearer ${token}`, // Dodaj token w nagłówkach
                 },
@@ -108,7 +108,7 @@ function EditUser() {
                     <label>Czy Student:</label>
                     <input
                         type="checkbox"
-                        name="isElectric"
+                        name="isStudent"
                         checked={user.isStudent}
                         onChange={handleChange}
                     />
@@ -117,7 +117,7 @@ function EditUser() {
                     <label>Czy Nauczyciel:</label>
                     <input
                         type="checkbox"
-                        name="isElectric"
+                        name="isTeacher"
                         checked={user.isTeacher}
                         onChange={handleChange}
                     />
