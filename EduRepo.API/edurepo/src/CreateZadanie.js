@@ -1,53 +1,29 @@
 ﻿import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 const token = localStorage.getItem('authToken');
 
-function CreateOdpowiedz() {
-    const [odpowiedz, setOdpowiedz] = useState({
-        NazwaPliku: "",
-        DataOddania: "",
-        Ocena: "",
-        KomentarzNauczyciela: "",
-        CzyObowiazkowe: false,
-        wlascicielUserId: "",
-        wlascicielUserName: "",
-        IdZadania: "",
-    });
-
-    const [zadanie, setZadanie] = useState(null);  // Przechowujemy dane o zadaniu
-    const [unique_name, setUserName] = useState(null);
-    const [userId, setUserId] = useState(null);
-    const { kursId, zadanieId } = useParams();  // Pobieramy kursId i zadanieId z URL
+function CreateZadanie() {
+    const { id } = useParams(); // kursId
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const [unique_name, setUserName] = useState(null);
+
+    const [zadanie, setZadanie] = useState({
+        Nazwa: '',
+        Tresc: '',
+        TerminOddania: '',
+        PlikPomocniczy: '',
+        CzyObowiazkowe: false,
+    });
 
     useEffect(() => {
-        // Funkcja do pobierania szczegółów zadania z API
-        const fetchZadanie = async () => {
-            try {
-                const response = await axios.get(`https://localhost:7157/api/Zadanie/${kursId}/${zadanieId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                setZadanie(response.data);  // Ustawiamy dane zadania
-                setOdpowiedz((prevState) => ({
-                    ...prevState,
-                    IdZadania: zadanieId,  // Ustawiamy ID zadania w odpowiedzi
-                }));
-            } catch (error) {
-                console.error('Błąd podczas pobierania zadania:', error);
-                setError('Wystąpił błąd podczas pobierania zadania.');
-            }
-        };
-
-        fetchZadanie();
         fetchUserData();
-    }, [kursId, zadanieId]);
+    }, []);
 
-    const parseJwt = (token: string | null) => {
+    const parseJwt = (token) => {
         if (!token) return null;
         try {
             const base64Url = token.split('.')[1];
@@ -74,119 +50,100 @@ function CreateOdpowiedz() {
         setUserName(userData.unique_name);
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        let newValue = value;
-        if (type === 'checkbox') {
-            newValue = checked;
-        }
+        const newValue = type === 'checkbox' ? checked : value;
 
-        setOdpowiedz({
-            ...odpowiedz,
+        setZadanie(prev => ({
+            ...prev,
             [name]: newValue,
-        });
+        }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!userId) {
-            alert("Nie udało się odczytać UserId.");
-            return;
-        }
-
-        const odpowiedzToSend = {
-            NazwaPliku: odpowiedz.NazwaPliku,
-            DataOddania: odpowiedz.DataOddania,
-            KomentarzNauczyciela: odpowiedz.KomentarzNauczyciela,
-            Ocena: odpowiedz.Ocena,
-            CzyObowiazkowe: odpowiedz.CzyObowiazkowe,
-            WlascicielId: userId,
+        const zadanieToSend = {
+            ...zadanie,
+            KursId: id,
+            UserId: userId,
             UserName: unique_name,
-            IdZadania: zadanieId,  // Przekazujemy zadanieId, które zostało pobrane
         };
 
-        axios.post('https://localhost:7157/api/odpowiedz', odpowiedzToSend, {
+        axios.post('https://localhost:7157/api/Zadanie', zadanieToSend, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         })
-            .then(() => navigate(`/kurs/${kursId}/zadanie/${zadanieId}`))  // Po utworzeniu odpowiedzi wracamy do zadania
+            .then(() => navigate(`/details/${id}`))
             .catch((error) => {
-                console.error('Błąd podczas tworzenia odpowiedzi:', error);
-                setError('Wystąpił błąd podczas tworzenia odpowiedzi.');
+                console.error('Błąd podczas tworzenia zadania:', error);
+                alert('Wystąpił błąd podczas tworzenia zadania.');
             });
     };
 
     return (
-        <div className="bike-form">
-            <h6>Dodaj odpowiedź do zadania</h6>
+        <div className="form-container">
+            <h4>Utwórz nowe zadanie</h4>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            {zadanie ? (
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label>Nazwa pliku:</label>
-                        <input
-                            type="text"
-                            name="NazwaPliku"
-                            value={odpowiedz.NazwaPliku}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label>Nazwa zadania:</label>
+                    <input
+                        type="text"
+                        name="Nazwa"
+                        value={zadanie.Nazwa}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
 
-                    <div className="form-group">
-                        <label>Data oddania:</label>
-                        <input
-                            type="datetime-local"
-                            name="DataOddania"
-                            value={odpowiedz.DataOddania}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+                <div className="form-group">
+                    <label>Treść:</label>
+                    <textarea
+                        name="Tresc"
+                        value={zadanie.Tresc}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
 
-                    <div className="form-group">
-                        <label>Ocena:</label>
-                        <input
-                            type="text"
-                            name="Ocena"
-                            value={odpowiedz.Ocena}
-                            onChange={handleChange}
-                        />
-                    </div>
+                <div className="form-group">
+                    <label>Termin oddania:</label>
+                    <input
+                        type="datetime-local"
+                        name="TerminOddania"
+                        value={zadanie.TerminOddania}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
 
-                    <div className="form-group">
-                        <label>Komentarz nauczyciela:</label>
-                        <textarea
-                            name="KomentarzNauczyciela"
-                            value={odpowiedz.KomentarzNauczyciela}
-                            onChange={handleChange}
-                        />
-                    </div>
+                <div className="form-group">
+                    <label>Plik pomocniczy (nazwa lub URL):</label>
+                    <input
+                        type="text"
+                        name="PlikPomocniczy"
+                        value={zadanie.PlikPomocniczy}
+                        onChange={handleChange}
+                    />
+                </div>
 
-                    <div className="form-group">
-                        <label>Czy obowiązkowe:</label>
-                        <input
-                            type="checkbox"
-                            name="CzyObowiazkowe"
-                            checked={odpowiedz.CzyObowiazkowe}
-                            onChange={handleChange}
-                        />
-                    </div>
+                <div className="form-group">
+                    <label>Czy obowiązkowe:</label>
+                    <input
+                        type="checkbox"
+                        name="CzyObowiazkowe"
+                        checked={zadanie.CzyObowiazkowe}
+                        onChange={handleChange}
+                    />
+                </div>
 
-                    <button type="submit" className="btn btn-primary">
-                        Dodaj odpowiedź
-                    </button>
-                    <Link to={`/kurs/${kursId}/zadanie/${zadanieId}`} className="btn btn-secondary">
-                        Powrót do zadania
-                    </Link>
-                </form>
-            ) : (
-                <p>Ładowanie danych zadania...</p>
-            )}
+                <button type="submit" className="btn btn-primary">Utwórz zadanie</button>
+                <Link to={`/details/${id}`} className="btn btn-secondary">Anuluj</Link>
+            </form>
         </div>
     );
 }
 
-export default CreateOdpowiedz;
+export default CreateZadanie;

@@ -2,7 +2,6 @@
 import axios from 'axios';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 
-
 function EditUser() {
     const [user, setUser] = useState({
         id: '',
@@ -10,27 +9,34 @@ function EditUser() {
         email: '',
         isStudent: false,
         isTeacher: false,
-
     });
-    const [error, setError] = useState('');  // Stan do przechowywania komunikatu o błędzie
-
-    const { id } = useParams();
+    const [error, setError] = useState('');
+    const { id } = useParams(); // Capture the 'id' from the URL using useParams
     const navigate = useNavigate();
 
+    // Fetch user based on the 'id' from the URL
+    const fetchUser = async () => {
+        try {
+            const token = localStorage.getItem('authToken');
+            const response = await axios.get(`https://localhost:7157/api/auth/users/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUser(response.data);
+        } catch (err) {
+            console.error('Błąd podczas pobierania użytkownika:', err);
+            setError('Błąd podczas pobierania danych.');
+        }
+    };
+
     useEffect(() => {
+        fetchUser();
         window.scrollTo({
             top: 0,
             behavior: 'smooth',
         });
-        axios
-            .get(`/api/auth/users`)
-            .then((response) => {
-                setUser(response.data);
-            })
-            .catch((error) => {
-                console.error('Błąd podczas pobierania danych roweru:', error);
-            });
-    }, [id]);
+    }, [id]); // Dependency on 'id' ensures that when the 'id' changes, the data is re-fetched
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -48,34 +54,32 @@ function EditUser() {
             return;
         }
         if (!user.email) {
-            alert('Rozmiar jest wymagany');
+            alert('Email jest wymagany');
             return;
         }
-
 
         const updatedUser = {
             ...user,
             userId: parseInt(id),
         };
 
-        // Pobierz token z localStorage (lub z innego źródła)
-        const token = localStorage.getItem('authToken'); // Zmienna authToken może mieć inną nazwę, zależnie od tego, jak go przechowujesz
+        const token = localStorage.getItem('authToken');
 
         axios
-            .put(`https://localhost:7032/api/Auth/user/${user.id}`, updatedUser, {
+            .put(`https://localhost:7157/api/Auth/user/${id}`, updatedUser, {
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Dodaj token w nagłówkach
+                    'Authorization': `Bearer ${token}`,
                 },
             })
             .then(() => {
-                navigate(`/details/${id}`);
+                navigate(`/kursy`);
             })
             .catch((error) => {
-                console.error('Błąd podczas aktualizacji roweru:', error);
+                console.error('Błąd podczas aktualizacji użytkownika:', error);
                 if (error.response) {
-                    setError(error.response.data); // Przypisz komunikat błędu do stanu
+                    setError(error.response.data); // Set error message if any
                 } else {
-                    setError('Nie udało się zaktualizować roweru. Sprawdź czy prawidłowo wpisałeś wszystkie parametry');
+                    setError('Nie udało się zaktualizować użytkownika. Sprawdź czy prawidłowo wpisałeś wszystkie parametry');
                 }
                 setTimeout(() => {
                     setError('');
@@ -84,22 +88,17 @@ function EditUser() {
     };
 
     return (
-        <div className="bike-form">
-
-
-            {/* Jeśli wystąpił błąd, wyświetl komunikat */}
+        <div className="user-form">
             {error && <div className="error-message">{error}</div>}
 
             <form onSubmit={handleSubmit}>
-
                 <div className="form-group">
-                    <p className="h2">Edytuj</p>
+                    <p className="h2">Edytuj użytkownika</p>
                     <label>Nazwa:</label>
                     <input type="text" name="userName" value={user.userName} onChange={handleChange} required />
                 </div>
 
                 <div className="form-group">
-
                     <label>Email:</label>
                     <input type="text" name="email" value={user.email} onChange={handleChange} required />
                 </div>
@@ -113,6 +112,7 @@ function EditUser() {
                         onChange={handleChange}
                     />
                 </div>
+
                 <div className="form-group">
                     <label>Czy Nauczyciel:</label>
                     <input

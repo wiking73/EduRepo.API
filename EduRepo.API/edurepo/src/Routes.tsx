@@ -17,12 +17,12 @@ export const routes: RouteObject[] = [
             { path: 'navbar', element: <NavBar /> },
             { path: 'dashboard', element: <Dashboard />},
             { path: 'kursy', element: <Kursy/>},
-            { path: 'details/:kursId', element: <KursDetails /> },
+            { path: 'details/:id', element: <KursDetails /> },
             { path: '/kurs/create', element: <CreateKurs /> },
-            { path: 'kurs/:kursId/zadanie/create', element: < CreateZadanie /> },
-            { path: `/kurs/:kursId/zadanie/:IdZadania/odpowiedz`, element: <CreateOdpowiedz /> },
+            { path: 'kurs/:id/zadanie/create', element: < CreateZadanie /> },
+            { path: `/kurs/:id/zadanie/:IdZadania/odpowiedz`, element: <CreateOdpowiedz /> },
             { path: '/users', element: <Zarzadzajuzytkownikami /> },
-            { path: '/edytuj/:userId', element: <EditUser /> }
+            { path: '/edytuj/:id', element: <EditUser /> }
         ]
     }
 ];
