@@ -89,7 +89,7 @@ const Odpowiedzi: React.FC = () => {
                             <div className="bike-container" key={odpowiedz.idOdpowiedzi}>
 
 
-                                {odpowiedz.nazwa}
+                                {odpowiedz.nazwaPliku}
 
 
                                 <div>
