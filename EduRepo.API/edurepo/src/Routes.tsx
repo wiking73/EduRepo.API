@@ -22,7 +22,8 @@ export const routes: RouteObject[] = [
             { path: 'kurs/:id/zadanie/create', element: < CreateZadanie /> },
             { path: `/kurs/:id/zadanie/:IdZadania/odpowiedz`, element: <CreateOdpowiedz /> },
             { path: '/users', element: <Zarzadzajuzytkownikami /> },
-            { path: '/edytuj/:id', element: <EditUser /> }
+            { path: '/edytuj/:id', element: <EditUser /> },
+            { path: `/kurs/:id/zadanie/:IdZadania/odpowiedzi`, element: <CreateOdpowiedz /> }
         ]
     }
 ];

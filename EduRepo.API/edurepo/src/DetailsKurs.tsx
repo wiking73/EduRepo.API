@@ -81,6 +81,9 @@ function KursDetails() {
     const handleAddOdpowiedz = () => {
         console.log('Dodaj zadanie dla kursu (tylko Admin)');
     };
+    const handleOdpowiedz = () => {
+        console.log('Zobacz Odpowiedzi');
+    };
     
     const zadaniaDlaKursu = zadania.filter((zadanie) => zadanie.idKursu === parseInt(id!));
     const role = localStorage.getItem('role');
@@ -121,11 +124,17 @@ function KursDetails() {
                                 <Link to={`/zadanie/${zadanie.idZadania}`} className="btn btn-primary">
                                     Szczegó³y zadania
                                 </Link>
-                                {role === "Student"(
+                                {role === "Student" && (
                                     <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedz`}>
                                         <Button content="Dodaj OdpowiedŸ" size="large" className="custom-button17" onClick={handleAddOdpowiedz} />
                                     </Menu.Item>
                                 )};
+                                {role === 'Teacher' && (
+
+                                    <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedzi`}>
+                                        <Button content="Odpowiedzi" size="large" className="custom-button17" onClick={handleOdpowiedz} />
+                                    </Menu.Item>
+                                ) };
                             </List.Content>
                         </List.Item>
                     ))}
