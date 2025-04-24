@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Styles/Dashboard.css';
+import './Styles/Details.css';
 import { Menu, Button, List } from 'semantic-ui-react';
 
 // Interfejs dla kursu
@@ -26,7 +26,7 @@ interface Zadanie {
     userName: string;
     idKursu: number; // Zak³adam, ¿e zadanie ma przypisane id kursu
 }
-
+const role = localStorage.getItem("role");
 function KursDetails() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<null | string>(null);
@@ -81,8 +81,9 @@ function KursDetails() {
     const handleAddOdpowiedz = () => {
         console.log('Dodaj zadanie dla kursu (tylko Admin)');
     };
-    // Filtrujemy zadania tylko dla aktualnego kursu
+    
     const zadaniaDlaKursu = zadania.filter((zadanie) => zadanie.idKursu === parseInt(id!));
+    const role = localStorage.getItem('role');
 
     return (
         <div className="kurs-details">
@@ -95,16 +96,19 @@ function KursDetails() {
                 Powrót do kursów
             </Link>
 
-            {/* Przycisk dodawania zadania */}
-            <div className="bike-list__header">
+            {role === "Teacher" && (
+            
+            <div className=".add-task-button">
                 <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/create`}>
                     <Button content="Dodaj Zadanie" size="large" className="custom-button17" onClick={handleAddZadanie} />
                 </Menu.Item>
             </div>
 
+    )
+};
             <p><strong>Stworzony przez:</strong> {kurs.userName}</p>
 
-            {/* Lista zadañ */}
+            
             <h3>Lista zadañ</h3>
             {zadaniaDlaKursu.length > 0 ? (
                 <List>
@@ -117,9 +121,11 @@ function KursDetails() {
                                 <Link to={`/zadanie/${zadanie.idZadania}`} className="btn btn-primary">
                                     Szczegó³y zadania
                                 </Link>
-                                <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${id}/odpowiedz`}>
-                                    <Button content="Dodaj OdpowiedŸ" size="large" className="custom-button17" onClick={handleAddOdpowiedz} />
-                                </Menu.Item>
+                                {role === "Student"(
+                                    <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedz`}>
+                                        <Button content="Dodaj OdpowiedŸ" size="large" className="custom-button17" onClick={handleAddOdpowiedz} />
+                                    </Menu.Item>
+                                )};
                             </List.Content>
                         </List.Item>
                     ))}

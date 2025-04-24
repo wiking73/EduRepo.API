@@ -1,2 +1,92 @@
-﻿body {
+﻿/* Kontener główny */
+.user-list {
+    max-width: 1100px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+    /* Tytuł sekcji */
+    .user-list h2 {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        font-size: 2rem;
+        color: #2185d0;
+    }
+
+/* Karta użytkownika */
+.user-card {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+}
+
+    .user-card:hover {
+        transform: translateY(-5px);
+        background-color: #f1f9ff;
+    }
+
+    /* Dane użytkownika */
+    .user-card h4 {
+        margin: 0;
+        font-size: 1.3rem;
+        color: #333;
+    }
+
+    .user-card p {
+        margin: 0.5rem 0;
+        font-size: 1rem;
+        color: #555;
+    }
+
+/* Przycisk edycji */
+.edit-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background-color: #21ba45;
+    color: white;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+    .edit-button:hover {
+        background-color: #16ab39;
+    }
+
+/* Przycisk powrotu */
+.btn-secondary {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.7rem 1.5rem;
+    background-color: #777;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-secondary:hover {
+        background-color: #555;
+    }
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .user-card {
+        padding: 1rem;
+    }
+
+    .edit-button,
+    .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
 }

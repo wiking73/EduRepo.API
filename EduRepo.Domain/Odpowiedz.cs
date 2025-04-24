@@ -9,7 +9,7 @@ namespace EduRepo.Domain
         public int IdZadania { get; set; }
         //  public Zadanie Zadanie { get; set; }
 
-
+        
 
         public string WlascicielId { get; set; }  // FK
         public string UserName { get; set; }

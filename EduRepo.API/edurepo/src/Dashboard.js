@@ -12,6 +12,16 @@ const Dashboard: React.FC = () => {
                 <div className="username1">Witaj, {username}!</div>
            
             </div>
+            {role === 'Teacher' && (
+
+                <div class="dropdown">
+                    <span>Powiadomienia</span>
+                    <div class="dropdown-content">
+                        <p></p>
+                    </div>
+
+                </div>
+            )}
             <div className="dashboard-container">
                 <h1>EduRepo </h1>
                 <h2>Twoje osobiste repozytorium zadan!</h2>
@@ -32,8 +42,10 @@ const Dashboard: React.FC = () => {
                         </div>
                     </div>
                 )}
+                
 
-                </div>
+            </div>
+ 
         </>
     );
 };

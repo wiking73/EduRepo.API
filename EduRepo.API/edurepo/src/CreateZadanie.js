@@ -1,9 +1,9 @@
 ﻿import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-
+import "./Styles/CreateZadanie.css";
 const token = localStorage.getItem('authToken');
-
+//const role = localStorage.getItem('role');
 function CreateZadanie() {
     const { id } = useParams(); // kursId
     const navigate = useNavigate();
@@ -12,11 +12,16 @@ function CreateZadanie() {
     const [unique_name, setUserName] = useState(null);
 
     const [zadanie, setZadanie] = useState({
-        Nazwa: '',
-        Tresc: '',
-        TerminOddania: '',
-        PlikPomocniczy: '',
-        CzyObowiazkowe: false,
+        "idZadania": "",
+        "idKursu": "",
+        "nazwa": "",
+        "tresc": "",
+        "terminOddania": "",
+        "plikPomocniczy": "",
+        "czyObowiazkowe": false,
+        "wlascicielId": "",
+        "userName": ""
+        
     });
 
     useEffect(() => {
@@ -64,10 +69,14 @@ function CreateZadanie() {
         e.preventDefault();
 
         const zadanieToSend = {
-            ...zadanie,
-            KursId: id,
-            UserId: userId,
-            UserName: unique_name,
+            idKursu: id,
+            nazwa: zadanie.nazwa,
+            tresc: zadanie.tresc,
+            terminOddania: zadanie.terminOddania,
+            plikPomocniczy: zadanie.plikPomocniczy,
+            czyObowiazkowe: zadanie.czyObowiazkowe,
+            userId: userId,
+            name: unique_name,
         };
 
         axios.post('https://localhost:7157/api/Zadanie', zadanieToSend, {
@@ -91,8 +100,8 @@ function CreateZadanie() {
                     <label>Nazwa zadania:</label>
                     <input
                         type="text"
-                        name="Nazwa"
-                        value={zadanie.Nazwa}
+                        name="nazwa"
+                        value={zadanie.nazwa}
                         onChange={handleChange}
                         required
                     />
@@ -101,8 +110,8 @@ function CreateZadanie() {
                 <div className="form-group">
                     <label>Treść:</label>
                     <textarea
-                        name="Tresc"
-                        value={zadanie.Tresc}
+                        name="tresc"
+                        value={zadanie.tresc}
                         onChange={handleChange}
                         required
                     />
@@ -112,8 +121,8 @@ function CreateZadanie() {
                     <label>Termin oddania:</label>
                     <input
                         type="datetime-local"
-                        name="TerminOddania"
-                        value={zadanie.TerminOddania}
+                        name="terminOddania"
+                        value={zadanie.terminOddania}
                         onChange={handleChange}
                         required
                     />
@@ -123,8 +132,8 @@ function CreateZadanie() {
                     <label>Plik pomocniczy (nazwa lub URL):</label>
                     <input
                         type="text"
-                        name="PlikPomocniczy"
-                        value={zadanie.PlikPomocniczy}
+                        name="plikPomocniczy"
+                        value={zadanie.plikPomocniczy}
                         onChange={handleChange}
                     />
                 </div>
@@ -133,8 +142,8 @@ function CreateZadanie() {
                     <label>Czy obowiązkowe:</label>
                     <input
                         type="checkbox"
-                        name="CzyObowiazkowe"
-                        checked={zadanie.CzyObowiazkowe}
+                        name="czyObowiazkowe"
+                        checked={zadanie.czyObowiazkowe}
                         onChange={handleChange}
                     />
                 </div>

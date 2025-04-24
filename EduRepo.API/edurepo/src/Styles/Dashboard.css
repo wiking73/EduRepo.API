@@ -1,47 +1,111 @@
-﻿body {
-
-}
+﻿/* Ogólne tło i marginesy */
 .dashboard-container {
-    background: gray;
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
-.username1 {
-    
-}
+
+    .dashboard-container h1 {
+        font-size: 2.5rem;
+        color: #2185d0;
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard-container h2 {
+        color: #555;
+        font-weight: normal;
+        margin-bottom: 2rem;
+    }
+
+/* Powitanie użytkownika */
 .title1 {
-   background-color: white;
-    padding: 10px;
+    text-align: right;
+    margin: 1rem 2rem 0 0;
+    font-size: 1.1rem;
+    color: #333;
 }
-h1 {
-    font-family: "Playfair Display", serif;
-    font-style: initial;
-    font-size: 7vw;
-    text-align: center;
-    color: white;
-    border: black;
-    color: black;
-    
-}
-h2 {
-    font-family: "Playfair Display", serif;
-    font-style: initial;
-    font-size: 5vw;
-    text-align: center;
-    color: black;
-    border: black;
+.dropdown-content {
+    text-align: right;
+    margin: 1rem 2rem 0 0;
+    font-size: 1.1rem;
+    color: #333;
 }
 
+.username1 {
+    font-weight: bold;
+}
+
+/* Kafelki */
 .tile-container {
-    text-align: center;
-
-    
-    color: black;
-    border: black;
-
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
 }
-.tile-link {
-    font-family: "Playfair Display", serif;
-    font-style: initial;
-    font-size: 5vw;
-    color: black;
-    border: black;
+
+.tile, .users {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease-in-out;
+    width: 220px;
+    text-align: center;
+}
+
+    .tile:hover, .users:hover {
+        background-color: #eef6fb;
+        transform: translateY(-5px);
+    }
+
+/* Linki w kafelkach */
+.tile-link, .tile-link2 {
+    font-size: 1.2rem;
+    color: #2185d0;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+    .tile-link:hover, .tile-link2:hover {
+        text-decoration: underline;
+    }
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .tile-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tile, .users {
+        width: 90%;
+    }
+
+    .title1 {
+        text-align: center;
+        margin: 1rem 0;
+    }
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }

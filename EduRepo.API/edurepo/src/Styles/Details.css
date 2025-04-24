@@ -1,273 +1,62 @@
-﻿h1 {
-    font-family: "Playfair Display", serif;
-    font-weight: bold;
-    font-size: 28px;
-    color: #333;
-    letter-spacing: 1vw;
-    left: -10vw;
-    top: -1vw;
-    width: 50vw;
-    text-align: center;
-    margin-bottom: 20px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-
-.bike-details {
-    padding: 30px;
-    position: absolute;
-    top: 15%;
-    left: 20%;
-    width: 500px;
-    color: white;
-}
-
-.car-details-list {
-    font-style: initial;
-    font-size: 30px;
-    padding: 30px;
-    margin: 0 auto;
-    align-items: center;
-    position: absolute;
-    top: 60px;
-    left: 20px;
-    width: 500px;
-    height: auto;
-    z-index: 1000;
-}
-
-.details-container button:hover {
-    background-color: #0056b3;
-}
-
-.car-delete {
-    position: absolute;
-    top: 20%;
-    left: 40%;
-    padding: 10px 10px;
-    border: none;
-    background-color: red;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.cancel-button {
-    position: absolute;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    left: 40%;
-    color: black;
-}
-
-h13 {
-    font-family: "Playfair Display", serif;
-    font-weight: 400;
-    font-size: 40px;
-    left: 31%;
-    width: 500%;
-    position: absolute;
-    top: -10%;
-    color: rgb( 86, 101, 115);
-    border: black;
-    color: White;
-    background-color: transparent;
-    width: 500px;
-}
-
-h15 {
-    font-family: "Playfair Display", serif;
-    font-weight: 400;
-    font-size: 40px;
-    color: rgb(86, 101, 115);
-    text-align: center;
-    margin-bottom: 20px;
-    position: relative;
-    color: black;
-    font-weight: bold
-}
-
-.bike-details {
-    width: 60vw;
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: white;
+﻿/* Ogólny kontener */
+.kurs-details {
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
-    h15::after, .bike-details p::after {
-        content: "";
-        display: block;
-        width: 100%;
-        height: 2px;
-        background-color: black;
-        margin: 15px auto 0 auto;
+    /* Nagłówki */
+    .kurs-details h2,
+    .kurs-details h3 {
+        color: #1b1c1d;
     }
 
-    .bike-details p {
-        font-family: "Playfair Display", serif;
-        font-size: 18px;
-        color: rgb(86, 101, 115);
-        line-height: 1.8;
-        margin-bottom: 15px;
-        color: black;
+    /* Sekcja powrotu */
+    .kurs-details .back-button {
+        margin-top: 2rem;
     }
 
-    .bike-details a {
-        font-family: "Playfair Display", serif;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 30px;
-        padding: 12px 20px;
-        background-color: #007bff;
-        color: white;
-        background-color: black;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
+    /* Lista zadań */
+    .kurs-details .ui.list .item {
+        padding: 1.2rem;
+        border-bottom: 1px solid #ddd;
+        background-color: #f9f9f9;
+        margin-bottom: 1rem;
+        border-radius: 8px;
     }
 
-.btn btn-secondary2 {
-    font-family: "Playfair Display", serif;
-    font-size: 18px;
-    color: rgb(86, 101, 115);
-    line-height: 1.8;
-    margin-bottom: 25px;
-    color: black;
-}
+        .kurs-details .ui.list .item:hover {
+            background-color: #f1f1f1;
+        }
 
-.date-inputs {
-    display: flex;
-    gap: 20px; /* Odst�p mi�dzy polami */
-    align-items: center; /* Wyr�wnanie w pionie */
-}
-
-    .date-inputs label {
-        display: flex;
-        flex-direction: column;
+    /* Przycisk dodawania zadania */
+    .kurs-details .add-task-button {
+        margin: 1rem 0;
     }
 
-@media (max-width: 1050px) {
-    h1 {
-        font-size: 3vw;
-        margin-left: 10%;
-        left: 0;
-        top: 2%;
-        width: 90%;
+    /* Przycisk: Szczegóły i Odpowiedź */
+    .kurs-details .ui.button {
+        margin-top: 0.5rem;
+        margin-right: 0.5rem;
     }
 
-    .bike-details {
-        width: 50%;
-        padding: 3px;
-        top: 4%;
-        left: 25%;
-        margin: 20px auto;
+    /* Odpowiedni margines podziałki */
+    .kurs-details .ui.divider {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
     }
 
-    .car-details-list {
-        font-size: 15px;
-        width: 90%;
-        left: 5%;
-        top: auto;
+/* Responsywność */
+@media (max-width: 768px) {
+    .kurs-details {
+        padding: 1rem;
     }
 
-    h13, h15 {
-        font-size: 3vw;
-        left: 0;
-        width: 100%;
-        top: auto;
-        text-align: center;
-    }
-
-    .bike-details p {
-        font-size: 12px;
-        line-height: 1.5;
-    }
-
-    .bike-details a {
-        font-size: 14px;
-        padding: 10px 15px;
-    }
-
-    .car-delete {
-        top: auto;
-        left: auto;
-        width: 90%;
-        margin: 20px auto;
-        text-align: center;
-    }
-
-    .cancel-button {
-        left: auto;
-        margin: 20px auto;
-    }
-
-    .date-inputs {
-        flex-direction: column;
-        gap: 1%;
-    }
-}
-
-@media (max-width: 456px) {
-    h1 {
-        font-size: 6vw;
-        margin-left: 10%;
-        left: 0;
-        top: 2%;
-        width: 90%;
-    }
-
-    .bike-details {
-        width: 90%;
-        padding: 15px;
-        top: 15%;
-        left: 1%;
-        margin: 20px auto;
-    }
-
-    .car-details-list {
-        font-size: 18px;
-        width: 90%;
-        left: 5%;
-        top: auto;
-    }
-
-    h13, h15 {
-        font-size: 5vw;
-        left: 0;
-        width: 100%;
-        top: auto;
-        text-align: center;
-    }
-
-    .bike-details p {
-        font-size: 16px;
-        line-height: 1.5;
-    }
-
-    .bike-details a {
-        font-size: 14px;
-        padding: 10px 15px;
-    }
-
-    .car-delete {
-        top: auto;
-        left: auto;
-        width: 90%;
-        margin: 20px auto;
-        text-align: center;
-    }
-
-    .cancel-button {
-        left: auto;
-        margin: 20px auto;
-    }
-
-    .date-inputs {
-        flex-direction: column;
-        gap: 10px;
-    }
+        .kurs-details .ui.grid > .column {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
 }

@@ -1,30 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, Link, useParams } from 'react-router-dom';
-
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import "./Styles/CreateZadanie.css";
 const token = localStorage.getItem('authToken');
-
+//const role = localStorage.getItem('role');
 function CreateOdpowiedz() {
-    const [odpowiedz, setOdpowiedz] = useState({
-        NazwaPliku: "",
-        DataOddania: "",
-        Ocena: "",
-        KomentarzNauczyciela: "",
-        CzyObowiazkowe: false,
-        wlascicielUserId: "",
-        wlascicielUserName: "",
-        IdZadania: "",
-    });
+    const { id, IdZadania } = useParams();
 
-    const [unique_name, setUserName] = useState(null);
-    const [userId, setUserId] = useState(null);
-    const { kursId, zadanieId } = useParams();  // Zbieramy oba parametry z URL
+
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const [unique_name, setUserName] = useState(null);
 
-    console.log("kursId:", kursId, "zadanieId:", zadanieId);  // Sprawdzamy w konsoli wartoœci
+    const [odpowiedz, setOdpowiedz] = useState({
+        "idOdpowiedzi": "",
+        "IdZadania": "",
+        "wlascicielId": "",
+        "userName": "",
+        "dataOddania": Date.now(),
+        "komentarzNauczyciela": "Brak",
+        "nazwaPliku": "",
+        "ocena": "Brak"
 
-    const parseJwt = (token: string | null) => {
+    });
+
+   
+    useEffect(() => {
+        fetchUserData();
+    }, []);
+
+    const parseJwt = (token) => {
         if (!token) return null;
         try {
             const base64Url = token.split('.')[1];
@@ -51,116 +57,76 @@ function CreateOdpowiedz() {
         setUserName(userData.unique_name);
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        let newValue = value;
-        if (type === 'checkbox') {
-            newValue = checked;
-        }
+        const newValue = type === 'checkbox' ? checked : value;
 
-        setOdpowiedz({
-            ...odpowiedz,
+        setOdpowiedz(prev => ({
+            ...prev,
             [name]: newValue,
-        });
+        }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!userId) {
-            alert("Nie uda³o siê odczytaæ UserId.");
-            return;
-        }
-
         const odpowiedzToSend = {
-            NazwaPliku: odpowiedz.NazwaPliku,
-            DataOddania: odpowiedz.DataOddania,
-            KomentarzNauczyciela: odpowiedz.KomentarzNauczyciela,
-            Ocena: odpowiedz.Ocena,
-            CzyObowiazkowe: odpowiedz.CzyObowiazkowe,
-            WlascicielId: userId,
-            UserName: unique_name,
-            IdZadania: zadanieId,  // U¿ywamy zadanieId, które zosta³o pobrane z URL
+            idZadania: IdZadania,
+            nazwaPliku: odpowiedz.nazwaPliku,
+            dataOddania: new Date().toISOString(),
+
+            komentarzNauczyciela: "brak",
+            ocena: "brak",
+            userId: userId,
+            name: unique_name,
         };
 
-        axios.post('https://localhost:7157/api/odpowiedz', odpowiedzToSend, {
+
+        axios.post('https://localhost:7157/api/Odpowiedz', odpowiedzToSend, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         })
-            .then(() => navigate(`/kurs/${kursId}/zadanie/${zadanieId}`))  // Po utworzeniu odpowiedzi wracamy do zadania
+            .then(() => navigate(`/details/${IdZadania}`))
             .catch((error) => {
-                console.error('B³¹d podczas tworzenia odpowiedzi:', error);
-                setError('Wyst¹pi³ b³¹d podczas tworzenia odpowiedzi.');
+                console.error('B³¹d podczas dodania Odpowiedzi:', error);
+                alert('Wyst¹pi³ b³¹d podczas dodania Odpowiedz.');
             });
     };
 
-    useEffect(() => {
-        fetchUserData();
-    }, []);
-
     return (
-        <div className="bike-form">
-            <h6>Dodaj odpowiedŸ do zadania</h6>
+        <div className="form-container">
+            <h4>Dodaj Odpowiedz</h4>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Nazwa pliku:</label>
+                    <label>Nazwa zadania:</label>
                     <input
                         type="text"
-                        name="NazwaPliku"
-                        value={odpowiedz.NazwaPliku}
+                        name="nazwaPliku"
+                        value={odpowiedz.nazwaPliku}
                         onChange={handleChange}
                         required
                     />
                 </div>
 
-                <div className="form-group">
-                    <label>Data oddania:</label>
-                    <input
-                        type="datetime-local"
-                        name="DataOddania"
-                        value={odpowiedz.DataOddania}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label>Ocena:</label>
-                    <input
-                        type="text"
-                        name="Ocena"
-                        value={odpowiedz.Ocena}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label>Komentarz nauczyciela:</label>
+               {/* <div className="form-group">
+                    <label>Treœæ:</label>
                     <textarea
-                        name="KomentarzNauczyciela"
-                        value={odpowiedz.KomentarzNauczyciela}
+                        name="tresc"
+                        value={zadanie.tresc}
                         onChange={handleChange}
+                        required
                     />
-                </div>
+                </div>*/}
 
-                <div className="form-group">
-                    <label>Czy obowi¹zkowe:</label>
-                    <input
-                        type="checkbox"
-                        name="CzyObowiazkowe"
-                        checked={odpowiedz.CzyObowiazkowe}
-                        onChange={handleChange}
-                    />
-                </div>
+                
 
-                <button type="submit" className="btn btn-primary">
-                    Dodaj odpowiedŸ
-                </button>
-                <Link to={`/kurs/${kursId}/zadanie/${zadanieId}`} className="btn btn-secondary">
-                    Powrót do zadania
-                </Link>
+
+                
+
+                <button type="submit" className="btn btn-primary">Dodaj</button>
+                <Link to={`/details/${IdZadania}`} className="btn btn-secondary">Anuluj</Link>
             </form>
         </div>
     );
