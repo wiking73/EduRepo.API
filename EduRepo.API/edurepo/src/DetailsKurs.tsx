@@ -128,13 +128,13 @@ function KursDetails() {
                                     <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedz`}>
                                         <Button content="Dodaj OdpowiedŸ" size="large" className="custom-button17" onClick={handleAddOdpowiedz} />
                                     </Menu.Item>
-                                )};
+                                )}
                                 {role === 'Teacher' && (
 
                                     <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedzi`}>
                                         <Button content="Odpowiedzi" size="large" className="custom-button17" onClick={handleOdpowiedz} />
                                     </Menu.Item>
-                                ) };
+                                ) }
                             </List.Content>
                         </List.Item>
                     ))}
