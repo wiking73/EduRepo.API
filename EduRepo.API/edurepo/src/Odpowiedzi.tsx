@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useParams } from 'react-router-dom';
 import './Styles/kursy.css';
 
 import { Menu, Button } from 'semantic-ui-react';
@@ -8,7 +8,7 @@ import { Menu, Button } from 'semantic-ui-react';
 interface Odpowiedz {
     idOdpowiedzi: number;
 
-        
+    idZadania: number;
         dataOddania: Date,
         komentarzNauczyciela: string,
         nazwaPliku: string,
@@ -22,7 +22,7 @@ const Odpowiedzi: React.FC = () => {
 
     const token = localStorage.getItem('authToken');
     const role = localStorage.getItem('role');
-
+    const { id, IdZadania } = useParams();
 
     useEffect(() => {
         fetchOdpowiedzi();
@@ -72,7 +72,7 @@ const Odpowiedzi: React.FC = () => {
     if (error) {
         return <p style={{ color: 'red' }}>{error}</p>;
     }
-
+    const OdpowiedziDlaZadanie = odpowiedzi.filter((odpowiedz) => odpowiedz.idZadania === parseInt(IdZadania!));
     return (
 
         <div className="bike-list-background">
@@ -83,9 +83,9 @@ const Odpowiedzi: React.FC = () => {
 
 
 
-                {odpowiedzi.length > 0 ? (
+                {OdpowiedziDlaZadanie.length > 0 ? (
                     <div className="bike-grid">
-                        {odpowiedzi.map((odpowiedz) => (
+                        {OdpowiedziDlaZadanie.map((odpowiedz) => (
                             <div className="bike-container" key={odpowiedz.idOdpowiedzi}>
 
 
@@ -98,8 +98,8 @@ const Odpowiedzi: React.FC = () => {
                                     </Link>
 
                                     <>
-                                        <Link to={`/edit/${odpowiedz.idOdpowiedzi}`} className="edit-button">
-                                            Edytuj
+                                        <Link to={`/edit/${id}/${IdZadania}/${odpowiedz.idOdpowiedzi}`} className="edit-button">
+                                            Oceń
                                         </Link>
                                         <button
                                             onClick={() => handleDeleteOdpowiedz(odpowiedz.idOdpowiedzi)}
@@ -107,7 +107,7 @@ const Odpowiedzi: React.FC = () => {
                                         >
                                             Usuń
                                         </button>
-                                        {/* Nie zrobione*/}
+                                        
                                         
                                     </>
 

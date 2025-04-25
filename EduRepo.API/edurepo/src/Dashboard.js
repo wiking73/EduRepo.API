@@ -1,17 +1,50 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import './Styles/Dashboard.css';
 
 const Dashboard: React.FC = () => {
     const username = localStorage.getItem('displayName');
     const role = localStorage.getItem('role');
+    const token = localStorage.getItem('token');
+    //const [userToken, setUserToken] = React.useState(localStorage.getItem('token'));
 
+    const navigate = useNavigate();
     return (
         <>
             <div className="title1">
                 <div className="username1">Witaj, {username}!</div>
            
             </div>
+
+            {username ? (
+                <button
+                    type="button"
+                    className="login-register-button2"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        localStorage.removeItem('authToken');
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('displayName');
+                        localStorage.removeItem('role');
+                        //setUserToken(null);
+                        navigate("/navbar");
+                    }}
+                >
+                    Wyloguj siê
+                </button>
+            ) : (
+                <button
+                    type="button"
+                    className="login-register-button2"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/navbar");
+                    }}
+                >
+                    Zaloguj siê
+                </button>
+            )}
+
             {role === 'Teacher' && (
 
                 <div class="dropdown">

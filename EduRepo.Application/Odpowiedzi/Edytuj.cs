@@ -40,10 +40,10 @@ namespace EduRepo.Application.Odpowiedzi
 
             //////////////////!!!!!!!!!!!!!!!!!!!!!!!
             odpowiedz.DataOddania = request.DataOddania;
-            odpowiedz.KomentarzNauczyciela = request.KomentarzNauczyciela;
+            odpowiedz.KomentarzNauczyciela = request.KomentarzNauczyciela ?? odpowiedz.KomentarzNauczyciela;
             odpowiedz.NazwaPliku = request.NazwaPliku;
-            odpowiedz.Ocena = request.Ocena;
-
+            odpowiedz.Ocena = request.Ocena ?? odpowiedz.Ocena;
+            
             await _context.SaveChangesAsync(cancellationToken);
 
 

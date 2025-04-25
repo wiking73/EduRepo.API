@@ -47,9 +47,19 @@ namespace EduRepo.API.Controllers
 
         public async Task<IActionResult> UpdateOdpowiedz(int id, [FromBody] EditCommand command)
         {
-            var result = await _mediator.Send(new EditCommand { IdOdpowiedzi = id });
-            if (result == null) return NotFound();
-            return Ok(result);
+           
+            command.IdOdpowiedzi = id;        
+            try
+            {
+                
+                await _mediator.Send(command);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+               
+                return NotFound(new { message = "Nie udało się zaktualizować odpowiedzi", error = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]

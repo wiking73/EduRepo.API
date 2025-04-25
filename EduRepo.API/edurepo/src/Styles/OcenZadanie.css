@@ -1,0 +1,124 @@
+﻿/* Ogólne stylowanie formularza */
+.user-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .user-form h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+    .form-group label {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+        .form-group input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+/* Stylowanie przycisków */
+button, .btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    button:hover, .btn:hover {
+        background-color: #0056b3;
+    }
+
+/* Stylizacja linków */
+a.btn-secondary {
+    background-color: #6c757d;
+}
+
+    a.btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+/* Stylizacja komunikatów błędów */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Sekcja z odpowiedzią */
+.odpowiedz-info {
+    background-color: #e9ecef;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+    .odpowiedz-info p {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .odpowiedz-info strong {
+        font-weight: bold;
+    }
+
+/* Stylizacja daty oddania */
+.overdue {
+    color: red;
+    font-weight: bold;
+}
+
+.on-time {
+    color: green;
+    font-weight: bold;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .user-form {
+        padding: 15px;
+    }
+
+        .user-form h2 {
+            font-size: 20px;
+        }
+
+    .form-group input[type="text"] {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    button, .btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}

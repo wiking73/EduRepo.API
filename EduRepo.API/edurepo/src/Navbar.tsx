@@ -81,6 +81,7 @@ const Logowanie: React.FC = () => {
 
                 const decoded = jwtDecode<JwtPayload>(token);
                 localStorage.setItem('role', decoded.role);
+                
                 navigate("/dashboard");
             }
         } catch (error) {
@@ -130,7 +131,8 @@ const Logowanie: React.FC = () => {
                         localStorage.removeItem('authToken');
                         localStorage.removeItem('displayName');
                         localStorage.removeItem('role');
-                        navigate("/dashboard");  // Przekierowanie na stronê g³ówn¹
+                       
+                        window.location.reload();
                     }}
                 >
                     Wyloguj siê

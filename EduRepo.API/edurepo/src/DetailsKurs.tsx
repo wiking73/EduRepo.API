@@ -104,7 +104,10 @@ function KursDetails() {
             <div className=".add-task-button">
                 <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/create`}>
                     <Button content="Dodaj Zadanie" size="large" className="custom-button17" onClick={handleAddZadanie} />
-                </Menu.Item>
+                    </Menu.Item>
+                    <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/create`}>
+                        <Button content="Uczestnicy" size="large" className="custom-button17" onClick={handleAddZadanie} />
+                    </Menu.Item>
             </div>
 
     )
