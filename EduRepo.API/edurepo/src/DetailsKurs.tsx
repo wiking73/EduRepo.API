@@ -4,7 +4,6 @@ import axios from 'axios';
 import './Styles/Details.css';
 import { Menu, Button, List } from 'semantic-ui-react';
 
-// Interfejs dla kursu
 interface Kurs {
     idKursu: number;
     nazwa: string;
@@ -14,7 +13,7 @@ interface Kurs {
     userName: string;
 }
 
-// Interfejs dla zadania
+
 interface Zadanie {
     idZadania: number;
     nazwa: string;
@@ -24,7 +23,7 @@ interface Zadanie {
     czyObowiazkowe: boolean;
     wlascicielId: string;
     userName: string;
-    idKursu: number; // Zak³adam, ¿e zadanie ma przypisane id kursu
+    idKursu: number; 
 }
 const role = localStorage.getItem("role");
 const name = localStorage.getItem("username");
@@ -32,12 +31,12 @@ function KursDetails() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<null | string>(null);
     const [kurs, setKurs] = useState<Kurs | null>(null);
-    const [zadania, setZadania] = useState<Zadanie[]>([]); // Tablica z zadaniami
+    const [zadania, setZadania] = useState<Zadanie[]>([]); 
 
     const { id } = useParams();
     const navigate = useNavigate();
 
-    // Funkcja do pobierania szczegó³ów kursu
+    
     const fetchKurs = async () => {
         try {
             const response = await axios.get(`https://localhost:7157/api/Kurs/${id}`);
@@ -49,7 +48,7 @@ function KursDetails() {
         }
     };
 
-    // Funkcja do pobierania zadañ dla kursu
+   
     const fetchZadania = async () => {
         try {
             const response = await axios.get(`https://localhost:7157/api/Zadanie`);
@@ -61,7 +60,7 @@ function KursDetails() {
 
     useEffect(() => {
         fetchKurs();
-        fetchZadania(); // Pobieranie zadañ po za³adowaniu kursu
+        fetchZadania(); 
     }, [id]);
 
     if (isLoading) {
