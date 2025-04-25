@@ -22,16 +22,6 @@ namespace EduRepo.Domain
         public bool IsTeacher { get; set; } = false;
     }
 
-   /* public class Uczestnictwo
-    {
-        [Key]
-        public int IdKursu { get; set; }
-        public Kurs Kurs { get; set; }
 
-        public int IdUzytkownika { get; set; }
-        public Uzytkownik Uzytkownik { get; set; }
-
-        public string Status { get; set; }
-    }*/
 
 }

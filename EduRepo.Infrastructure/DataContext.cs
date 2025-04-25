@@ -17,7 +17,7 @@ namespace EduRepo.Infrastructure
         public DbSet<Zadanie> Zadania { get; set; }
 
       
-        // public DbSet<Uczestnictwo> Uczestnictwa { get; set; }
+        public DbSet<Uczestnictwo> Uczestnictwa { get; set; }
     }
 
 
