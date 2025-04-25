@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace EduRepo.Domain
 {
+    public enum StatusUczestnika { Zaakceptowano, Odrzucono, Oczekuje}
     public class Uczestnictwo
     {
         [Key]
-        public int Id { get; set; }
+        public int IdUczestnictwa { get; set; }
 
         public int IdKursu { get; set; }
       
@@ -18,6 +19,6 @@ namespace EduRepo.Domain
         public string WlascicielId { get; set; }  // FK
         public string UserName { get; set; }
 
-        public string Status { get; set; } 
+        public StatusUczestnika Status { get; set; } 
     }
 }
