@@ -86,10 +86,11 @@ function KursDetails() {
     };
 
     const zadaniaDlaKursu = zadania.filter((zadanie) => zadanie.idKursu === parseInt(id!));
-    const role = localStorage.getItem('role');
-
+    
+    
     return (
-        kurs.userName === name ? (
+
+        (kurs.userName === name || role === "Admin") ? (
             <div className="kurs-details">
                 <h4>{kurs.nazwa}</h4>
                 <h3>Szczegó³owe Informacje</h3>
