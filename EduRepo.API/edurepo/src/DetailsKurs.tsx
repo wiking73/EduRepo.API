@@ -27,6 +27,7 @@ interface Zadanie {
     idKursu: number; // Zak³adam, ¿e zadanie ma przypisane id kursu
 }
 const role = localStorage.getItem("role");
+const name = localStorage.getItem("username");
 function KursDetails() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<null | string>(null);
@@ -84,70 +85,75 @@ function KursDetails() {
     const handleOdpowiedz = () => {
         console.log('Zobacz Odpowiedzi');
     };
-    
+
     const zadaniaDlaKursu = zadania.filter((zadanie) => zadanie.idKursu === parseInt(id!));
     const role = localStorage.getItem('role');
 
     return (
-        <div className="kurs-details">
-            <h4>{kurs.nazwa}</h4>
-            <h3>Szczegó³owe Informacje</h3>
-            <p><strong>Opis:</strong> {kurs.opisKursu}</p>
-            <p><strong>Klasa:</strong> {kurs.klasa}</p>
-            <p><strong>Rok akademicki:</strong> {kurs.rokAkademicki}</p>
-            <Link to="/kursy" className="btn btn-secondary">
-                Powrót do kursów
-            </Link>
+        kurs.userName === name ? (
+            <div className="kurs-details">
+                <h4>{kurs.nazwa}</h4>
+                <h3>Szczegó³owe Informacje</h3>
+                <p><strong>Opis:</strong> {kurs.opisKursu}</p>
+                <p><strong>Klasa:</strong> {kurs.klasa}</p>
+                <p><strong>Rok akademicki:</strong> {kurs.rokAkademicki}</p>
+                <Link to="/kursy" className="btn btn-secondary">
+                    Powrót do kursów
+                </Link>
 
-            {role === "Teacher" && (
-            
-            <div className=".add-task-button">
-                <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/create`}>
-                    <Button content="Dodaj Zadanie" size="large" className="custom-button17" onClick={handleAddZadanie} />
-                    </Menu.Item>
-                    <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/create`}>
-                        <Button content="Uczestnicy" size="large" className="custom-button17" onClick={handleAddZadanie} />
-                    </Menu.Item>
+                {role === "Teacher" && (
+                    <div className="add-task-button">
+                        <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/create`}>
+                            <Button content="Dodaj Zadanie" size="large" className="custom-button17" onClick={handleAddZadanie} />
+                        </Menu.Item>
+                        <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/create`}>
+                            <Button content="Uczestnicy" size="large" className="custom-button17" onClick={handleAddZadanie} />
+                        </Menu.Item>
+                    </div>
+                )}
+
+                <p><strong>Stworzony przez:</strong> {kurs.userName}</p>
+
+                <h3>Lista zadañ</h3>
+                {zadaniaDlaKursu.length > 0 ? (
+                    <List>
+                        {zadaniaDlaKursu.map((zadanie) => (
+                            <List.Item key={zadanie.idZadania}>
+                                <List.Content>
+                                    <List.Header>{zadanie.nazwa}</List.Header>
+                                    <p><strong>Termin oddania:</strong> {new Date(zadanie.terminOddania).toLocaleString()}</p>
+                                    <p>{zadanie.tresc}</p>
+                                    <Link to={`/zadanie/${zadanie.idZadania}`} className="btn btn-primary">
+                                        Szczegó³y zadania
+                                    </Link>
+                                    {role === "Student" && (
+                                        <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedz`}>
+                                            <Button content="Dodaj OdpowiedŸ" size="large" className="custom-button17" onClick={handleAddOdpowiedz} />
+                                        </Menu.Item>
+                                    )}
+                                    {role === 'Teacher' && (
+                                        <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedzi`}>
+                                            <Button content="Odpowiedzi" size="large" className="custom-button17" onClick={handleOdpowiedz} />
+                                        </Menu.Item>
+                                    )}
+                                </List.Content>
+                            </List.Item>
+                        ))}
+                    </List>
+                ) : (
+                    <p>Brak zadañ dla tego kursu.</p>
+                )}
             </div>
-
-    )
-};
-            <p><strong>Stworzony przez:</strong> {kurs.userName}</p>
-
-            
-            <h3>Lista zadañ</h3>
-            {zadaniaDlaKursu.length > 0 ? (
-                <List>
-                    {zadaniaDlaKursu.map((zadanie) => (
-                        <List.Item key={zadanie.idZadania}>
-                            <List.Content>
-                                <List.Header>{zadanie.nazwa}</List.Header>
-                                <p><strong>Termin oddania:</strong> {new Date(zadanie.terminOddania).toLocaleString()}</p>
-                                <p>{zadanie.tresc}</p>
-                                <Link to={`/zadanie/${zadanie.idZadania}`} className="btn btn-primary">
-                                    Szczegó³y zadania
-                                </Link>
-                                {role === "Student" && (
-                                    <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedz`}>
-                                        <Button content="Dodaj OdpowiedŸ" size="large" className="custom-button17" onClick={handleAddOdpowiedz} />
-                                    </Menu.Item>
-                                )}
-                                {role === 'Teacher' && (
-
-                                    <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedzi`}>
-                                        <Button content="Odpowiedzi" size="large" className="custom-button17" onClick={handleOdpowiedz} />
-                                    </Menu.Item>
-                                ) }
-                            </List.Content>
-                        </List.Item>
-                    ))}
-                </List>
-            ) : (
-                <p>Brak zadañ dla tego kursu.</p>
-            )}
-
-        </div>
+        ) : (
+            <div>
+                <p>Nie masz dostêpu do tego kursu.</p>
+                <Link to="/kursy" className="btn btn-secondary">
+                    Powrót do kursów
+                </Link>
+            </div>
+        )
     );
-}
 
+
+}
 export default KursDetails;
