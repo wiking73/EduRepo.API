@@ -3,6 +3,7 @@ using System;
 using EduRepo.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduRepo.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250505082242_InitialCreate3")]
+    partial class InitialCreate3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
@@ -402,7 +405,7 @@ namespace EduRepo.Infrastructure.Migrations
             modelBuilder.Entity("EduRepo.Domain.Uczestnictwo", b =>
                 {
                     b.HasOne("EduRepo.Domain.Kurs", "Kurs")
-                        .WithMany("Uczestnicy")
+                        .WithMany()
                         .HasForeignKey("KursIdKursu")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -470,8 +473,6 @@ namespace EduRepo.Infrastructure.Migrations
 
             modelBuilder.Entity("EduRepo.Domain.Kurs", b =>
                 {
-                    b.Navigation("Uczestnicy");
-
                     b.Navigation("Zadania");
                 });
 

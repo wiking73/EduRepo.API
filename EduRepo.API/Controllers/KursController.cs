@@ -71,6 +71,26 @@ namespace EduRepo.API.Controllers
                 return NotFound();
             }
         }
+        [Authorize]
+        [HttpGet("{id}/uczestnicy")]
+        public async Task<ActionResult<List<Uczestnictwo>>> GetUczestnicy(int id)
+        {
+            var userId = User.FindFirst("sub")?.Value ?? User.Identity.Name;
+
+            var query = new EduRepo.Application.Uczestnictwa.List.Query
+            {
+                UserId = userId
+            };
+
+            var uczestnicy = await _mediator.Send(query);
+
+            if (uczestnicy == null || uczestnicy.Count == 0)
+            {
+                return NotFound("Nie znaleziono żadnych uczestników.");
+            }
+
+            return Ok(uczestnicy);
+        }
 
     }
 }

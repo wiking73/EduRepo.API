@@ -15,6 +15,7 @@ namespace EduRepo.Domain
         public string WlascicielId{ get; set; }  // FK
         public string UserName { get; set; }
         public ICollection<Zadanie> Zadania { get; set; }
+        public ICollection<Uczestnictwo> Uczestnicy { get; set; }
 
     }
 }
