@@ -1,71 +1,78 @@
-.login-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 550px;
-    padding: 50px;
-    font-family: 'Arial', sans-serif;
-    background-color: cornflowerblue;
-    border-radius: 10px;
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #a28089;
+    overflow: hidden;
 }
 
-    .login-header {
-        font-family: "Playfair Display", serif;
-        font-weight: bold;
-        font-size: 2rem;
-        color: #333;
-        text-align: left;
-    }
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+   
+    background-size: cover;
+}
 
 .login-form {
-    width: 100%;
-    max-width: 500px;
-    padding: 40px;
-    border-radius: 10px;
-    background-color: #ffffff;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background: rgba(0, 255, 200, 0.1);
+    border: 1px solid rgba(0, 255, 200, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(20px);
+    padding: 40px 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    width: 320px;
+    color: #fff;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-input {
-    padding: 10px 15px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.login-header {
+    font-size: 1.6rem;
+    text-align: center;
+    color: #aaf0ff;
+    margin-bottom: 10px;
 }
 
-    input:focus {
-        outline: none;
-        border-color: #007bff;
-        box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
-    }
-
-.zapisz {
-    background-color: #007bff;
-    color: #ffffff;
+.login-form input {
     padding: 10px 15px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    outline: none;
+    transition: all 0.3s ease;
 }
 
-    .zapisz:hover {
-        background-color: #0056b3;
+    .login-form input:focus {
+        background: rgba(255, 255, 255, 0.15);
     }
 
 .pokaz {
+    font-size: 0.9rem;
+    color: #ccc;
     display: flex;
     align-items: center;
-    width: 40%;
-    
-    font-size: 14px;
-    color: #666;
+    gap: 6px;
+}
+
+.zapisz {
+    background: linear-gradient(135deg, #66ffcc, #33cccc);
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    .zapisz:hover {
+        background: linear-gradient(135deg, #33cccc, #66ffcc);
+    }
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
 }
 
 .login-register-button1,
@@ -73,47 +80,15 @@ input {
     flex: 1;
     padding: 10px;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 6px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transition: background 0.3s;
 }
 
-.login-register-button1 {
-    background-color: #007bff;
-    color: white;
-}
-
-    .login-register-button1:hover {
-        background-color: #0056b3;
-    }
-
-.login-register-button2 {
-    background-color: #6c757d;
-    color: white;
-}
-
+    .login-register-button1:hover,
     .login-register-button2:hover {
-        background-color: #5a6268;
+        background-color: rgba(255, 255, 255, 0.3);
     }
-
-.button-container {
-    display: flex;
-    gap: 10px;
-}
-
-
-.error-message,
-.success-message {
-    text-align: center;
-    font-size: 14px;
-    color: red;
-}
-
-.success-message {
-    color: green;
-}
-
-
-
-

@@ -3,20 +3,21 @@
     max-width: 1000px;
     margin: 3rem auto;
     padding: 2rem;
-    background-color: #ffffff;
+    background-color: #fbe3e8;
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
     .dashboard-container h1 {
         font-size: 2.5rem;
-        color: #2185d0;
+        color: #352f44;
         margin-bottom: 0.5rem;
     }
 
     .dashboard-container h2 {
-        color: #555;
+        color: #352f44;
         font-weight: normal;
         margin-bottom: 2rem;
     }
@@ -26,13 +27,13 @@
     text-align: right;
     margin: 1rem 2rem 0 0;
     font-size: 1.1rem;
-    color: #333;
+    color: #352f44;
 }
 .login-register-button2 {
     text-align: left;
-   margin-top: -4px;
+    margin-top: -4px;
     font-size: 1.1rem;
-    color: #333;
+    color: #352f44;
     background-color: transparent;
     font-weight: bold;
 }
@@ -40,11 +41,12 @@
     text-align: right;
     margin: 1rem 2rem 0 0;
     font-size: 1.1rem;
-    color: #333;
+    color: #352f44;
 }
 
 .username1 {
    font-weight: bold;
+
 } 
 
 .tile-container {
@@ -73,7 +75,7 @@
 /* Linki w kafelkach */
 .tile-link, .tile-link2 {
     font-size: 1.2rem;
-    color: #2185d0;
+    color: #352f44;
     font-weight: bold;
     text-decoration: none;
 }
