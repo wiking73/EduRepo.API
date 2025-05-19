@@ -13,6 +13,8 @@ import Odpowiedzi from "./Odpowiedzi";
 import UserProfile from "./UserProfile";
 import OcenOdpowiedz from "./OcenOdpowiedz";
 import EditKurs from "./EdytujKurs";
+import ZgloszeniaDoKursu from "./ZgloszeniaDoKursu";
+import UczestnicyKursu from "./UczestnicyKursu";
 export const routes: RouteObject[] = [
     {
         path: "/",
@@ -25,12 +27,14 @@ export const routes: RouteObject[] = [
             { path: '/kurs/create', element: <CreateKurs /> },
             { path: 'kurs/:id/zadanie/create', element: < CreateZadanie /> },
             { path: `/kurs/:id/zadanie/:IdZadania/odpowiedz`, element: <CreateOdpowiedz /> },
+            { path: 'kurs/:id/zgloszenia', element: <ZgloszeniaDoKursu /> },
+            { path: '/kurs/:id/uczestnicy', element: <UczestnicyKursu /> },
             { path: '/users', element: <Zarzadzajuzytkownikami /> },
             { path: '/edytuj/:id', element: <EditUser /> },
             { path: '/kurs/:id/zadanie/:IdZadania/odpowiedzi', element: <Odpowiedzi /> },
             { path: '/edit/:id/:IdZadania/:IdOdpowiedzi', element: <OcenOdpowiedz /> },
             { path: '/profile', element: <UserProfile /> },
-            {path: '/edit/:id', element: <EditKurs />}
+            { path: '/edit/:id', element: <EditKurs />},
         ]
     }
 ];

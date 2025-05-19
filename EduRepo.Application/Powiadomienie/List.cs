@@ -11,7 +11,7 @@ namespace EduRepo.Application.Powiadomienia
     public class List
     {
         public class Query : IRequest<List<PowiadomienieBrakOdpowiedzi>> { }
-    
+
         public class Handler : IRequestHandler<Query, List<PowiadomienieBrakOdpowiedzi>>
         {
             private readonly DataContext _context;

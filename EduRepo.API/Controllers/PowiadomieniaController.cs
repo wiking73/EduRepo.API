@@ -32,7 +32,7 @@ namespace EduRepo.API.Controllers
         }
         [HttpPost]
 
-       
+
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeletePowiadomienie(int id)

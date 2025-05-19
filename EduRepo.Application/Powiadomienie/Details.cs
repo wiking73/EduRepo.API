@@ -16,7 +16,7 @@ namespace EduRepo.Application.Powiadomienia
     {
         public class Query : IRequest<PowiadomienieBrakOdpowiedzi>
         {
-            public  int Id { get; set; }
+            public int Id { get; set; }
         }
 
 
