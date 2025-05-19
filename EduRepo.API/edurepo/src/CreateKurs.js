@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
-const token = localStorage.getItem('authToken');
-const rola = localStorage.getItem('role');
+
 function CreateKurs() {
     const [kurs, setKurs] = useState({
         idKursu: "",
@@ -16,13 +15,14 @@ function CreateKurs() {
 
     });
 
-    // Stan na nazwisko u¿ytkownika i UserId
+    
     const [unique_name, setUserName] = useState(null);
     const [userId, setUserId] = useState(null);
-
+    const [rola, setRola] = useState(null);
+    const [token, settoken] = useState(null);
     const navigate = useNavigate();
     console.log(rola);
-    // Funkcja do parsowania tokena
+   
     const parseJwt = (token) => {
         if (!token) return null;
         try {
@@ -40,7 +40,7 @@ function CreateKurs() {
         }
     };
 
-    // Pobierz dane u¿ytkownika
+   
     const fetchUserData = () => {
         const userData = parseJwt(token);
         if (!userData || !userData.nameid) {
@@ -51,7 +51,7 @@ function CreateKurs() {
         setUserName(userData.unique_name); 
     };
 
-    // Obs³uga zmiany wartoœci w formularzu
+    
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
 
@@ -68,7 +68,7 @@ function CreateKurs() {
         });
     };
 
-    // Obs³uga przesy³ania formularza
+    
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -101,8 +101,22 @@ function CreateKurs() {
     };
 
     useEffect(() => {
-        fetchUserData(); // Pobierz dane u¿ytkownika po za³adowaniu komponentu
+        const tokenn = localStorage.getItem('authToken');
+        const rolaa = localStorage.getItem('role');
+        setRola(rolaa);
+
+        if (!tokenn) return;
+
+        const userData = parseJwt(tokenn);
+        if (!userData || !userData.nameid) {
+            alert("Nie uda³o siê odczytaæ UserId z tokena.");
+            return;
+        }
+
+        setUserId(userData.nameid);
+        setUserName(userData.unique_name);
     }, []);
+
 
     return (
         
@@ -150,15 +164,7 @@ function CreateKurs() {
                         required
                     />
                 </div>
-               {/* */}{/* Wyœwietlamy nazwisko u¿ytkownika */}{/*
-                <div className="form-group">
-                    <label>W³aœciciel:</label>
-                    <input
-                        type="text"
-                        value={userName || 'Loading...'}
-                        readOnly
-                    />
-                </div>*/}
+               
                 }
                 <button type="submit" className="btn btn-primary">
                     Dodaj

@@ -68,7 +68,7 @@ function KursDetails() {
     const zadaniaDlaKursu = zadania.filter((zadanie) => zadanie.idKursu === parseInt(id, 10));
 
     return (
-        (kurs.userName === name || role === "admin") ? (
+        (kurs.userName === name || role === "Student") ? (
             <div className="kurs-details">
                 <h4>{kurs.nazwa}</h4>
                 <h3>Szczegółowe Informacje</h3>

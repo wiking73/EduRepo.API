@@ -91,9 +91,11 @@ const Kursy = () => {
         <div className="bike-list-background">
             <div className="bike-list-container">
                 <div className="bike-list__header">
+                    {role === 'Teacher' && (
                     <Menu.Item as={NavLink} to="/kurs/create">
                         <Button content="Dodaj Kurs" size="large" className="custom-button17" onClick={handleAddKurs} />
                     </Menu.Item>
+                    )}
                     <Menu.Item as={NavLink} to="/bikes/filtersort">
                         <Button content="Filtrowanie/Sortowanie" size="large" className="custom-button18" />
                     </Menu.Item>
