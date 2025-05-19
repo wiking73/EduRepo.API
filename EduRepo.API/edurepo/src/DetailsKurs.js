@@ -4,14 +4,15 @@ import axios from 'axios';
 import './Styles/Details.css';
 import { Menu, Button, List } from 'semantic-ui-react';
 
-const role = localStorage.getItem("role");
-const name = localStorage.getItem("username");
 
 function KursDetails() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [kurs, setKurs] = useState(null);
     const [zadania, setZadania] = useState([]);
+    const role = localStorage.getItem("role");
+    const name = localStorage.getItem("username");
+
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -68,7 +69,7 @@ function KursDetails() {
     const zadaniaDlaKursu = zadania.filter((zadanie) => zadanie.idKursu === parseInt(id, 10));
 
     return (
-        (kurs.userName === name || role === "Student") ? (
+        (kurs.userName === name || role === "Admin" ) ? (
             <div className="kurs-details">
                 <h4>{kurs.nazwa}</h4>
                 <h3>Szczegółowe Informacje</h3>
