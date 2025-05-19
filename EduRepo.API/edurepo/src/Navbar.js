@@ -2,28 +2,12 @@ import React, { useState } from 'react';
 import './Styles/Login.css';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import { useNavigate } from "react-router-dom";
+
+import { useNavigate } from 'react-router-dom';
 
 const token = localStorage.getItem('authToken');
-interface JwtPayload {
-    unique_name: string;
-    nameid: string;
-    email: string;
-    role: string;
-    exp: number;
-}
 
-interface LoginResponse {
-    token: string;
-    username: string;
-}
-
-interface RegisterResponse {
-    token: string;
-    username: string;
-}
-
-const Logowanie: React.FC = () => {
+const Logowanie = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [loginInfo, setLoginInfo] = useState({
         email: '',
@@ -35,8 +19,8 @@ const Logowanie: React.FC = () => {
         email: '',
         password: ''
     });
-    const [error, setErrorMessage] = useState<string | null>(null);
-    const [success, setSuccessMessage] = useState<string | null>(null);
+    const [error, setErrorMessage] = useState(null);
+    const [success, setSuccessMessage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
 
@@ -46,7 +30,7 @@ const Logowanie: React.FC = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleLoginInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleLoginInputChange = (e) => {
         const { name, value } = e.target;
         setLoginInfo((prev) => ({
             ...prev,
@@ -54,7 +38,7 @@ const Logowanie: React.FC = () => {
         }));
     };
 
-    const handleRegisterInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleRegisterInputChange = (e) => {
         const { name, value } = e.target;
         setRegisterInfo((prev) => ({
             ...prev,
@@ -62,12 +46,12 @@ const Logowanie: React.FC = () => {
         }));
     };
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         setErrorMessage(null);
         try {
             setLoading(true);
-            const response = await axios.post<LoginResponse>(
+            const response = await axios.post(
                 'https://localhost:7157/api/Auth/login',
                 loginInfo
             );
@@ -79,25 +63,25 @@ const Logowanie: React.FC = () => {
                 localStorage.setItem('authToken', token);
                 localStorage.setItem('displayName', username);
 
-                const decoded = jwtDecode<JwtPayload>(token);
+                const decoded = jwtDecode(token);
                 localStorage.setItem('role', decoded.role);
-                
+
                 navigate("/dashboard");
             }
         } catch (error) {
-            console.error('B³¹d logowania:', error);
-            setErrorMessage('B³¹d logowania, spróbuj ponownie.');
+            console.error('BÅ‚Ä…d logowania:', error);
+            setErrorMessage('BÅ‚Ä…d logowania, sprÃ³buj ponownie.');
         } finally {
             setLoading(false);
         }
     };
 
-    const handleRegister = async (e: React.FormEvent) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
         setErrorMessage(null);
         try {
             setLoading(true);
-            const response = await axios.post<RegisterResponse>(
+            const response = await axios.post(
                 'https://localhost:7157/api/Auth/register',
                 registerInfo
             );
@@ -108,13 +92,14 @@ const Logowanie: React.FC = () => {
 
                 localStorage.setItem('authToken', token);
                 localStorage.setItem('username', username);
-                const decoded = jwtDecode<JwtPayload>(token);
+
+                const decoded = jwtDecode(token);
                 localStorage.setItem('role', decoded.role);
                 navigate("/dashboard");
             }
         } catch (error) {
-            console.error('B³¹d rejestracji:', error);
-            setErrorMessage('B³¹d rejestracji, spróbuj ponownie.');
+            console.error('BÅ‚Ä…d rejestracji:', error);
+            setErrorMessage('BÅ‚Ä…d rejestracji, sprÃ³buj ponownie.');
         } finally {
             setLoading(false);
         }
@@ -131,11 +116,10 @@ const Logowanie: React.FC = () => {
                         localStorage.removeItem('authToken');
                         localStorage.removeItem('displayName');
                         localStorage.removeItem('role');
-                       
                         window.location.reload();
                     }}
                 >
-                    Wyloguj siê
+                    Wyloguj siÄ™
                 </button>
             ) : (
                 <form
@@ -150,12 +134,11 @@ const Logowanie: React.FC = () => {
                             onClick={(e) => {
                                 e.preventDefault();
                                 setIsLogin(true);
-                                localStorage.getItem('authToken');
                                 setSuccessMessage(null);
                                 setErrorMessage(null);
                             }}
                         >
-                            Zaloguj siê
+                            Zaloguj siÄ™
                         </button>
                         <button
                             type="button"
@@ -167,11 +150,10 @@ const Logowanie: React.FC = () => {
                                 setErrorMessage(null);
                             }}
                         >
-                            Zarejestruj siê
+                            Zarejestruj siÄ™
                         </button>
                     </div>
 
-                    {/* Pola w zale¿noœci od trybu: login vs register */}
                     {isLogin ? (
                         <input
                             type="email"
@@ -190,7 +172,7 @@ const Logowanie: React.FC = () => {
                                 id="username"
                                 name="username"
                                 className="username"
-                                placeholder="Nazwa u¿ytkownika"
+                                placeholder="Nazwa uÅ¼ytkownika"
                                 value={registerInfo.username}
                                 onChange={handleRegisterInputChange}
                                 required
@@ -213,7 +195,7 @@ const Logowanie: React.FC = () => {
                         id="password"
                         className="haslo"
                         name="password"
-                        placeholder="Has³o"
+                        placeholder="HasÅ‚o"
                         value={isLogin ? loginInfo.password : registerInfo.password}
                         onChange={isLogin ? handleLoginInputChange : handleRegisterInputChange}
                         required
@@ -225,17 +207,16 @@ const Logowanie: React.FC = () => {
                             checked={showPassword}
                             onChange={togglePassword}
                         />
-                        Poka¿ has³o
+                        PokaÅ¼ hasÅ‚o
                     </label>
 
                     <input
                         type="submit"
                         className="zapisz"
-                        value={isLogin ? 'Zaloguj siê' : 'Zarejestruj'}
+                        value={isLogin ? 'Zaloguj siÄ™' : 'Zarejestruj'}
                         disabled={loading}
                     />
 
-                    {/* Komunikaty o b³êdzie / sukcesie */}
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                     {success && <p style={{ color: 'green' }}>{success}</p>}
                 </form>

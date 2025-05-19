@@ -5,6 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using EduRepo.Infrastructure;
+using System.Security.Claims;
+using EduRepo.Application.Uczestnictwa;
+using KursyList = EduRepo.Application.Kursy.List;
+
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+
 
 namespace EduRepo.API.Controllers
 {
@@ -24,7 +31,8 @@ namespace EduRepo.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Kurs>>> GetKursy()
         {
-            return await _mediator.Send(new List.Query());
+            return await _mediator.Send(new KursyList.Query());
+
         }
 
 
@@ -53,7 +61,8 @@ namespace EduRepo.API.Controllers
 
         public async Task<IActionResult> UpdateKurs(int id, [FromBody] EditCommand command)
         {
-            var result = await _mediator.Send(new EditCommand { IdKursu = id });
+            command.IdKursu = id;
+            var result = await _mediator.Send(command);
             if (result == null) return NotFound();
             return Ok(result);
         }
@@ -72,25 +81,24 @@ namespace EduRepo.API.Controllers
             }
         }
         [Authorize]
-        [HttpGet("{id}/uczestnicy")]
-        public async Task<ActionResult<List<Uczestnictwo>>> GetUczestnicy(int id)
+        [HttpPost("{id}/dolacz")]
+        public async Task<IActionResult> DolaczDoKursu(int id)
         {
-            var userId = User.FindFirst("sub")?.Value ?? User.Identity.Name;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized("Nie można znaleźć ID użytkownika.");
 
-            var query = new EduRepo.Application.Uczestnictwa.List.Query
+            var command = new ZapiszCommand
             {
-                UserId = userId
+                IdKursu = id,
+                UserId = userId // backend sam ustawia
             };
 
-            var uczestnicy = await _mediator.Send(query);
-
-            if (uczestnicy == null || uczestnicy.Count == 0)
-            {
-                return NotFound("Nie znaleziono żadnych uczestników.");
-            }
-
-            return Ok(uczestnicy);
+            await _mediator.Send(command);
+            return Ok("Zapisano zgłoszenie.");
         }
+
+
 
     }
 }

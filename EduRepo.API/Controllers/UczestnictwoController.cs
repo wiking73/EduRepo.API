@@ -1,4 +1,4 @@
-﻿using EduRepo.Application.Uczestnictwa;
+﻿/*using EduRepo.Application.Uczestnictwa;
 using EduRepo.Domain;
 using EduRepo.Infrastructure;
 using MediatR;
@@ -70,3 +70,4 @@ namespace EduRepo.API.Controllers
 
     }
 }
+*/

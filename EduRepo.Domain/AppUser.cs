@@ -9,12 +9,13 @@ namespace EduRepo.Domain
         
        // public string Imie { get; set; }
         public string Email { get; set; }
-         
-        
-        
+
+
+
 
         //  public ICollection<Kurs> KursyWlasne { get; set; }
-        ////  public ICollection<Uczestnictwo> Uczestnictwa { get; set; }
+        public ICollection<Uczestnictwo> Uczestnictwa { get; set; } = new List<Uczestnictwo>();
+
         //  public ICollection<Odpowiedz> Odpowiedzi { get; set; }
         // public ICollection<PowiadomienieBrakOdpowiedzi> Powiadomienia { get; set; }
 

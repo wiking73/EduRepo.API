@@ -216,6 +216,8 @@ namespace EduRepo.Infrastructure.Migrations
 
                     b.HasIndex("KursIdKursu");
 
+                    b.HasIndex("WlascicielId");
+
                     b.ToTable("Uczestnictwa");
                 });
 
@@ -403,18 +405,26 @@ namespace EduRepo.Infrastructure.Migrations
                 {
                     b.HasOne("EduRepo.Domain.Kurs", "Kurs")
                         .WithMany("Uczestnicy")
-                        .HasForeignKey("KursIdKursu")
+                        .HasForeignKey("IdKursu")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduRepo.Domain.AppUser", "Wlasciciel")
+                        .WithMany("Uczestnictwa")
+                        .HasForeignKey("WlascicielId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Kurs");
+
+                    b.Navigation("Wlasciciel");
                 });
 
             modelBuilder.Entity("EduRepo.Domain.Zadanie", b =>
                 {
                     b.HasOne("EduRepo.Domain.Kurs", null)
                         .WithMany("Zadania")
-                        .HasForeignKey("KursIdKursu");
+                        .HasForeignKey("IdKursu");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -466,6 +476,11 @@ namespace EduRepo.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EduRepo.Domain.AppUser", b =>
+                {
+                    b.Navigation("Uczestnictwa");
                 });
 
             modelBuilder.Entity("EduRepo.Domain.Kurs", b =>

@@ -2,22 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, NavLink } from 'react-router-dom';
 import './Styles/kursy.css';
-
 import { Menu, Button } from 'semantic-ui-react';
 
-interface Kurs {
-    idKursu: number;
-    nazwa: string;
-    opis: string;
-    rokAkademicki: string;
-    klasa: string;
-    czyZarchiwizowany: true;
-}
-
-const Kursy: React.FC = () => {
-    const [kursy, setkursy] = useState<Kurs[]>([]);
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+const Kursy = () => {
+    const [kursy, setKursy] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const token = localStorage.getItem('authToken');
     const role = localStorage.getItem('role');
@@ -29,31 +19,31 @@ const Kursy: React.FC = () => {
     const fetchKursy = async () => {
         setLoading(true);
         try {
-            const response = await axios.get<Kurs[]>('https://localhost:7157/api/Kurs');
-            setkursy(response.data);
-        } catch (err: any) {
-            console.error('B³¹d pobierania listy kursów:', err);
-            setError('Nie uda³o siê pobraæ listy kursów.');
+            const response = await axios.get('https://localhost:7157/api/Kurs');
+            setKursy(response.data);
+        } catch (err) {
+            console.error('BÅ‚Ä…d pobierania listy kursÃ³w:', err);
+            setError('Nie udaÅ‚o siÄ™ pobraÄ‡ listy kursÃ³w.');
         } finally {
             setLoading(false);
         }
     };
 
-    const handleDeleteKurs = async (idKursu: number) => {
+    const handleDeleteKurs = async (idKursu) => {
         try {
             if (!token) {
-                setError('Musisz byæ zalogowany!');
+                setError('Musisz byÄ‡ zalogowany!');
                 return;
             }
 
-            if (window.confirm('Czy na pewno chcesz usun¹æ ten kurs?')) {
+            if (window.confirm('Czy na pewno chcesz usunÄ…Ä‡ ten kurs?')) {
                 await axios.delete(`https://localhost:7157/api/Kurs/${idKursu}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                setkursy((prev) => prev.filter((b) => b.idKursu !== idKursu));
+                setKursy((prev) => prev.filter((b) => b.idKursu !== idKursu));
             }
-        } catch (err: any) {
-            console.error('B³¹d', err);
+        } catch (err) {
+            console.error('BÅ‚Ä…d', err);
         }
     };
 
@@ -61,38 +51,36 @@ const Kursy: React.FC = () => {
         console.log('Dodaj kurs (tylko Admin)');
     };
 
-    const handleEditKurs = (idkurs: number) => {
-        console.log(`Edytuj kurs o ID: ${idkurs} (tylko Admin)`);
+    const handleEditKurs = (idKursu) => {
+        console.log(`Edytuj kurs o ID: ${idKursu} (tylko Admin)`);
     };
 
-    const handleZapiszKurs = async (idKursu: number) => {
+    const handleZapiszKurs = async (idKursu) => {
         try {
             if (!token) {
-                setError('Musisz byæ zalogowany!');
+                setError('Musisz byÄ‡ zalogowany!');
                 return;
             }
 
-            // Zapisywanie u¿ytkownika na kurs (post request)
-            const userId = localStorage.getItem('userId');
+
             const response = await axios.post(
-                `https://localhost:7157/api/Uczestnictwo/${idKursu}/dolacz`,
+                `https://localhost:7157/api/Kurs/${idKursu}/dolacz`,
                 {},
                 {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: { Authorization: `Bearer ${token}` },
                 }
             );
 
             if (response.status === 200) {
-                alert('Zosta³eœ zapisany na kurs!');
+                alert('WysÅ‚ano proÅ›bÄ™ o doÅ‚Ä…czenie do kursu.');
             }
-        } catch (err: any) {
-            console.error('B³¹d zapisywania na kurs:', err);
-            setError('Nie uda³o siê zapisaæ na kurs.');
+        } catch (error) {
+            console.error('BÅ‚Ä…d zapisywania na kurs:', error.response ? error.response.data : error.message);
         }
     };
 
     if (loading) {
-        return <p>£adowanie danych...</p>;
+        return <p>ï¿½adowanie danych...</p>;
     }
 
     if (error) {
@@ -102,7 +90,6 @@ const Kursy: React.FC = () => {
     return (
         <div className="bike-list-background">
             <div className="bike-list-container">
-                {/* Menu dla Admina */}
                 <div className="bike-list__header">
                     <Menu.Item as={NavLink} to="/kurs/create">
                         <Button content="Dodaj Kurs" size="large" className="custom-button17" onClick={handleAddKurs} />
@@ -119,32 +106,29 @@ const Kursy: React.FC = () => {
                                 <h3>{kurs.nazwa}</h3>
                                 <div>
                                     <Link to={`/details/${kurs.idKursu}`} className="bike-item-button">
-                                        Szczegó³y
+                                        SzczegÃ³Å‚y
                                     </Link>
 
                                     <Link to={`/edit/${kurs.idKursu}`} className="edit-button">
                                         Edytuj
                                     </Link>
-                                    <button
-                                        onClick={() => handleDeleteKurs(kurs.idKursu)}
-                                        className="bike-item-button2"
-                                    >
-                                        Usuñ
+                                    <button onClick={() => handleDeleteKurs(kurs.idKursu)} className="bike-item-button2">
+                                        UsuÅ„
                                     </button>
 
-                                    {/* Przycisk do zapisywania na kurs */}
-                                    <button
-                                        onClick={() => handleZapiszKurs(kurs.idKursu)}
-                                        className="bike-item-button2"
-                                    >
-                                        Zapisz Mnie
-                                    </button>
+                                    {role === 'Student' && (
+                                        <button onClick={() => handleZapiszKurs(kurs.idKursu)} className="bike-item-button2">
+                                            Zapisz Mnie
+                                        </button>
+
+                                    )}
+
                                 </div>
                             </div>
                         ))}
                     </div>
                 ) : (
-                    <p>Brak kursów do wyœwietlenia.</p>
+                    <p>Brak kursÃ³w do wyÅ›wietlenia.</p>
                 )}
             </div>
         </div>

@@ -10,6 +10,7 @@ import CreateOdpowiedz from "./CreateOdpowiedz";
 import Zarzadzajuzytkownikami from "./ZarzadzajUzytkownikami";
 import EditUser from "./EdytujUsers";
 import Odpowiedzi from "./Odpowiedzi";
+import UserProfile from "./UserProfile";
 import OcenOdpowiedz from "./OcenOdpowiedz";
 export const routes: RouteObject[] = [
     {
@@ -26,7 +27,8 @@ export const routes: RouteObject[] = [
             { path: '/users', element: <Zarzadzajuzytkownikami /> },
             { path: '/edytuj/:id', element: <EditUser /> },
             { path: '/kurs/:id/zadanie/:IdZadania/odpowiedzi', element: <Odpowiedzi /> },
-            { path: '/edit/:id/:IdZadania/:IdOdpowiedzi', element: <OcenOdpowiedz />}
+            { path: '/edit/:id/:IdZadania/:IdOdpowiedzi', element: <OcenOdpowiedz /> },
+            {path: '/profile', element: <UserProfile /> }
         ]
     }
 ];

@@ -13,15 +13,14 @@ namespace EduRepo.Domain
         [Key]
         public int IdUczestnictwa { get; set; }
 
-        public int IdKursu { get; set; }  
+        public int IdKursu { get; set; }
+        public Kurs Kurs { get; set; }
 
-        public string WlascicielId { get; set; } 
-
-        public string UserName { get; set; }
-
+        public string WlascicielId { get; set; }  
+        public AppUser Wlasciciel { get; set; }   
         public StatusUczestnika Status { get; set; }
 
-        public Kurs Kurs { get; set; } 
+        public string UserName { get; set; }
     }
 
-}
+    }

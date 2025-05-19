@@ -4,67 +4,47 @@ import axios from 'axios';
 import './Styles/Details.css';
 import { Menu, Button, List } from 'semantic-ui-react';
 
-interface Kurs {
-    idKursu: number;
-    nazwa: string;
-    opisKursu: string;
-    rokAkademicki: string;
-    klasa: string;
-    userName: string;
-}
-
-
-interface Zadanie {
-    idZadania: number;
-    nazwa: string;
-    tresc: string;
-    terminOddania: string;
-    plikPomocniczy: string;
-    czyObowiazkowe: boolean;
-    wlascicielId: string;
-    userName: string;
-    idKursu: number; 
-}
 const role = localStorage.getItem("role");
 const name = localStorage.getItem("username");
+
 function KursDetails() {
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<null | string>(null);
-    const [kurs, setKurs] = useState<Kurs | null>(null);
-    const [zadania, setZadania] = useState<Zadanie[]>([]); 
+    const [error, setError] = useState(null);
+    const [kurs, setKurs] = useState(null);
+    const [zadania, setZadania] = useState([]);
 
     const { id } = useParams();
     const navigate = useNavigate();
 
-    
     const fetchKurs = async () => {
         try {
             const response = await axios.get(`https://localhost:7157/api/Kurs/${id}`);
             setKurs(response.data);
         } catch (err) {
-            console.error('B³¹d podczas pobierania kursu:', err);
+            console.error('BÅ‚Ä…d podczas pobierania kursu:', err);
+            setError('Nie udaÅ‚o siÄ™ pobraÄ‡ danych kursu.');
         } finally {
             setIsLoading(false);
         }
     };
 
-   
     const fetchZadania = async () => {
         try {
             const response = await axios.get(`https://localhost:7157/api/Zadanie`);
             setZadania(response.data);
         } catch (err) {
-            console.error('B³¹d podczas pobierania zadañ:', err);
+            console.error('BÅ‚Ä…d podczas pobierania zadaÅ„:', err);
+            setError('Nie udaÅ‚o siÄ™ pobraÄ‡ zadaÅ¼=Å„.');
         }
     };
 
     useEffect(() => {
         fetchKurs();
-        fetchZadania(); 
+        fetchZadania();
     }, [id]);
 
     if (isLoading) {
-        return <p>£adowanie danych kursu...</p>;
+        return <p>Å‚adowanie danych kursu...</p>;
     }
 
     if (error) {
@@ -79,26 +59,24 @@ function KursDetails() {
         console.log('Dodaj zadanie dla kursu (tylko Admin)');
     };
     const handleAddOdpowiedz = () => {
-        console.log('Dodaj zadanie dla kursu (tylko Admin)');
+        console.log('Dodaj odpowiedÅº do zadania (tylko Admin)');
     };
     const handleOdpowiedz = () => {
-        console.log('Zobacz Odpowiedzi');
+        console.log('Zobacz odpowiedzi');
     };
 
-    const zadaniaDlaKursu = zadania.filter((zadanie) => zadanie.idKursu === parseInt(id!));
-    
-    
-    return (
+    const zadaniaDlaKursu = zadania.filter((zadanie) => zadanie.idKursu === parseInt(id, 10));
 
-        (kurs.userName === name || role === "Admin") ? (
+    return (
+        (kurs.userName === name || role === "admin") ? (
             <div className="kurs-details">
                 <h4>{kurs.nazwa}</h4>
-                <h3>Szczegó³owe Informacje</h3>
+                <h3>SzczegÃ³Å‚owe Informacje</h3>
                 <p><strong>Opis:</strong> {kurs.opisKursu}</p>
                 <p><strong>Klasa:</strong> {kurs.klasa}</p>
                 <p><strong>Rok akademicki:</strong> {kurs.rokAkademicki}</p>
                 <Link to="/kursy" className="btn btn-secondary">
-                    Powrót do kursów
+                    PowrÃ³t do kursÃ³w
                 </Link>
 
                 {role === "Teacher" && (
@@ -106,7 +84,7 @@ function KursDetails() {
                         <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/create`}>
                             <Button content="Dodaj Zadanie" size="large" className="custom-button17" onClick={handleAddZadanie} />
                         </Menu.Item>
-                        <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/create`}>
+                        <Menu.Item as={NavLink} to={`/kurs/${id}/uczestnicy`}>
                             <Button content="Uczestnicy" size="large" className="custom-button17" onClick={handleAddZadanie} />
                         </Menu.Item>
                     </div>
@@ -114,7 +92,7 @@ function KursDetails() {
 
                 <p><strong>Stworzony przez:</strong> {kurs.userName}</p>
 
-                <h3>Lista zadañ</h3>
+                <h3>Lista zadaÅ„</h3>
                 {zadaniaDlaKursu.length > 0 ? (
                     <List>
                         {zadaniaDlaKursu.map((zadanie) => (
@@ -124,11 +102,11 @@ function KursDetails() {
                                     <p><strong>Termin oddania:</strong> {new Date(zadanie.terminOddania).toLocaleString()}</p>
                                     <p>{zadanie.tresc}</p>
                                     <Link to={`/zadanie/${zadanie.idZadania}`} className="btn btn-primary">
-                                        Szczegó³y zadania
+                                        SzczegÃ³Å‚y zadania
                                     </Link>
                                     {role === "Student" && (
                                         <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedz`}>
-                                            <Button content="Dodaj OdpowiedŸ" size="large" className="custom-button17" onClick={handleAddOdpowiedz} />
+                                            <Button content="Dodaj Odpowiedï¿½" size="large" className="custom-button17" onClick={handleAddOdpowiedz} />
                                         </Menu.Item>
                                     )}
                                     {role === 'Teacher' && (
@@ -141,19 +119,18 @@ function KursDetails() {
                         ))}
                     </List>
                 ) : (
-                    <p>Brak zadañ dla tego kursu.</p>
+                    <p>Brak zadaÅ„ dla tego kursu.</p>
                 )}
             </div>
         ) : (
             <div>
-                <p>Nie masz dostêpu do tego kursu.</p>
+                <p>Nie masz dostÄ™pu do tego kursu.</p>
                 <Link to="/kursy" className="btn btn-secondary">
-                    Powrót do kursów
+                    PowrÃ³t do kursÃ³w
                 </Link>
             </div>
         )
     );
-
-
 }
+
 export default KursDetails;

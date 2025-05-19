@@ -1,4 +1,4 @@
-import React from 'react';
+ï»¿import React from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import './Styles/Dashboard.css';
 
@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
         <>
             <div className="title1">
                 <div className="username1">Witaj, {username}!</div>
-           
+
             </div>
 
             {username ? (
@@ -30,7 +30,6 @@ const Dashboard: React.FC = () => {
                         navigate("/navbar");
                     }}
                 >
-                    Wyloguj siê
                 </button>
             ) : (
                 <button
@@ -41,7 +40,7 @@ const Dashboard: React.FC = () => {
                         navigate("/navbar");
                     }}
                 >
-                    Zaloguj siê
+                    Zaloguj siï¿½
                 </button>
             )}
 
@@ -57,28 +56,29 @@ const Dashboard: React.FC = () => {
             )}
             <div className="dashboard-container">
                 <h1>EduRepo </h1>
-                <h2>Twoje osobiste repozytorium zadan!</h2>
-            <div className="tile-container">
-                <div className="tile">
-                    <Link to="/kursy" className="tile-link">Wyszukaj Kursy</Link>
+                <h2>Twoje osobiste repozytorium zadaÅ„!</h2>
+                <div className="tile-container">
+                    <div className="tile">
+                        <Link to="/kursy" className="tile-link">Wyszukaj Kursy</Link>
+                    </div>
+
+                    <div className="tile">
+                        <Link to="/profile" className="tile-link2">ZarzÄ…dzaj Profilem</Link>
+                    </div>
+
                 </div>
 
-                <div className="tile">
-                    <Link to="/profile" className="tile-link2">Zarzadzaj Profilem</Link>
-                </div>
-                </div>
-                
                 {role === 'Admin' && (
                     <div className="tile-container">
                         <div className="users">
-                            <Link to="/users" className="tile-link2">Zarz¹dzaj U¿ytkownikami</Link>
+                            <Link to="/users" className="tile-link2">ZarzÄ…dzaj UÅ¼ytkownikami</Link>
                         </div>
                     </div>
                 )}
-                
+
 
             </div>
- 
+
         </>
     );
 };

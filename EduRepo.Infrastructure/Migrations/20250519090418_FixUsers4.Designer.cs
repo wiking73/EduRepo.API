@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduRepo.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250505082242_InitialCreate3")]
-    partial class InitialCreate3
+    [Migration("20250519090418_FixUsers4")]
+    partial class FixUsers4
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -219,6 +219,8 @@ namespace EduRepo.Infrastructure.Migrations
 
                     b.HasIndex("KursIdKursu");
 
+                    b.HasIndex("WlascicielId");
+
                     b.ToTable("Uczestnictwa");
                 });
 
@@ -405,12 +407,20 @@ namespace EduRepo.Infrastructure.Migrations
             modelBuilder.Entity("EduRepo.Domain.Uczestnictwo", b =>
                 {
                     b.HasOne("EduRepo.Domain.Kurs", "Kurs")
-                        .WithMany()
+                        .WithMany("Uczestnicy")
                         .HasForeignKey("KursIdKursu")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("EduRepo.Domain.AppUser", "Wlasciciel")
+                        .WithMany("Uczestnictwa")
+                        .HasForeignKey("WlascicielId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Kurs");
+
+                    b.Navigation("Wlasciciel");
                 });
 
             modelBuilder.Entity("EduRepo.Domain.Zadanie", b =>
@@ -471,8 +481,15 @@ namespace EduRepo.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EduRepo.Domain.AppUser", b =>
+                {
+                    b.Navigation("Uczestnictwa");
+                });
+
             modelBuilder.Entity("EduRepo.Domain.Kurs", b =>
                 {
+                    b.Navigation("Uczestnicy");
+
                     b.Navigation("Zadania");
                 });
 
