@@ -81,7 +81,7 @@ function EditKurs() {
             .catch((error) => {
                 console.error('Błąd podczas aktualizacji kursu:', error);
                 if (error.response) {
-                    setError(error.response.data); // Set error message if any
+                    setError(error.response.data); 
                 } else {
                     setError('Nie udało się zaktualizować kursu. Sprawdź czy prawidłowo wpisałeś wszystkie parametry');
                 }

@@ -11,10 +11,10 @@ function EditUser() {
         isTeacher: false,
     });
     const [error, setError] = useState('');
-    const { id } = useParams(); // Capture the 'id' from the URL using useParams
+    const { id } = useParams(); 
     const navigate = useNavigate();
 
-    // Fetch user based on the 'id' from the URL
+    
     const fetchUser = async () => {
         try {
             const token = localStorage.getItem('authToken');
@@ -36,7 +36,7 @@ function EditUser() {
             top: 0,
             behavior: 'smooth',
         });
-    }, [id]); // Dependency on 'id' ensures that when the 'id' changes, the data is re-fetched
+    }, [id]); 
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -77,7 +77,7 @@ function EditUser() {
             .catch((error) => {
                 console.error('Błąd podczas aktualizacji użytkownika:', error);
                 if (error.response) {
-                    setError(error.response.data); // Set error message if any
+                    setError(error.response.data); 
                 } else {
                     setError('Nie udało się zaktualizować użytkownika. Sprawdź czy prawidłowo wpisałeś wszystkie parametry');
                 }
