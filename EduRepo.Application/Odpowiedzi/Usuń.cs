@@ -22,14 +22,14 @@ namespace EduRepo.Application.Odpowiedzi
 
         public async Task<Unit> Handle(DeleteCommand request, CancellationToken cancellationToken)
         {
-            var kurs = await _context.Kursy.FindAsync(request.Id);
+            var odpowiedz = await _context.Odpowiedzi.FindAsync(request.Id);
 
-            if (kurs == null)
+            if (odpowiedz == null)
             {
-                throw new KeyNotFoundException($"Kurs with ID {request.Id} not found.");
+                throw new KeyNotFoundException($"Odpowiedz with ID {request.Id} not found.");
             }
 
-            _context.Kursy.Remove(kurs);
+            _context.Odpowiedzi.Remove(odpowiedz);
 
             await _context.SaveChangesAsync(cancellationToken);
 

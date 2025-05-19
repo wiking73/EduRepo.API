@@ -9,8 +9,6 @@ using System.Security.Claims;
 using EduRepo.Application.Uczestnictwa;
 using KursyList = EduRepo.Application.Kursy.List;
 
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 
 namespace EduRepo.API.Controllers
