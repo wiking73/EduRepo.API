@@ -123,6 +123,8 @@ const Kursy = () => {
 
                                     )}
 
+                                    
+
                                 </div>
                             </div>
                         ))}

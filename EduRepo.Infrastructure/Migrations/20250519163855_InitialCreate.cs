@@ -193,6 +193,35 @@ namespace EduRepo.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Uczestnictwa",
+                columns: table => new
+                {
+                    IdUczestnictwa = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IdKursu = table.Column<int>(type: "INTEGER", nullable: false),
+                    KursIdKursu = table.Column<int>(type: "INTEGER", nullable: false),
+                    WlascicielId = table.Column<string>(type: "TEXT", nullable: false),
+                    Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Uczestnictwa", x => x.IdUczestnictwa);
+                    table.ForeignKey(
+                        name: "FK_Uczestnictwa_AspNetUsers_WlascicielId",
+                        column: x => x.WlascicielId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Uczestnictwa_Kursy_KursIdKursu",
+                        column: x => x.KursIdKursu,
+                        principalTable: "Kursy",
+                        principalColumn: "IdKursu",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Zadania",
                 columns: table => new
                 {
@@ -225,12 +254,12 @@ namespace EduRepo.Infrastructure.Migrations
                     IdOdpowiedzi = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     IdZadania = table.Column<int>(type: "INTEGER", nullable: false),
+                    KomentarzNauczyciela = table.Column<string>(type: "TEXT", nullable: false),
+                    Ocena = table.Column<string>(type: "TEXT", nullable: false),
+                    NazwaPliku = table.Column<string>(type: "TEXT", nullable: false),
+                    DataOddania = table.Column<DateTime>(type: "TEXT", nullable: false),
                     WlascicielId = table.Column<string>(type: "TEXT", nullable: false),
                     UserName = table.Column<string>(type: "TEXT", nullable: false),
-                    DataOddania = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    KomentarzNauczyciela = table.Column<string>(type: "TEXT", nullable: false),
-                    NazwaPliku = table.Column<string>(type: "TEXT", nullable: false),
-                    Ocena = table.Column<string>(type: "TEXT", nullable: false),
                     ZadanieIdZadania = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -286,6 +315,16 @@ namespace EduRepo.Infrastructure.Migrations
                 column: "ZadanieIdZadania");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Uczestnictwa_KursIdKursu",
+                table: "Uczestnictwa",
+                column: "KursIdKursu");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Uczestnictwa_WlascicielId",
+                table: "Uczestnictwa",
+                column: "WlascicielId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Zadania_KursIdKursu",
                 table: "Zadania",
                 column: "KursIdKursu");
@@ -316,13 +355,16 @@ namespace EduRepo.Infrastructure.Migrations
                 name: "Powiadomienia");
 
             migrationBuilder.DropTable(
+                name: "Uczestnictwa");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Zadania");
 
             migrationBuilder.DropTable(
-                name: "Zadania");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Kursy");

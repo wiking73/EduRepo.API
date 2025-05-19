@@ -195,10 +195,7 @@ namespace EduRepo.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("IdKursu")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("KursIdKursu")
+                    b.Property<int>("KursId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Status")
@@ -214,7 +211,7 @@ namespace EduRepo.Infrastructure.Migrations
 
                     b.HasKey("IdUczestnictwa");
 
-                    b.HasIndex("KursIdKursu");
+                    b.HasIndex("KursId");
 
                     b.HasIndex("WlascicielId");
 
@@ -405,7 +402,7 @@ namespace EduRepo.Infrastructure.Migrations
                 {
                     b.HasOne("EduRepo.Domain.Kurs", "Kurs")
                         .WithMany("Uczestnicy")
-                        .HasForeignKey("IdKursu")
+                        .HasForeignKey("KursId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -424,7 +421,7 @@ namespace EduRepo.Infrastructure.Migrations
                 {
                     b.HasOne("EduRepo.Domain.Kurs", null)
                         .WithMany("Zadania")
-                        .HasForeignKey("IdKursu");
+                        .HasForeignKey("KursIdKursu");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

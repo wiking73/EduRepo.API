@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduRepo.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250519090418_FixUsers4")]
-    partial class FixUsers4
+    [Migration("20250519164424_InitialCreate2")]
+    partial class InitialCreate2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -198,10 +198,7 @@ namespace EduRepo.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("IdKursu")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("KursIdKursu")
+                    b.Property<int>("KursId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Status")
@@ -217,7 +214,7 @@ namespace EduRepo.Infrastructure.Migrations
 
                     b.HasKey("IdUczestnictwa");
 
-                    b.HasIndex("KursIdKursu");
+                    b.HasIndex("KursId");
 
                     b.HasIndex("WlascicielId");
 
@@ -408,7 +405,7 @@ namespace EduRepo.Infrastructure.Migrations
                 {
                     b.HasOne("EduRepo.Domain.Kurs", "Kurs")
                         .WithMany("Uczestnicy")
-                        .HasForeignKey("KursIdKursu")
+                        .HasForeignKey("KursId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

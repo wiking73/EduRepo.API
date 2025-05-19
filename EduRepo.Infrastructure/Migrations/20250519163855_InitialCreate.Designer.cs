@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduRepo.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250418071554_InitialCreate")]
+    [Migration("20250519163855_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -190,6 +190,38 @@ namespace EduRepo.Infrastructure.Migrations
                     b.HasKey("IdPowiadomienia");
 
                     b.ToTable("Powiadomienia");
+                });
+
+            modelBuilder.Entity("EduRepo.Domain.Uczestnictwo", b =>
+                {
+                    b.Property<int>("IdUczestnictwa")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdKursu")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("KursIdKursu")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WlascicielId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("IdUczestnictwa");
+
+                    b.HasIndex("KursIdKursu");
+
+                    b.HasIndex("WlascicielId");
+
+                    b.ToTable("Uczestnictwa");
                 });
 
             modelBuilder.Entity("EduRepo.Domain.Zadanie", b =>
@@ -372,6 +404,25 @@ namespace EduRepo.Infrastructure.Migrations
                         .HasForeignKey("ZadanieIdZadania");
                 });
 
+            modelBuilder.Entity("EduRepo.Domain.Uczestnictwo", b =>
+                {
+                    b.HasOne("EduRepo.Domain.Kurs", "Kurs")
+                        .WithMany("Uczestnicy")
+                        .HasForeignKey("KursIdKursu")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduRepo.Domain.AppUser", "Wlasciciel")
+                        .WithMany("Uczestnictwa")
+                        .HasForeignKey("WlascicielId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Kurs");
+
+                    b.Navigation("Wlasciciel");
+                });
+
             modelBuilder.Entity("EduRepo.Domain.Zadanie", b =>
                 {
                     b.HasOne("EduRepo.Domain.Kurs", null)
@@ -430,8 +481,15 @@ namespace EduRepo.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EduRepo.Domain.AppUser", b =>
+                {
+                    b.Navigation("Uczestnictwa");
+                });
+
             modelBuilder.Entity("EduRepo.Domain.Kurs", b =>
                 {
+                    b.Navigation("Uczestnicy");
+
                     b.Navigation("Zadania");
                 });
 

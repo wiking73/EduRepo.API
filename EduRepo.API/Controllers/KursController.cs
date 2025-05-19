@@ -90,15 +90,24 @@ namespace EduRepo.API.Controllers
 
             var command = new ZapiszCommand
             {
-                IdKursu = id,
-                UserId = userId // backend sam ustawia
+                KursId = id,
+                UserId = userId
             };
 
-            await _mediator.Send(command);
-            return Ok("Zapisano zgłoszenie.");
+            try
+            {
+                await _mediator.Send(command);
+                return Ok("Zapisano zgłoszenie.");
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+
+
+
+
+            }
         }
-
-
 
     }
 }
