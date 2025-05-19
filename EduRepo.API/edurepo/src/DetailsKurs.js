@@ -4,19 +4,16 @@ import axios from 'axios';
 import './Styles/Details.css';
 import { Menu, Button, List } from 'semantic-ui-react';
 
-
 function KursDetails() {
-
     const role = localStorage.getItem("role");
     const name = localStorage.getItem("username");
-    
+    const { id } = useParams();
+    const navigate = useNavigate();
+
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [kurs, setKurs] = useState(null);
     const [zadania, setZadania] = useState([]);
-
-    const { id } = useParams();
-    const navigate = useNavigate();
 
     const fetchKurs = async () => {
         try {
@@ -36,7 +33,7 @@ function KursDetails() {
             setZadania(response.data);
         } catch (err) {
             console.error('Błąd podczas pobierania zadań:', err);
-            setError('Nie udało się pobrać zadaż=ń.');
+            setError('Nie udało się pobrać zadań.');
         }
     };
 
@@ -45,29 +42,15 @@ function KursDetails() {
         fetchZadania();
     }, [id]);
 
-    if (isLoading) {
-        return <p>ładowanie danych kursu...</p>;
-    }
+    if (isLoading) return <p>Ładowanie danych kursu...</p>;
+    if (error) return <p style={{ color: 'red' }}>{error}</p>;
+    if (!kurs) return <p>Nie znaleziono kursu</p>;
 
-    if (error) {
-        return <p style={{ color: 'red' }}>{error}</p>;
-    }
+    const handleAddZadanie = () => console.log('Dodaj zadanie');
+    const handleAddOdpowiedz = () => console.log('Dodaj odpowiedź');
+    const handleOdpowiedz = () => console.log('Zobacz odpowiedzi');
 
-    if (!kurs) {
-        return <p>Nie znaleziono kursu</p>;
-    }
-
-    const handleAddZadanie = () => {
-        console.log('Dodaj zadanie dla kursu (tylko Admin)');
-    };
-    const handleAddOdpowiedz = () => {
-        console.log('Dodaj odpowiedź do zadania (tylko Admin)');
-    };
-    const handleOdpowiedz = () => {
-        console.log('Zobacz odpowiedzi');
-    };
-
-    const zadaniaDlaKursu = zadania.filter((zadanie) => zadanie.idKursu === parseInt(id, 10));
+    const zadaniaDlaKursu = zadania.filter((z) => z.idKursu === parseInt(id, 10));
 
     return (
         (kurs.userName === name || role === "Student" || role === "Teacher") ? (
@@ -77,17 +60,15 @@ function KursDetails() {
                 <p><strong>Opis:</strong> {kurs.opisKursu}</p>
                 <p><strong>Klasa:</strong> {kurs.klasa}</p>
                 <p><strong>Rok akademicki:</strong> {kurs.rokAkademicki}</p>
-                <Link to="/kursy" className="btn btn-secondary">
-                    Powrót do kursów
-                </Link>
+                <Link to="/kursy" className="btn btn-secondary">Powrót do kursów</Link>
 
                 {role === "Teacher" && (
                     <div className="add-task-button">
                         <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/create`}>
-                            <Button content="Dodaj Zadanie" size="large" className="custom-button17" onClick={handleAddZadanie} />
+                            <Button content="Dodaj Zadanie" size="large" className="custom-button17" />
                         </Menu.Item>
                         <Menu.Item as={NavLink} to={`/kurs/${id}/uczestnicy`}>
-                            <Button content="Uczestnicy" size="large" className="custom-button17" onClick={handleAddZadanie} />
+                            <Button content="Uczestnicy" size="large" className="custom-button17" />
                         </Menu.Item>
                         <Menu.Item as={NavLink} to={`/kurs/${id}/zgloszenia`}>
                             <Button content="Zgłoszenia" size="large" className="custom-button17" />
@@ -106,17 +87,17 @@ function KursDetails() {
                                     <List.Header>{zadanie.nazwa}</List.Header>
                                     <p><strong>Termin oddania:</strong> {new Date(zadanie.terminOddania).toLocaleString()}</p>
                                     <p>{zadanie.tresc}</p>
-                                    <Link to={`/zadanie/${zadanie.idZadania}`} className="btn btn-primary">
-                                        Szczegóły zadania
-                                    </Link>
+                                    <Link to={`/zadanie/${zadanie.idZadania}`} className="btn btn-primary">Szczegóły zadania</Link>
+
                                     {role === "Student" && (
                                         <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedz`}>
-                                            <Button content="Dodaj Odpowied�" size="large" className="custom-button17" onClick={handleAddOdpowiedz} />
+                                            <Button content="Dodaj Odpowiedź" size="large" className="custom-button17" />
                                         </Menu.Item>
                                     )}
+
                                     {role === 'Teacher' && (
                                         <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedzi`}>
-                                            <Button content="Odpowiedzi" size="large" className="custom-button17" onClick={handleOdpowiedz} />
+                                            <Button content="Odpowiedzi" size="large" className="custom-button17" />
                                         </Menu.Item>
                                     )}
                                 </List.Content>
@@ -130,9 +111,7 @@ function KursDetails() {
         ) : (
             <div>
                 <p>Nie masz dostępu do tego kursu.</p>
-                <Link to="/kursy" className="btn btn-secondary">
-                    Powrót do kursów
-                </Link>
+                <Link to="/kursy" className="btn btn-secondary">Powrót do kursów</Link>
             </div>
         )
     );
