@@ -22,19 +22,17 @@ namespace EduRepo.Application.Zadania
 
         public async Task<Unit> Handle(DeleteCommand request, CancellationToken cancellationToken)
         {
-            var kurs = await _context.Kursy.FindAsync(request.Id);
+            var zadanie = await _context.Zadania.FindAsync(request.Id);
 
-            if (kurs == null)
+            if (zadanie == null)
             {
-                throw new KeyNotFoundException($"Kurs with ID {request.Id} not found.");
+                throw new KeyNotFoundException($"Zadanie z ID {request.Id} nie zostało znalezione.");
             }
 
-            _context.Kursy.Remove(kurs);
-
+            _context.Zadania.Remove(zadanie);
             await _context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }
     }
-
 }

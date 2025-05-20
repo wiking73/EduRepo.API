@@ -11,9 +11,9 @@ namespace EduRepo.Application.Odpowiedzi
 
     public class EditCommand : IRequest<Unit>
     {
-        public int IdOdpowiedzi { get; set; }
+        public int IdOdpowiedzi { get; set; }  // MUSI być obecne
+
         public int IdZadania { get; set; }
-        
 
         public DateTime DataOddania { get; set; }
         public string KomentarzNauczyciela { get; set; }

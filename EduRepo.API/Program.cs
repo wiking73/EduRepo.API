@@ -58,6 +58,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors("CorsPolicy");
 app.MapControllers();
+app.UseStaticFiles(); // pozwala na serwowanie plików z wwwroot
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 

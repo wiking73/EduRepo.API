@@ -2,26 +2,22 @@
 import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import "./Styles/CreateZadanie.css";
+
 const token = localStorage.getItem('authToken');
-//const role = localStorage.getItem('role');
+
 function CreateZadanie() {
     const { id } = useParams(); // kursId
     const navigate = useNavigate();
     const [error, setError] = useState(null);
     const [userId, setUserId] = useState(null);
     const [unique_name, setUserName] = useState(null);
+    const [file, setFile] = useState(null);
 
     const [zadanie, setZadanie] = useState({
-        "idZadania": "",
-        "idKursu": "",
-        "nazwa": "",
-        "tresc": "",
-        "terminOddania": "",
-        "plikPomocniczy": "",
-        "czyObowiazkowe": false,
-        "wlascicielId": "",
-        "userName": ""
-        
+        nazwa: "",
+        tresc: "",
+        terminOddania: "",
+        czyObowiazkowe: false
     });
 
     useEffect(() => {
@@ -65,30 +61,34 @@ function CreateZadanie() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const zadanieToSend = {
-            idKursu: id,
-            nazwa: zadanie.nazwa,
-            tresc: zadanie.tresc,
-            terminOddania: zadanie.terminOddania,
-            plikPomocniczy: zadanie.plikPomocniczy,
-            czyObowiazkowe: zadanie.czyObowiazkowe,
-            userId: userId,
-            name: unique_name,
-        };
+        const formData = new FormData();
+        formData.append("IdKursu", id);
+        formData.append("Nazwa", zadanie.nazwa);
+        formData.append("Tresc", zadanie.tresc);
+        formData.append("TerminOddania", zadanie.terminOddania);
+        formData.append("CzyObowiazkowe", zadanie.czyObowiazkowe);
+        formData.append("UserId", userId);
+        formData.append("Name", unique_name);
 
-        axios.post('https://localhost:7157/api/Zadanie', zadanieToSend, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-            .then(() => navigate(`/details/${id}`))
-            .catch((error) => {
-                console.error('Błąd podczas tworzenia zadania:', error);
-                alert('Wystąpił błąd podczas tworzenia zadania.');
+        if (file) {
+            formData.append("Zalacznik", file);
+        }
+
+        try {
+            await axios.post('https://localhost:7157/api/Zadanie', formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                },
             });
+            navigate(`/details/${id}`);
+        } catch (error) {
+            console.error('Błąd podczas tworzenia zadania:', error);
+            alert('Wystąpił błąd podczas tworzenia zadania.');
+        }
     };
 
     return (
@@ -129,12 +129,10 @@ function CreateZadanie() {
                 </div>
 
                 <div className="form-group">
-                    <label>Plik pomocniczy (nazwa lub URL):</label>
+                    <label>Załącz plik pomocniczy:</label>
                     <input
-                        type="text"
-                        name="plikPomocniczy"
-                        value={zadanie.plikPomocniczy}
-                        onChange={handleChange}
+                        type="file"
+                        onChange={(e) => setFile(e.target.files[0])}
                     />
                 </div>
 

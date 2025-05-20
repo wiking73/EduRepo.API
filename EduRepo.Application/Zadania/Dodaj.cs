@@ -13,7 +13,7 @@ namespace EduRepo.Application.Zadania
         public string Nazwa { get; set; }
         public string Tresc { get; set; }
         public DateTime TerminOddania { get; set; }
-        public string PlikPomocniczy { get; set; }
+        public string? PlikPomocniczy { get; set; }
         public bool CzyObowiazkowe { get; set; }
 
         public string UserId { get; set; }
@@ -35,6 +35,16 @@ namespace EduRepo.Application.Zadania
             if (kurs == null)
             {
                 throw new KeyNotFoundException($"Kurs o ID {request.IdKursu} nie istnieje.");
+            }
+
+            if (kurs.WlascicielId != request.UserId)
+            {
+                throw new UnauthorizedAccessException("Tylko właściciel kursu może dodać zadanie.");
+            }
+
+            if (request.TerminOddania < DateTime.Now)
+            {
+                throw new ArgumentException("Termin oddania nie może być wcześniejszy niż aktualna data.");
             }
 
             var zadanie = new Zadanie
