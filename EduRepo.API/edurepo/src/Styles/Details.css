@@ -8,47 +8,51 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
-    /* Nagłówki */
-    .kurs-details h2,
-    .kurs-details h3 {
-        color: #1b1c1d;
+body {
+    overflow: scroll;
+}
+
+/* Nagłówki */
+.kurs-details h2,
+.kurs-details h3 {
+    color: #1b1c1d;
+}
+
+/* Sekcja powrotu */
+.kurs-details .back-button {
+    margin-top: 2rem;
+}
+
+/* Lista zadań */
+.kurs-details .ui.list .item {
+    padding: 1.2rem;
+    border-bottom: 1px solid #ddd;
+    background-color: #f9f9f9;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+    .kurs-details .ui.list .item:hover {
+        background-color: #f1f1f1;
     }
 
-    /* Sekcja powrotu */
-    .kurs-details .back-button {
-        margin-top: 2rem;
-    }
+/* Przycisk dodawania zadania */
+.kurs-details .add-task-button {
+    margin: 1rem 0;
+}
 
-    /* Lista zadań */
-    .kurs-details .ui.list .item {
-        padding: 1.2rem;
-        border-bottom: 1px solid #ddd;
-        background-color: #f9f9f9;
-        margin-bottom: 1rem;
-        border-radius: 8px;
-    }
+/* Przycisk: Szczegóły i Odpowiedź */
+.kurs-details .ui.button {
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+}
 
-        .kurs-details .ui.list .item:hover {
-            background-color: #f1f1f1;
-        }
+/* Odpowiedni margines podziałki */
+.kurs-details .ui.divider {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
 
-    /* Przycisk dodawania zadania */
-    .kurs-details .add-task-button {
-        margin: 1rem 0;
-    }
-
-    /* Przycisk: Szczegóły i Odpowiedź */
-    .kurs-details .ui.button {
-        margin-top: 0.5rem;
-        margin-right: 0.5rem;
-    }
-
-    /* Odpowiedni margines podziałki */
-    .kurs-details .ui.divider {
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-    }
-    
 
 /* Responsywność */
 @media (max-width: 768px) {
@@ -60,4 +64,8 @@
             padding-left: 0 !important;
             padding-right: 0 !important;
         }
+}
+
+.late-info {
+    color: red;
 }

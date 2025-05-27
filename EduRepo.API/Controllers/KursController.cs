@@ -221,5 +221,45 @@ namespace EduRepo.API.Controllers
 
             return Ok("Uczestnik został usunięty z kursu.");
         }
+
+        [Authorize]
+        [HttpGet("{username}/mojekursy")]
+        public async Task<IActionResult> GetMyCourses(string username)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var kursy = await _context.Uczestnictwa
+                .Where(u => u.UserName == username)
+                .Where(u => u.Status == StatusUczestnika.Zaakceptowano)
+                .Select(u => new
+                {
+                    u.KursId,
+                    u.UserName
+                })
+                .ToListAsync();
+            //.Where(u => u.UserId == userId)
+            //.Where(u => u.Status == StatusUczestnika.Zaakceptowano)
+            //.Include(k => k.Kurs)
+            //.Select(u => u.Kurs).ToListAsync();
+            Console.WriteLine(userId);
+
+
+            //var kurs = await _context.Uczestnictwa
+            //    .Include(k => k.UserName)
+            //    .ToListAsync();
+            //if (kurs == null)
+            //    return NotFound("Kurs nie istnieje");
+
+            return Ok(kursy);
+
+
+            //var uczestnicy = kurs.Uczestnicy
+            //    .Where(u => u.Status == StatusUczestnika.Zaakceptowano)
+            //    .Select(u => new {
+            //        u.IdUczestnictwa,
+            //        u.UserName,
+            //        u.WlascicielId
+            //    });
+
+        }
     }
 }

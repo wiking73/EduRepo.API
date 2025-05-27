@@ -36,8 +36,22 @@ namespace EduRepo.API.Controllers
         }
         [HttpPost]
 
-        public async Task<IActionResult> CreateOdpowiedz([FromBody] CreateCommand command)
+        public async Task<IActionResult> CreateOdpowiedz([FromForm] CreateCommand command, IFormFile file)
         {
+
+            var fileName = "";
+
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+            Directory.CreateDirectory(uploadsFolder);
+            fileName = $"{Guid.NewGuid()}_{file.FileName}";
+            var fullPath = Path.Combine(uploadsFolder, fileName);
+
+            using var stream = new FileStream(fullPath, FileMode.Create);
+            await file.CopyToAsync(stream);
+
+            command.NazwaPliku = $"/uploads/{fileName}";
+
+            Console.WriteLine("create");
 
             var result = await _mediator.Send(command);
             if (result == null) return NotFound();
@@ -69,6 +83,31 @@ namespace EduRepo.API.Controllers
             var result = await _mediator.Send(new DeleteCommand { Id = id });
             if (result == null) return NotFound();
             return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadPlik(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("Nie wybrano pliku.");
+
+            var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+            if (!Directory.Exists(uploadsPath))
+            {
+                Directory.CreateDirectory(uploadsPath);
+            }
+
+            var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var filePath = Path.Combine(uploadsPath, uniqueFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var relativePath = $"/uploads/{uniqueFileName}";
+            return Ok(new { path = relativePath });
         }
     }
 }

@@ -6,7 +6,8 @@ import { Menu, Button, List } from 'semantic-ui-react';
 
 function KursDetails() {
     const role = localStorage.getItem("role");
-    const name = localStorage.getItem("username");
+    const name = localStorage.getItem("displayName");
+    const userId = localStorage.getItem("userId");
     const token = localStorage.getItem("authToken");
     const { id } = useParams();
     const navigate = useNavigate();
@@ -15,6 +16,8 @@ function KursDetails() {
     const [error, setError] = useState(null);
     const [kurs, setKurs] = useState(null);
     const [zadania, setZadania] = useState([]);
+    const [answers, setAnswers] = useState(null);
+
 
     const fetchKurs = async () => {
         try {
@@ -38,6 +41,36 @@ function KursDetails() {
         }
     };
 
+    const fetchOdpowiedz = async () => {
+        try {
+            const response = await axios.get('https://localhost:7157/api/Odpowiedz');
+            setAnswers(response.data)
+        } catch (err) {
+            console.error('Błąd pobierania odpowiedzi:', err);
+        } finally {
+            //setLoading(false);
+        }
+    };
+
+    const handleDeleteOdpowiedz = async (idOdpowiedzi) => {
+        try {
+            if (!token) {
+                setError('Musisz być zalogowany!');
+                return;
+            }
+
+            if (window.confirm('Czy na pewno chcesz usunąć tę odpowiedź?')) {
+                await axios.delete(`https://localhost:7157/api/Odpowiedz/${idOdpowiedzi}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                assignAnswers();
+                navigate(0);
+            }
+        } catch (err) {
+            console.error('Błąd usuwania:', err);
+        }
+    };
+
     const handleDeleteZadanie = async (zadanieId) => {
         if (window.confirm("Czy na pewno chcesz usunąć to zadanie?")) {
             try {
@@ -58,16 +91,25 @@ function KursDetails() {
     useEffect(() => {
         fetchKurs();
         fetchZadania();
+        fetchOdpowiedz();
     }, [id]);
 
     if (isLoading) return <p>Ładowanie danych kursu...</p>;
     if (error) return <p style={{ color: 'red' }}>{error}</p>;
     if (!kurs) return <p>Nie znaleziono kursu</p>;
 
+    let odpowiedzDlaZadania;
+
+    const assignAnswers = () => {
+        odpowiedzDlaZadania = answers ? Object.fromEntries(zadaniaDlaKursu.map((zadanie) =>
+            [zadanie.idZadania, answers.find((ans) => ans.idZadania === zadanie.idZadania && ans.userName === name) || null])) : {};
+        console.log(answers)
+    }
     const zadaniaDlaKursu = zadania.filter((z) => z.idKursu === parseInt(id, 10));
+    assignAnswers();
 
     return (
-        (kurs.userName === name || role === "Student" || role === "Teacher") ? (
+        (kurs.userName === name || role === "Student") ? (
             <div className="kurs-details">
                 <h4>{kurs.nazwa}</h4>
                 <h3>Szczegółowe Informacje</h3>
@@ -99,7 +141,7 @@ function KursDetails() {
                             <List.Item key={zadanie.idZadania}>
                                 <List.Content>
                                     <List.Header>{zadanie.nazwa}</List.Header>
-                                    <p><strong>Termin oddania:</strong> {new Date(zadanie.terminOddania).toLocaleString()}</p>
+                                    <p><strong>Termin oddania:</strong> {new Date(zadanie.terminOddania).toLocaleDateString()}</p>
                                     <p>{zadanie.tresc}</p>
 
                                     {zadanie.plikPomocniczy && (
@@ -120,38 +162,56 @@ function KursDetails() {
                                     </Link>
 
                                     {role === "Student" && (
-                                        <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedz`}>
-                                            <Button content="Dodaj Odpowiedź" size="large" className="custom-button17" />
-                                        </Menu.Item>
-                                    )}
+                                        odpowiedzDlaZadania[zadanie.idZadania] ? <List.Item>
+                                            <h3><strong>Twoja odpowiedź</strong></h3>
+                                            <p><strong>Data oddania <span></span>{new Date(odpowiedzDlaZadania[zadanie.idZadania].dataOddania).toLocaleDateString()} </strong>
+                                                {new Date(zadanie.terminOddania).toLocaleDateString() < new Date(odpowiedzDlaZadania[zadanie.idZadania].dataOddania).toLocaleDateString() && <span className="late-info">Oddane po terminie</span>}
+                                            </p>
+                                            <p><strong>Plik </strong>
+                                                <a href={`https://localhost:7157${odpowiedzDlaZadania[zadanie.idZadania].nazwaPliku}`} target="_blank" rel="noopener noreferrer">
+                                                    Otwórz
+                                                </a>
+                                            </p>
+                                            <p><strong>Komentarz nauczyciela</strong> {odpowiedzDlaZadania[zadanie.idZadania].komentarzNauczyciela}</p>
+                                            <p><strong>Ocena </strong>{odpowiedzDlaZadania[zadanie.idZadania].ocena}</p>
+                                            <Button
+                                                content="Usuń odpowiedź"
+                                                size="small"
+                                                onClick={() => handleDeleteOdpowiedz(odpowiedzDlaZadania[zadanie.idZadania].idOdpowiedzi)}
+                                                style={{ backgroundColor: "red" }}
+                                            />
+                                        </List.Item> :
+                                            <Link to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedz`}>
+                                                <Button content="dodaj odpowiedź" size="large" className="custom-button17" />
+                                            </Link>)}
 
                                     {role === 'Teacher' && (
                                         <>
-                                            <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedzi`}>
+                                            <Link to={`/kurs/${id}/zadanie/${zadanie.idZadania}/odpowiedzi`}>
                                                 <Button
                                                     content="Odpowiedzi"
                                                     size="large"
                                                     className="custom-button17"
-                                                    style={{ marginTop: '1rem', marginLeft: '-2rem' }}
+                                                    style={{ marginTop: '1rem' }}
                                                 />
-                                            </Menu.Item>
-                                            <Menu.Item>
+                                            </Link>
+                                            <div>
                                                 <Button
                                                     content="Usuń"
                                                     size="small"
                                                     color="red"
                                                     onClick={() => handleDeleteZadanie(zadanie.idZadania)}
-                                                    style={{ marginTop: '0rem', marginLeft: '-0.5rem' }}
+                                                    style={{ marginTop: '1rem' }}
                                                 />
-                                            </Menu.Item>
-                                            <Menu.Item as={NavLink} to={`/zadanie/edit/${zadanie.idZadania}`}>
+                                            </div>
+                                            <Link to={`/zadanie/edit/${zadanie.idZadania}`}>
                                                 <Button
                                                     content="Edytuj"
                                                     size="small"
                                                     color="blue"
-                                                    style={{ marginTop: '0.5rem', marginLeft: '0.5rem' }}
+                                                    style={{ marginTop: '0.5rem' }}
                                                 />
-                                            </Menu.Item>
+                                            </Link>
                                         </>
                                     )}
                                 </List.Content>

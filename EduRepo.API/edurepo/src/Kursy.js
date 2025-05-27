@@ -11,6 +11,7 @@ const Kursy = () => {
 
     const token = localStorage.getItem('authToken');
     const role = localStorage.getItem('role');
+    const name = localStorage.getItem('displayName');
 
     useEffect(() => {
         fetchKursy();
@@ -21,6 +22,7 @@ const Kursy = () => {
         try {
             const response = await axios.get('https://localhost:7157/api/Kurs');
             setKursy(response.data);
+            console.log(response.data)
         } catch (err) {
             console.error('Błąd pobierania listy kursów:', err);
             setError('Nie udało się pobrać listy kursów.');
@@ -92,9 +94,9 @@ const Kursy = () => {
             <div className="bike-list-container">
                 <div className="bike-list__header">
                     {role === 'Teacher' && (
-                    <Menu.Item as={NavLink} to="/kurs/create">
-                        <Button content="Dodaj Kurs" size="large" className="custom-button17" onClick={handleAddKurs} />
-                    </Menu.Item>
+                        <Menu.Item as={NavLink} to="/kurs/create">
+                            <Button content="Dodaj Kurs" size="large" className="custom-button17" onClick={handleAddKurs} />
+                        </Menu.Item>
                     )}
                     <Menu.Item as={NavLink} to="/bikes/filtersort">
                         <Button content="Filtrowanie/Sortowanie" size="large" className="custom-button18" />
@@ -110,23 +112,23 @@ const Kursy = () => {
                                     <Link to={`/details/${kurs.idKursu}`} className="bike-item-button">
                                         Szczegóły
                                     </Link>
-
-                                    <Link to={`/edit/${kurs.idKursu}`} className="edit-button">
-                                        Edytuj
-                                    </Link>
+                                    {role !== 'Student' && (
+                                        <Link to={`/edit/${kurs.idKursu}`} className="edit-button">
+                                            Edytuj
+                                        </Link>)}
+                                    
                                     <button onClick={() => handleDeleteKurs(kurs.idKursu)} className="bike-item-button2">
                                         Usuń
                                     </button>
+                                </div>
 
+                                <div>
                                     {role === 'Student' && (
                                         <button onClick={() => handleZapiszKurs(kurs.idKursu)} className="bike-item-button2">
                                             Zapisz Mnie
                                         </button>
 
                                     )}
-
-                                    
-
                                 </div>
                             </div>
                         ))}

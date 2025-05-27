@@ -14,7 +14,7 @@ function OcenOdpowiedz() {
         nazwaPliku: "",
         ocena: ""
     });
-    const [zadanie, setZadanie] = useState(null); 
+    const [zadanie, setZadanie] = useState(null);
     const [error, setError] = useState('');
     const { IdOdpowiedzi, IdZadania } = useParams();
     const navigate = useNavigate();
@@ -48,22 +48,22 @@ function OcenOdpowiedz() {
     };
 
     useEffect(() => {
-        fetchZadanie(); 
-        fetchOdpowiedz(); 
+        fetchZadanie();
+        fetchOdpowiedz();
         window.scrollTo({
             top: 0,
             behavior: 'smooth',
         });
     }, [IdOdpowiedzi]);
 
-   
+
     const getDateClass = () => {
         if (zadanie && odpowiedz.dataOddania) {
             const termin = new Date(zadanie.terminOddania);
             const dataOddania = new Date(odpowiedz.dataOddania);
-            return dataOddania > termin ? 'overdue' : 'on-time'; 
+            return dataOddania > termin ? 'overdue' : 'on-time';
         }
-        return ''; 
+        return '';
     };
 
     const handleChange = (e) => {
@@ -99,7 +99,7 @@ function OcenOdpowiedz() {
             .catch((error) => {
                 console.error('Błąd podczas aktualizacji użytkownika:', error);
                 if (error.response) {
-                    setError(error.response.data); 
+                    setError(error.response.data);
                 } else {
                     setError('Nie udało się zaktualizować użytkownika. Sprawdź czy prawidłowo wpisałeś wszystkie parametry');
                 }
@@ -114,8 +114,13 @@ function OcenOdpowiedz() {
             {error && <div className="error-message">{error}</div>}
             <div className="odpowiedz-info">
                 <p><strong>Użytkownik:</strong> {odpowiedz.userName}</p>
-                <p><strong>Plik:</strong> {odpowiedz.nazwaPliku}</p>
-                <p className={getDateClass()}><strong>Data oddania:</strong> {new Date(odpowiedz.dataOddania).toLocaleString()}</p>
+                <p><strong>Plik: </strong>
+                    <a href={`https://localhost:7157${odpowiedz.nazwaPliku}`} target="_blank" rel="noopener noreferrer">
+                        Otwórz
+                    </a></p>
+                <p className={getDateClass()}><strong>Data oddania:</strong> {new Date(odpowiedz.dataOddania).toLocaleDateString()}</p>
+                {(new Date(zadanie?.terminOddania) < new Date(odpowiedz.dataOddania)) && <p style={{ color: "red" }}>Oddane z opóźnieniem</p>}
+
             </div>
 
             <form onSubmit={handleSubmit}>
