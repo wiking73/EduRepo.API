@@ -5,7 +5,8 @@ import './Styles/kursy.css';
 import { Menu, Button } from 'semantic-ui-react';
 
 const Kursy = () => {
-    const [kursy, setKursy] = useState([]);
+    const [mojeKursy, setMojeKursy] = useState([]);
+    const [wszystkieKursy, setWszystkieKursy] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -15,14 +16,26 @@ const Kursy = () => {
 
     useEffect(() => {
         fetchKursy();
+        fetchMojeKursy(name);
+        
     }, []);
+    
+    const fetchMojeKursy = async (name) => {
+
+        try {
+            const response = await axios.get(`https://localhost:7157/api/Kurs/${name}/mojekursy`);         
+            const ids = response.data.map((k) => k.kursId)
+            setMojeKursy(ids)
+        } catch (err) {
+            console.error('Błąd pobierania listy kursów:', err);
+        }
+    };
 
     const fetchKursy = async () => {
         setLoading(true);
         try {
             const response = await axios.get('https://localhost:7157/api/Kurs');
-            setKursy(response.data);
-            console.log(response.data)
+            setWszystkieKursy(response.data);         
         } catch (err) {
             console.error('Błąd pobierania listy kursów:', err);
             setError('Nie udało się pobrać listy kursów.');
@@ -42,7 +55,7 @@ const Kursy = () => {
                 await axios.delete(`https://localhost:7157/api/Kurs/${idKursu}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                setKursy((prev) => prev.filter((b) => b.idKursu !== idKursu));
+                setWszystkieKursy((prev) => prev.filter((b) => b.idKursu !== idKursu));
             }
         } catch (err) {
             console.error('Błąd', err);
@@ -103,9 +116,9 @@ const Kursy = () => {
                     </Menu.Item>
                 </div>
 
-                {kursy.length > 0 ? (
+                {wszystkieKursy.length > 0 ? (
                     <div className="bike-grid">
-                        {kursy.map((kurs) => (
+                        {wszystkieKursy.map((kurs) => (
                             <div className="bike-container" key={kurs.idKursu}>
                                 <h3>{kurs.nazwa}</h3>
                                 <div>
@@ -113,21 +126,23 @@ const Kursy = () => {
                                         Szczegóły
                                     </Link>
                                     {role !== 'Student' && (
-                                        <Link to={`/edit/${kurs.idKursu}`} className="edit-button">
-                                            Edytuj
-                                        </Link>)}
-                                    
-                                    <button onClick={() => handleDeleteKurs(kurs.idKursu)} className="bike-item-button2">
-                                        Usuń
-                                    </button>
+                                        <>
+                                            <Link to={`/edit/${kurs.idKursu}`} className="edit-button">
+                                                Edytuj
+                                            </Link>
+                                            <button onClick={() => handleDeleteKurs(kurs.idKursu)} className="bike-item-button2">
+                                                Usuń
+                                            </button>
+                                        </>              
+                                    )}                                                            
                                 </div>
 
-                                <div>
+                                <div>           
                                     {role === 'Student' && (
-                                        <button onClick={() => handleZapiszKurs(kurs.idKursu)} className="bike-item-button2">
-                                            Zapisz Mnie
-                                        </button>
-
+                                        mojeKursy.includes(kurs.idKursu) ? <p>Jesteś uczestnikiem kursu</p> : 
+                                            <button onClick={() => handleZapiszKurs(kurs.idKursu)} className="bike-item-button2">
+                                                Zapisz Mnie
+                                            </button>                                        
                                     )}
                                 </div>
                             </div>

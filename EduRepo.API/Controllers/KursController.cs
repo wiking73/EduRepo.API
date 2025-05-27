@@ -236,30 +236,7 @@ namespace EduRepo.API.Controllers
                     u.UserName
                 })
                 .ToListAsync();
-            //.Where(u => u.UserId == userId)
-            //.Where(u => u.Status == StatusUczestnika.Zaakceptowano)
-            //.Include(k => k.Kurs)
-            //.Select(u => u.Kurs).ToListAsync();
-            Console.WriteLine(userId);
-
-
-            //var kurs = await _context.Uczestnictwa
-            //    .Include(k => k.UserName)
-            //    .ToListAsync();
-            //if (kurs == null)
-            //    return NotFound("Kurs nie istnieje");
-
-            return Ok(kursy);
-
-
-            //var uczestnicy = kurs.Uczestnicy
-            //    .Where(u => u.Status == StatusUczestnika.Zaakceptowano)
-            //    .Select(u => new {
-            //        u.IdUczestnictwa,
-            //        u.UserName,
-            //        u.WlascicielId
-            //    });
-
+            return Ok(kursy);       
         }
     }
 }
