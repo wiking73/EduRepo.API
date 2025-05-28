@@ -10,19 +10,19 @@ function CreateKurs() {
         opisKursu: "",
         rokAkademicki: "",
         klasa: "",
-        wlascicielUserId: "", 
+        wlascicielUserId: "",
         wlascicielUserName: "",
 
     });
 
-    
+
     const [unique_name, setUserName] = useState(null);
     const [userId, setUserId] = useState(null);
     const [rola, setRola] = useState(null);
     const [token, settoken] = useState(null);
     const navigate = useNavigate();
     console.log(rola);
-   
+
     const parseJwt = (token) => {
         if (!token) return null;
         try {
@@ -40,7 +40,7 @@ function CreateKurs() {
         }
     };
 
-   
+
     const fetchUserData = () => {
         const userData = parseJwt(token);
         if (!userData || !userData.nameid) {
@@ -48,10 +48,10 @@ function CreateKurs() {
             return;
         }
         setUserId(userData.nameid);
-        setUserName(userData.unique_name); 
+        setUserName(userData.unique_name);
     };
 
-    
+
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
 
@@ -68,7 +68,7 @@ function CreateKurs() {
         });
     };
 
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -83,7 +83,7 @@ function CreateKurs() {
             opisKursu: kurs.opisKursu,
             rokAkademicki: kurs.rokAkademicki,
             klasa: kurs.klasa,
-            userId: userId, 
+            userId: userId,
             name: unique_name,
         };
 
@@ -91,7 +91,7 @@ function CreateKurs() {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            
+
         })
             .then(() => navigate('/dashboard'))
             .catch((error) => {
@@ -119,8 +119,6 @@ function CreateKurs() {
 
 
     return (
-        
-        
         <div className="bike-form">
             <h6>Dodaj nowy kurs</h6>
             <form onSubmit={handleSubmit}>
@@ -164,17 +162,12 @@ function CreateKurs() {
                         required
                     />
                 </div>
-               
-                }
                 <button type="submit" className="btn btn-primary">
                     Dodaj
                 </button>
-                }else
-                {
-                    <Link to="/kursy" className="btn btn-secondary">
-                        Powrót do listy
-                    </Link>
-                }
+                <Link to="/kursy" className="btn btn-secondary">
+                    Powrót do listy
+                </Link>
             </form>
         </div>
     );

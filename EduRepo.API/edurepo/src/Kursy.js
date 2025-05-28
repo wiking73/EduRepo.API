@@ -5,24 +5,37 @@ import './Styles/kursy.css';
 import { Menu, Button } from 'semantic-ui-react';
 
 const Kursy = () => {
-    const [kursy, setKursy] = useState([]);
+    const [mojeKursy, setMojeKursy] = useState([]);
+    const [wszystkieKursy, setWszystkieKursy] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const token = localStorage.getItem('authToken');
     const role = localStorage.getItem('role');
+    const name = localStorage.getItem('displayName');
 
     useEffect(() => {
         fetchKursy();
+        fetchMojeKursy(name);
+        
     }, []);
+    
+    const fetchMojeKursy = async (name) => {
+
+        try {
+            const response = await axios.get(`https://localhost:7157/api/Kurs/${name}/mojekursy`);         
+            const ids = response.data.map((k) => k.kursId)
+            setMojeKursy(ids)
+        } catch (err) {
+            console.error('Błąd pobierania listy kursów:', err);
+        }
+    };
 
     const fetchKursy = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('https://localhost:7157/api/Kurs', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setKursy(response.data);
+            const response = await axios.get('https://localhost:7157/api/Kurs');
+            setWszystkieKursy(response.data);         
         } catch (err) {
             console.error('Błąd pobierania listy kursów:', err);
             setError('Nie udało się pobrać listy kursów.');
@@ -30,7 +43,6 @@ const Kursy = () => {
             setLoading(false);
         }
     };
-
 
     const handleDeleteKurs = async (idKursu) => {
         try {
@@ -43,7 +55,7 @@ const Kursy = () => {
                 await axios.delete(`https://localhost:7157/api/Kurs/${idKursu}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                setKursy((prev) => prev.filter((b) => b.idKursu !== idKursu));
+                setWszystkieKursy((prev) => prev.filter((b) => b.idKursu !== idKursu));
             }
         } catch (err) {
             console.error('Błąd', err);
@@ -95,41 +107,43 @@ const Kursy = () => {
             <div className="bike-list-container">
                 <div className="bike-list__header">
                     {role === 'Teacher' && (
-                    <Menu.Item as={NavLink} to="/kurs/create">
-                        <Button content="Dodaj Kurs" size="large" className="custom-button17" onClick={handleAddKurs} />
-                    </Menu.Item>
+                        <Menu.Item as={NavLink} to="/kurs/create">
+                            <Button content="Dodaj Kurs" size="large" className="custom-button17" onClick={handleAddKurs} />
+                        </Menu.Item>
                     )}
                     <Menu.Item as={NavLink} to="/bikes/filtersort">
                         <Button content="Filtrowanie/Sortowanie" size="large" className="custom-button18" />
                     </Menu.Item>
                 </div>
 
-                {kursy.length > 0 ? (
+                {wszystkieKursy.length > 0 ? (
                     <div className="bike-grid">
-                        {kursy.map((kurs) => (
+                        {wszystkieKursy.map((kurs) => (
                             <div className="bike-container" key={kurs.idKursu}>
                                 <h3>{kurs.nazwa}</h3>
                                 <div>
                                     <Link to={`/details/${kurs.idKursu}`} className="bike-item-button">
                                         Szczegóły
                                     </Link>
+                                    {role !== 'Student' && (
+                                        <>
+                                            <Link to={`/edit/${kurs.idKursu}`} className="edit-button">
+                                                Edytuj
+                                            </Link>
+                                            <button onClick={() => handleDeleteKurs(kurs.idKursu)} className="bike-item-button2">
+                                                Usuń
+                                            </button>
+                                        </>              
+                                    )}                                                            
+                                </div>
 
-                                    <Link to={`/edit/${kurs.idKursu}`} className="edit-button">
-                                        Edytuj
-                                    </Link>
-                                    <button onClick={() => handleDeleteKurs(kurs.idKursu)} className="bike-item-button2">
-                                        Usuń
-                                    </button>
-
+                                <div>           
                                     {role === 'Student' && (
-                                        <button onClick={() => handleZapiszKurs(kurs.idKursu)} className="bike-item-button2">
-                                            Zapisz Mnie
-                                        </button>
-
+                                        mojeKursy.includes(kurs.idKursu) ? <p>Jesteś uczestnikiem kursu</p> : 
+                                            <button onClick={() => handleZapiszKurs(kurs.idKursu)} className="bike-item-button2">
+                                                Zapisz Mnie
+                                            </button>                                        
                                     )}
-
-                                    
-
                                 </div>
                             </div>
                         ))}

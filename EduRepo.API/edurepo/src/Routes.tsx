@@ -16,6 +16,8 @@ import EditKurs from "./EdytujKurs";
 import EditZadanie from "./EditZadanie";
 import ZgloszeniaDoKursu from "./ZgloszeniaDoKursu";
 import UczestnicyKursu from "./UczestnicyKursu";
+import MojeKursy from "./MojeKursy";
+
 export const routes: RouteObject[] = [
     {
         path: "/",
@@ -37,6 +39,7 @@ export const routes: RouteObject[] = [
             { path: '/profile', element: <UserProfile /> },
             { path: '/edit/:id', element: <EditKurs />},
             { path: '/zadanie/edit/:IdZadania', element: <EditZadanie /> },
+            { path: '/mojekursy', element: <MojeKursy /> }
         ]
     }
 ];

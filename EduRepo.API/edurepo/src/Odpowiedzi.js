@@ -62,7 +62,9 @@ const Odpowiedzi = () => {
                     <div className="bike-grid">
                         {odpowiedziDlaZadania.map((odpowiedz) => (
                             <div className="bike-container" key={odpowiedz.idOdpowiedzi}>
+                                <p>{odpowiedz.userName}</p>
                                 <p>{odpowiedz.nazwaPliku}</p>
+                                {odpowiedz.ocena !== "brak" && <p>Ocenione: {odpowiedz.ocena}</p>}
                                 <div>
                                     <Link to={`/details/${odpowiedz.idOdpowiedzi}`} className="bike-item-button">
                                         Szczegóły

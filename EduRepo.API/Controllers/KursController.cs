@@ -221,5 +221,22 @@ namespace EduRepo.API.Controllers
 
             return Ok("Uczestnik został usunięty z kursu.");
         }
+
+        [Authorize]
+        [HttpGet("{username}/mojekursy")]
+        public async Task<IActionResult> GetMyCourses(string username)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var kursy = await _context.Uczestnictwa
+                .Where(u => u.UserName == username)
+                .Where(u => u.Status == StatusUczestnika.Zaakceptowano)
+                .Select(u => new
+                {
+                    u.KursId,
+                    u.UserName
+                })
+                .ToListAsync();
+            return Ok(kursy);       
+        }
     }
 }

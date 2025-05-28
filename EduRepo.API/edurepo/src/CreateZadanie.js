@@ -3,9 +3,11 @@ import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import "./Styles/CreateZadanie.css";
 
-const token = localStorage.getItem('authToken');
+
 
 function CreateZadanie() {
+    const token = localStorage.getItem('authToken');
+
     const { id } = useParams(); // kursId
     const navigate = useNavigate();
     const [error, setError] = useState(null);

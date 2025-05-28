@@ -65,6 +65,11 @@ const Dashboard: React.FC = () => {
                     <div className="tile">
                         <Link to="/profile" className="tile-link2">Zarządzaj Profilem</Link>
                     </div>
+                    {role === "Student" &&
+                        <div className="tile">
+                            <Link to="/mojekursy" className="tile-link2">Moje Kursy</Link>
+                        </div>
+                }                 
 
                 </div>
 
