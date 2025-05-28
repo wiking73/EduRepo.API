@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IPasswordHasher<AppUser>, PasswordHasher<AppUser>>();
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers(opt =>
 { 
 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();

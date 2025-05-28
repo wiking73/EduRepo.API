@@ -40,22 +40,24 @@ function ZarzadzajUzytkownikami() {
     return (
         <div className="user-list">
             <h2>Lista użytkowników</h2>
-            {users.map((user) => {
-                const currentRole = user.isTeacher ? 'Teacher' : user.isStudent ? 'Student' : 'Admin';
 
-                return (
-                    <div key={user.id} className="user-card">
-                        <h4>{user.userName}</h4>
-                        <p><strong>Email:</strong> {user.email}</p>
-                        <p><strong>Aktualna rola:</strong> {currentRole}</p>
+            <div className="scrollable-content">
+                {users.map((user) => {
+                    const currentRole = user.isTeacher ? 'Teacher' : user.isStudent ? 'Student' : 'Admin';
 
- 
-                        <Link to={`/edytuj/${user.id}`} className="edit-button">
-                            Edytuj
-                        </Link>
-                    </div>
-                );
-            })}
+                    return (
+                        <div key={user.id} className="user-card">
+                            <h4>{user.userName}</h4>
+                            <p><strong>Email:</strong> {user.email}</p>
+                            <p><strong>Aktualna rola:</strong> {currentRole}</p>
+                            <Link to={`/edytuj/${user.id}`} className="edit-button">
+                                Edytuj
+                            </Link>
+                        </div>
+                    );
+                })}
+            </div>
+
             <Link to="/dashboard" className="btn btn-secondary">
                 Powrót
             </Link>

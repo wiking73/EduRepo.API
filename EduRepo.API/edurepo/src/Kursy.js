@@ -19,7 +19,9 @@ const Kursy = () => {
     const fetchKursy = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('https://localhost:7157/api/Kurs');
+            const response = await axios.get('https://localhost:7157/api/Kurs', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
             setKursy(response.data);
         } catch (err) {
             console.error('Błąd pobierania listy kursów:', err);
@@ -28,6 +30,7 @@ const Kursy = () => {
             setLoading(false);
         }
     };
+
 
     const handleDeleteKurs = async (idKursu) => {
         try {
