@@ -34,7 +34,7 @@ function KursDetails() {
     const fetchMojeKursy = async (name) => {
 
         try {
-            const response = await axios.get(`https://localhost:7157/api/Kurs/${name}/mojekursy`);      
+            const response = await axios.get(`https://localhost:7157/api/Kurs/${name}/mojekursy`);     
             setMojeKursy(response.data.map((k) => k.kursId));        
         } catch (err) {
             console.error('Błąd pobierania listy kursów:', err);
@@ -105,6 +105,8 @@ function KursDetails() {
         fetchMojeKursy(name);
     }, [id]);
 
+    
+
     if (isLoading) return <p>Ładowanie danych kursu...</p>;
     if (error) return <p style={{ color: 'red' }}>{error}</p>;
     if (!kurs) return <p>Nie znaleziono kursu</p>;
@@ -128,7 +130,7 @@ function KursDetails() {
                 <p><strong>Rok akademicki:</strong> {kurs.rokAkademicki}</p>
                 <Link to="/kursy" className="btn btn-secondary">Powrót do kursów</Link>
 
-                {role === "Teacher" && (
+                {role === "Teacher"  && (
                     <div className="add-task-button">
                         <Menu.Item as={NavLink} to={`/kurs/${id}/zadanie/create`}>
                             <Button content="Dodaj Zadanie" size="large" className="custom-button17" />
@@ -144,7 +146,7 @@ function KursDetails() {
 
                 <p><strong>Stworzony przez:</strong> {kurs.userName}</p>
 
-                {((role === "Teacher") || (role == "Student" && mojeKursy.includes(kurs.idKursu))) ? <>
+                {((role === "Teacher") || (role === "Student" && mojeKursy.includes(kurs.idKursu))) ? <>
                     <h3>Lista zadań</h3>
                     {zadaniaDlaKursu.length > 0 ? (
                         <List>
@@ -152,7 +154,7 @@ function KursDetails() {
                                 <List.Item key={zadanie.idZadania}>
                                     <List.Content>
                                         <List.Header>{zadanie.nazwa}</List.Header>
-                                        <p><strong>Termin oddania:</strong> {new Date(zadanie.terminOddania).toLocaleDateString()}</p>
+                                        <p><strong>Termin oddania:</strong> {new Date(zadanie.terminOddania).toLocaleString()}</p>
                                         <p>{zadanie.tresc}</p>
 
                                         {zadanie.plikPomocniczy && (
@@ -175,8 +177,8 @@ function KursDetails() {
                                         {role === "Student" && (
                                             odpowiedzDlaZadania[zadanie.idZadania] ? <List.Item>
                                                 <h3><strong>Twoja odpowiedź</strong></h3>
-                                                <p><strong>Data oddania <span></span>{new Date(odpowiedzDlaZadania[zadanie.idZadania].dataOddania).toLocaleDateString()} </strong>
-                                                    {new Date(zadanie.terminOddania).toLocaleDateString() < new Date(odpowiedzDlaZadania[zadanie.idZadania].dataOddania).toLocaleDateString() && <span className="late-info">Oddane po terminie</span>}
+                                                <p><strong>Data oddania <span></span>{new Date(odpowiedzDlaZadania[zadanie.idZadania].dataOddania).toLocaleString()} </strong>
+                                                    {new Date(zadanie.terminOddania).toLocaleString() < new Date(odpowiedzDlaZadania[zadanie.idZadania].dataOddania).toLocaleDateString() && <span className="late-info">Oddane po terminie</span>}
                                                 </p>
                                                 <p><strong>Plik </strong>
                                                     <a href={`https://localhost:7157${odpowiedzDlaZadania[zadanie.idZadania].nazwaPliku}`} target="_blank" rel="noopener noreferrer">

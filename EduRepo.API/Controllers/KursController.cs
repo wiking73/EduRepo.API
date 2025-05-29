@@ -32,12 +32,14 @@ namespace EduRepo.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Kurs>> GetKurs(int id)
         {
+
             var kurs = await _context.Kursy
                 .Include(k => k.Zadania)
                 .FirstOrDefaultAsync(k => k.IdKursu == id);
 
             if (kurs == null)
                 return NotFound();
+
 
             return Ok(kurs);
         }
@@ -97,6 +99,8 @@ namespace EduRepo.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
 
         // ✅ Lista oczekujących zgłoszeń
         [Authorize]

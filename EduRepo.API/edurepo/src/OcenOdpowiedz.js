@@ -118,7 +118,7 @@ function OcenOdpowiedz() {
                     <a href={`https://localhost:7157${odpowiedz.nazwaPliku}`} target="_blank" rel="noopener noreferrer">
                         Otwórz
                     </a></p>
-                <p className={getDateClass()}><strong>Data oddania:</strong> {new Date(odpowiedz.dataOddania).toLocaleDateString()}</p>
+                <p className={getDateClass()}><strong>Data oddania:</strong> {new Date(odpowiedz.dataOddania).toLocaleString()}</p>
                 {(new Date(zadanie?.terminOddania) < new Date(odpowiedz.dataOddania)) && <p style={{ color: "red" }}>Oddane z opóźnieniem</p>}
 
             </div>
