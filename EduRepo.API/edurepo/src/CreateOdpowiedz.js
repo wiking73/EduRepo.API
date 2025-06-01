@@ -105,7 +105,9 @@ function CreateOdpowiedz() {
         formData.append("IdZadania", IdZadania);
         formData.append("UserId", userId);
         formData.append("Name", unique_name);
-        formData.append("DataOddania", new Date().toISOString());
+        const currentDate = new Date();
+        currentDate.setHours(currentDate.getHours() + 2);
+        formData.append("DataOddania", currentDate.toISOString());
         formData.append("KomentarzNauczyciela", "brak");
         formData.append("NazwaPliku", file.name);
         formData.append("Ocena", "brak");

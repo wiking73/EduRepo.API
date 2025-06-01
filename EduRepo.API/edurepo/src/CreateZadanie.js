@@ -66,6 +66,7 @@ function CreateZadanie() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+
         const formData = new FormData();
         formData.append("IdKursu", id);
         formData.append("Nazwa", zadanie.nazwa);
