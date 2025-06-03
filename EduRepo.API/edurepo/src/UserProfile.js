@@ -1,5 +1,5 @@
 ﻿import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Styles/Profile.css';
 
@@ -181,8 +181,14 @@ const UserProfile = () => {
                     <button onClick={handleDeleteAccount} className="delete-account-button">
                         Usuń konto
                     </button>
+
                 </>
+
             )}
+            <Link to="/dashboard" className="btn btn-secondary">
+                Powrót
+            </Link>
+
         </div>
     );
 };

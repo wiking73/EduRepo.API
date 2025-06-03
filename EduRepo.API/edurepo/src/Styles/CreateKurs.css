@@ -1,0 +1,60 @@
+﻿.bike-form {
+    max-width: 600px;
+    margin: 50px auto;
+    background: linear-gradient(135deg, #e9fdfa, #d2f0e6);
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+    color: #2c3e50;
+}
+
+    .bike-form h6 {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 25px;
+        text-align: center;
+        color: #34495e;
+    }
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #34495e;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"] {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border 0.3s ease;
+    }
+
+    .form-group input:focus {
+        border-color: #64b0a0;
+        outline: none;
+    }
+
+.btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+

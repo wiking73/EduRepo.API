@@ -30,6 +30,7 @@ const Dashboard: React.FC = () => {
                         navigate("/navbar");
                     }}
                 >
+                    Wyloguj się
                 </button>
             ) : (
                 <button
@@ -40,7 +41,7 @@ const Dashboard: React.FC = () => {
                         navigate("/navbar");
                     }}
                 >
-                    Zaloguj si�
+                    Zaloguj się
                 </button>
             )}
 
@@ -65,21 +66,20 @@ const Dashboard: React.FC = () => {
                     <div className="tile">
                         <Link to="/profile" className="tile-link2">Zarządzaj Profilem</Link>
                     </div>
-                    {role === "Student" &&
+                    {role === "Student" && (
                         <div className="tile">
                             <Link to="/mojekursy" className="tile-link2">Moje Kursy</Link>
                         </div>
-                }                 
+                    )}
+
+                    {role === 'Admin' && (
+                        <div className="users">
+                            <Link to="/users" className="tile-link2">Użytkownicy</Link>
+                        </div>
+                    )}
+                                
 
                 </div>
-
-                {role === 'Admin' && (
-                    <div className="tile-container">
-                        <div className="users">
-                            <Link to="/users" className="tile-link2">Zarządzaj Użytkownikami</Link>
-                        </div>
-                    </div>
-                )}
 
 
             </div>

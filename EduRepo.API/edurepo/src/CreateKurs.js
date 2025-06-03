@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+ï»¿import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './Styles/CreateKurs.css';
 import { useNavigate, Link } from 'react-router-dom';
 
 
@@ -44,7 +45,7 @@ function CreateKurs() {
     const fetchUserData = () => {
         const userData = parseJwt(token);
         if (!userData || !userData.nameid) {
-            alert("Nie uda³o siê odczytaæ UserId z tokena.");
+            alert("Nie udaï¿½o siï¿½ odczytaï¿½ UserId z tokena.");
             return;
         }
         setUserId(userData.nameid);
@@ -74,7 +75,7 @@ function CreateKurs() {
 
         const token = localStorage.getItem('authToken');
         if (!userId) {
-            alert("Nie uda³o siê odczytaæ UserId.");
+            alert("Nie udaï¿½o siï¿½ odczytaï¿½ UserId.");
             return;
         }
 
@@ -95,8 +96,8 @@ function CreateKurs() {
         })
             .then(() => navigate('/dashboard'))
             .catch((error) => {
-                console.error('B³¹d podczas tworzenia kursu:', error);
-                alert('Wyst¹pi³ b³¹d podczas tworzenia kursu.');
+                console.error('Bï¿½ï¿½d podczas tworzenia kursu:', error);
+                alert('Wystï¿½piï¿½ bï¿½ï¿½d podczas tworzenia kursu.');
             });
     };
 
@@ -109,7 +110,7 @@ function CreateKurs() {
 
         const userData = parseJwt(tokenn);
         if (!userData || !userData.nameid) {
-            alert("Nie uda³o siê odczytaæ UserId z tokena.");
+            alert("Nie udaï¿½o siï¿½ odczytaï¿½ UserId z tokena.");
             return;
         }
 
@@ -166,7 +167,7 @@ function CreateKurs() {
                     Dodaj
                 </button>
                 <Link to="/kursy" className="btn btn-secondary">
-                    Powrót do listy
+                    PowrÃ³t
                 </Link>
             </form>
         </div>

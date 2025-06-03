@@ -97,7 +97,7 @@ const Kursy = () => {
     };
 
     if (loading) {
-        return <p>�adowanie danych...</p>;
+        return <p>Ładowanie danych...</p>;
     }
 
     if (error) {
@@ -113,9 +113,7 @@ const Kursy = () => {
                             <Button content="Dodaj Kurs" size="large" className="custom-button17" onClick={handleAddKurs} />
                         </Menu.Item>
                     )}
-                    <Menu.Item as={NavLink} to="/bikes/filtersort">
-                        <Button content="Filtrowanie/Sortowanie" size="large" className="custom-button18" />
-                    </Menu.Item>
+                    
                 </div>
 
                 {wszystkieKursy.length > 0 ? (
@@ -153,7 +151,11 @@ const Kursy = () => {
                 ) : (
                     <p>Brak kursów do wyświetlenia.</p>
                 )}
+                <Link to="/dashboard" className="btn btn-secondary">
+                    Powrót
+                </Link>
             </div>
+
         </div>
     );
 };

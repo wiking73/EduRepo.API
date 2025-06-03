@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import './Styles/kursy.css';
+import { Menu, Button } from 'semantic-ui-react';
 
 const Odpowiedzi = () => {
     const [kursy, setKursy] = useState([]);
@@ -38,19 +39,27 @@ const Odpowiedzi = () => {
         if(name) fetchKursy(name)
     }, [])
 
-    return  (
-        <div className="bike-grid">
-            {kursy.map((kurs) => (
-                <div className="bike-container" key={kurs.idKursu}>
-                    <h3>{kurs.nazwa}</h3>
-                    <div>
-                        <Link to={`/details/${kurs.idKursu}`} className="bike-item-button">
-                            Szczegóły
-                        </Link>                      
-                    </div>
+    return (
+        <div className="bike-list-background">
+            <div className="bike-list-container">
+                <div className="bike-grid">
+                    {kursy.map((kurs) => (
+                        <div className="bike-container" key={kurs.idKursu}>
+                            <h3>{kurs.nazwa}</h3>
+                            <div>
+                                <Link to={`/details/${kurs.idKursu}`} className="bike-item-button">
+                                    Szczegóły
+                                </Link>                      
+                            </div>
              
-            </div>))}
+                    </div>))}
             
+                </div>
+                <Link to="/dashboard" className="btn btn-secondary">
+                    Powrót
+                </Link>
+            </div>
+
         </div>
     );
 };

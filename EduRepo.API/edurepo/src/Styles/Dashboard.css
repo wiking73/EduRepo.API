@@ -3,11 +3,10 @@
     max-width: 1000px;
     margin: 3rem auto;
     padding: 2rem;
-    background-color: #fbe3e8;
+    background-color: #c9f0e7;
     border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
     .dashboard-container h1 {
@@ -30,13 +29,30 @@
     color: #352f44;
 }
 .login-register-button2 {
-    text-align: left;
-    margin-top: -4px;
-    font-size: 1.1rem;
-    color: #352f44;
-    background-color: transparent;
+    position: absolute;
+    z-index: 10;
+    top: 20px;
+    left: 20px;
+    padding: 10px 16px;
+    font-size: 1.15rem;
     font-weight: bold;
+    color: #352f44;
+    background-color: #eef6fb;
+    border: 2px solid #352f44;
+    border-radius: 6px;
+    cursor: pointer;
+    width: auto;
+    max-width: none;
+    display: inline-block;
+    transition: background-color 0.2s, color 0.2s;
 }
+
+    .login-register-button2:hover {
+        background-color: #352f44;
+        color: #fff;
+    }
+
+
 .dropdown-content {
     text-align: right;
     margin: 1rem 2rem 0 0;
@@ -101,19 +117,28 @@
     }
 }
 .dropdown {
-    position: relative;
-    display: inline-block;
+    position: absolute;
+    font-size: 1.4rem;
+    top: 100px;
+    left: 20px;
+    font-weight: bold;
+    z-index: 10;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
+    top: 20px;
+    left: 0;
     background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
     padding: 12px 16px;
     z-index: 1;
+    border-radius: 6px;
+    font-size: 1rem;
 }
+
 
 .dropdown:hover .dropdown-content {
     display: block;

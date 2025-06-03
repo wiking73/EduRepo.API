@@ -130,7 +130,7 @@ const Logowanie = () => {
                     <div className="button-container">
                         <button
                             type="button"
-                            className="login-register-button1"
+                            className={`login-register-button ${isLogin ? 'active' : ''}`}
                             onClick={(e) => {
                                 e.preventDefault();
                                 setIsLogin(true);
@@ -142,7 +142,7 @@ const Logowanie = () => {
                         </button>
                         <button
                             type="button"
-                            className="login-register-button2"
+                            className={`login-register-button ${!isLogin ? 'active' : ''}`}
                             onClick={(e) => {
                                 e.preventDefault();
                                 setIsLogin(false);
@@ -190,30 +190,27 @@ const Logowanie = () => {
                         </>
                     )}
 
-                    <input
-                        type={showPassword ? 'text' : 'password'}
-                        id="password"
-                        className="haslo"
-                        name="password"
-                        placeholder="Hasło"
-                        value={isLogin ? loginInfo.password : registerInfo.password}
-                        onChange={isLogin ? handleLoginInputChange : handleRegisterInputChange}
-                        required
-                    />
+                        <div className="password-wrapper">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                id="password"
+                                className="haslo"
+                                name="password"
+                                placeholder="Hasło"
+                                value={isLogin ? loginInfo.password : registerInfo.password}
+                                onChange={isLogin ? handleLoginInputChange : handleRegisterInputChange}
+                                required
+                            />
+                            <span className="toggle-password" onClick={togglePassword}>
+                                {showPassword ? 'Ukryj' : 'Pokaż'}
+                            </span>
+                        </div>
 
-                    <label className="pokaz">
-                        <input
-                            type="checkbox"
-                            checked={showPassword}
-                            onChange={togglePassword}
-                        />
-                        Pokaż hasło
-                    </label>
 
                     <input
                         type="submit"
                         className="zapisz"
-                        value={isLogin ? 'Zaloguj się' : 'Zarejestruj'}
+                        value={isLogin ? 'Zaloguj się' : 'Zarejestruj się'}
                         disabled={loading}
                     />
 

@@ -1,5 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './Styles/EdytujKurs.css';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 
 function EditKurs() {

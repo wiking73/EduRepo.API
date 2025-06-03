@@ -126,7 +126,7 @@ function EditUser() {
                 <button type="submit" className="btn btn-primary">
                     Zapisz zmiany
                 </button>
-                <Link to="/kursy" className="btn btn-secondary">
+                <Link to="/users" className="btn btn-secondary">
                     Powrót
                 </Link>
             </form>

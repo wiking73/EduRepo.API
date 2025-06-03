@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #a28089;
+    background-color: #64b0a0;
     overflow: hidden;
 }
 
@@ -10,52 +10,74 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-   
     background-size: cover;
 }
 
 .login-form {
-    background: rgba(0, 255, 200, 0.1);
-    border: 1px solid rgba(0, 255, 200, 0.3);
+    background: rgba(237, 250, 247);
+    border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 12px;
     backdrop-filter: blur(20px);
     padding: 40px 30px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    width: 320px;
+    width: 520px;
     color: #fff;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
 .login-header {
-    font-size: 1.6rem;
+    font-size: 2.0rem;
     text-align: center;
-    color: #aaf0ff;
-    margin-bottom: 10px;
+    color: #000000;
+    margin-bottom: 15px;
+    font-weight: 600;
 }
 
 .login-form input {
+    font-size: 1.0rem;
     padding: 10px 15px;
-    border: none;
+    border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    background: linear-gradient(135deg, #e9fdfa, #d2f0e6);
+    color: #000;
     outline: none;
-    transition: all 0.3s ease;
 }
 
     .login-form input:focus {
-        background: rgba(255, 255, 255, 0.15);
+        border: 2px solid rgba(0, 0, 0, 0.4);
+        background: rgba(237, 250, 247,0.2);
+    }
+    .login-form input:hover {
+        border: 2px solid rgba(0, 0, 0, 0.4);
     }
 
-.pokaz {
-    font-size: 0.9rem;
-    color: #ccc;
+.password-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 6px;
 }
+
+    .password-wrapper input {
+        width: 100%;
+        padding-right: 40px; 
+    }
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #555;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+    .toggle-password:hover {
+        color: #000;
+    }
+
 
 .zapisz {
     background: linear-gradient(135deg, #66ffcc, #33cccc);
@@ -66,7 +88,7 @@ body {
 }
 
     .zapisz:hover {
-        background: linear-gradient(135deg, #33cccc, #66ffcc);
+        background: rgba(255, 255, 255, 0.3);
     }
 
 .button-container {
@@ -75,20 +97,26 @@ body {
     gap: 10px;
 }
 
-.login-register-button1,
-.login-register-button2 {
+.login-register-button {
     flex: 1;
     padding: 10px;
-    border: none;
+    border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    transition: background 0.3s;
+    background: linear-gradient(135deg, #e9fdfa, #d2f0e6);
+    color: #000;
+    transition: background 0.3s, color 0.3s;
 }
 
-    .login-register-button1:hover,
-    .login-register-button2:hover {
-        background-color: rgba(255, 255, 255, 0.3);
+    .login-register-button:hover {
+        background: rgba(237, 250, 247,0.2);
+        border: 2px solid rgba(0, 0, 0, 0.4);
     }
+
+    .login-register-button.active {
+        background: rgba(237, 250, 247,0.2);
+        border: 2px solid rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
