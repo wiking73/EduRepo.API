@@ -16,7 +16,7 @@ function OcenOdpowiedz() {
     });
     const [zadanie, setZadanie] = useState(null);
     const [error, setError] = useState('');
-    const { IdOdpowiedzi, IdZadania } = useParams();
+    const {id, IdOdpowiedzi, IdZadania } = useParams();
     const navigate = useNavigate();
 
     const fetchOdpowiedz = async () => {
@@ -94,7 +94,7 @@ function OcenOdpowiedz() {
                 },
             })
             .then(() => {
-                navigate(`/kursy`);
+                navigate(`/kurs/${id}/zadanie/${IdZadania}/odpowiedzi`);
             })
             .catch((error) => {
                 console.error('Błąd podczas aktualizacji użytkownika:', error);
@@ -138,7 +138,7 @@ function OcenOdpowiedz() {
                 <button type="submit" className="btn btn-primary">
                     Zapisz zmiany
                 </button>
-                <Link to="/kursy" className="btn btn-secondary">
+                <Link to={`/kurs/${id}/zadanie/${IdZadania}/odpowiedzi`} className="btn btn-secondary">
                     Powrót
                 </Link>
             </form>

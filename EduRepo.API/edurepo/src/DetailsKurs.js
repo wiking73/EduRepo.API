@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, NavLink, useNavigate } from 'react-router-dom';
+import { useParams, Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './Styles/Details.css';
 import { Menu, Button, List } from 'semantic-ui-react';
 
 function KursDetails() {
+    
     const role = localStorage.getItem("role");
     const name = localStorage.getItem("displayName");
     const token = localStorage.getItem("authToken");
     const { id } = useParams();
     const navigate = useNavigate();
+
+    const location = useLocation();
+    const moje = location.state;
+    const path = moje ? "/mojekursy" : "/kursy";
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -128,7 +133,7 @@ function KursDetails() {
                 <p><strong>Opis:</strong> {kurs.opisKursu}</p>
                 <p><strong>Klasa:</strong> {kurs.klasa}</p>
                 <p><strong>Rok akademicki:</strong> {kurs.rokAkademicki}</p>
-                <Link to="/kursy" className="btn btn-secondary">Powrót do kursów</Link>
+                <Link to={path} className="btn btn-secondary">Powrót do kursów</Link>
 
                 {role === "Teacher"  && (
                     <div className="add-task-button">
@@ -169,11 +174,6 @@ function KursDetails() {
                                                 </a>
                                             </p>
                                         )}
-
-                                        <Link to={`/zadanie/${zadanie.idZadania}`} className="btn btn-primary">
-                                            Szczegóły zadania
-                                        </Link>
-
                                         {role === "Student" && (
                                             odpowiedzDlaZadania[zadanie.idZadania] ? <List.Item>
                                                 <h3><strong>Twoja odpowiedź</strong></h3>
@@ -242,7 +242,7 @@ function KursDetails() {
         ) : (
             <div>
                 <p>Nie masz dostępu do tego kursu.</p>
-                <Link to="/kursy" className="btn btn-secondary">Powrót do kursów</Link>
+                    <Link to={path} className="btn btn-secondary">Powrót do kursów</Link>                  
             </div>
         )
     );

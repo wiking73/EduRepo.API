@@ -66,9 +66,6 @@ const Odpowiedzi = () => {
                                 <p>{odpowiedz.nazwaPliku}</p>
                                 {odpowiedz.ocena !== "brak" && <p>Ocenione: {odpowiedz.ocena}</p>}
                                 <div>
-                                    <Link to={`/details/${odpowiedz.idOdpowiedzi}`} className="bike-item-button">
-                                        Szczegóły
-                                    </Link>
                                     <Link to={`/edit/${id}/${IdZadania}/${odpowiedz.idOdpowiedzi}`} className="edit-button">
                                         Oceń
                                     </Link>
@@ -86,6 +83,9 @@ const Odpowiedzi = () => {
                     <p>Brak odpowiedzi do wyświetlenia.</p>
                 )}
             </div>
+            <Link to={ `/details/${id}`} className="btn-secondary">
+                Powrót do kursu
+            </Link>
         </div>
     );
 };
