@@ -37,20 +37,20 @@ const UserProfile = () => {
             await axios.post(
                 'https://localhost:7157/api/Auth/change-password-login',
                 {
-                    currentPassword,
-                    newPassword,
+                    CurrentPassword: currentPassword,
+                    NewPassword: newPassword,
                 },
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
-            setChangePasswordMessage('Password changed successfully.');
+            setChangePasswordMessage('Hasło zmieniono.');
             setChangePasswordSuccess(true);
             setCurrentPassword('');
             setNewPassword('');
         } catch (error) {
             setChangePasswordMessage(
-                error.response?.data?.message || 'Error changing password.'
+                error.response?.data?.message || 'Błąd zmiany hasła.'
             );
             setChangePasswordSuccess(false);
             console.error(error);
@@ -174,6 +174,7 @@ const UserProfile = () => {
                                     {changePasswordMessage}
                                 </p>
                             )}
+
                         </form>
                     )}
 
