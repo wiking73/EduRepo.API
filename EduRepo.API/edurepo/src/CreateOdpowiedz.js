@@ -2,32 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import "./Styles/CreateZadanie.css";
-;
-//const role = localStorage.getItem('role');
+
 function CreateOdpowiedz() {
     const { id, IdZadania } = useParams();
-    const token = localStorage.getItem('authToken')
+    const token = localStorage.getItem('authToken');
 
     const navigate = useNavigate();
     const [error, setError] = useState(null);
     const [userId, setUserId] = useState(null);
     const [unique_name, setUserName] = useState(null);
     const [file, setFile] = useState(null);
-    const [zadanie, setZadanie] = useState(null)
-
-    const [odpowiedz, setOdpowiedz] = useState({
-        "idOdpowiedzi": "",
-        "IdZadania": "",
-        "wlascicielId": "",
-        "userName": "",
-        "dataOddania": Date.now(),
-        "komentarzNauczyciela": "Brak",
-        "nazwaPliku": "",
-        "ocena": "Brak"
-
-    });
-
-
+    const [zadanie, setZadanie] = useState(null);
 
     useEffect(() => {
         fetchUserData();
@@ -54,7 +39,7 @@ function CreateOdpowiedz() {
     const fetchUserData = () => {
         const userData = parseJwt(token);
         if (!userData || !userData.nameid) {
-            alert("Nie uda�o si� odczyta� UserId z tokena.");
+            alert("Nie udało się odczytać UserId z tokena.");
             return;
         }
         setUserId(userData.nameid);
@@ -64,109 +49,76 @@ function CreateOdpowiedz() {
     const fetchZadanie = async (idZadania) => {
         try {
             if (!token) {
-                setError('Musisz by� zalogowany!');
+                setError('Musisz być zalogowany!');
                 return;
             }
             const response = await axios.get(`https://localhost:7157/api/Zadanie/${idZadania}`, {
                 headers: { Authorization: `Bearer ${token}` },
-            })
-            setZadanie(response.data)
+            });
+            setZadanie(response.data);
         } catch (err) {
-            console.error('B��d pobierania zadania:', err);
+            console.error('Błąd pobierania zadania:', err);
         }
     };
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        const newValue = type === 'checkbox' ? checked : value;
-
-        setOdpowiedz(prev => ({
-            ...prev,
-            [name]: newValue,
-        }));
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!file) return;
-
-        const odpowiedzToSend = {
-            idZadania: IdZadania,
-            nazwaPliku: odpowiedz.nazwaPliku,
-            dataOddania: new Date().toISOString(),
-            komentarzNauczyciela: "brak",
-            ocena: "brak",
-            userId: userId,
-            name: unique_name,
-        };
+        if (!file) {
+            alert("Nie wybrano pliku");
+            return;
+        }
 
         const formData = new FormData();
         formData.append("IdZadania", IdZadania);
         formData.append("UserId", userId);
         formData.append("Name", unique_name);
+
         const currentDate = new Date();
         currentDate.setHours(currentDate.getHours() + 2);
         formData.append("DataOddania", currentDate.toISOString());
+
         formData.append("KomentarzNauczyciela", "brak");
         formData.append("NazwaPliku", file.name);
         formData.append("Ocena", "brak");
         formData.append("file", file);
-        console.log(file.name)
-        //for (const [key, value] of formData.entries()) {
-        //    console.log(key, value);
-        //}
 
-        axios.post(`https://localhost:7157/api/upload/upload?idZadania=${IdZadania}`, formData, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "multipart/form-data"
-            },
-        })
-        .then(() => {
-            alert("Plik przesłany");
-            navigate(`/details/${id}`)
-        })
-        .catch((error) => {
-            console.error('Błąd podczas przesyłania pliku:', error);
-            alert('Błąd przesyłania pliku.');
-        });
+        try {
+            await axios.post(`https://localhost:7157/api/Upload/upload?idZadania=${IdZadania}`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            await axios.post('https://localhost:7157/api/Odpowiedz', formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            alert("Odpowiedź została dodana.");
+            navigate(`/details/${id}`);
+
+        } catch (error) {
+            console.error("Błąd podczas dodawania odpowiedzi:", error);
+            alert("Wystąpił błąd podczas dodawania odpowiedzi lub przesyłania pliku.");
+        }
     };
 
     return (
         <div className="form-container">
-            <h4>Dodaj Odpowiedz</h4>
+            <h4>Dodaj Odpowiedź</h4>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>{zadanie?.nazwa}</label>
-                    {/*<input*/}
-                    {/*    type="text"*/}
-                    {/*    name="nazwaPliku"*/}
-                    {/*    value={odpowiedz.nazwaPliku}*/}
-                    {/*    onChange={handleChange}*/}
-                    {/*    required*/}
-                    {/*/>*/}
                 </div>
                 <input
                     type="file"
-                    onChange={(e) => setFile(e.target.files[0])} required />
-
-                {/*<div className="form-group">*/}
-                {/*    <label>Tre��:</label>*/}
-                {/*    <textarea*/}
-                {/*        name="tresc"*/}
-                {/*        value={zadanie.tresc}*/}
-                {/*        onChange={handleChange}*/}
-                {/*        required*/}
-                {/*    />*/}
-                {/*</div>*/}
-
-
-
-
-
-
+                    onChange={(e) => setFile(e.target.files[0])}
+                    required
+                />
                 <button type="submit" className="btn btn-primary">Dodaj</button>
                 <Link to={`/details/${id}`} className="btn btn-secondary">Anuluj</Link>
             </form>
