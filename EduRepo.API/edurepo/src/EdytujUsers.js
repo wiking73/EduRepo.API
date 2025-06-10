@@ -14,6 +14,7 @@ function EditUser() {
     const { id } = useParams(); 
     const navigate = useNavigate();
 
+
     
     const fetchUser = async () => {
         try {
@@ -40,11 +41,15 @@ function EditUser() {
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setUser({
-            ...user,
+
+        setUser((prevUser) => ({
+            ...prevUser,
             [name]: type === 'checkbox' ? checked : value,
-        });
+            ...(name === 'isStudent' && checked ? { isTeacher: false } : {}),
+            ...(name === 'isTeacher' && checked ? { isStudent: false } : {}),
+        }));
     };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -72,7 +77,7 @@ function EditUser() {
                 },
             })
             .then(() => {
-                navigate(`/kursy`);
+                navigate(`/users`);
             })
             .catch((error) => {
                 console.error('Błąd podczas aktualizacji użytkownika:', error);

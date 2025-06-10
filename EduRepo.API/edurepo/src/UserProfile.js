@@ -134,7 +134,6 @@ const UserProfile = () => {
                     <p className="title">Profil użytkownika</p>
                     <p>Użytkownik: {profile.username}</p>
                     <p>Email: {profile.email}</p>
-                    <p>Numer telefonu: {profile.phoneNumber || 'Brak danych'}</p>
                 </div>
             ) : (
                 <p>Nie znaleziono danych użytkownika.</p>

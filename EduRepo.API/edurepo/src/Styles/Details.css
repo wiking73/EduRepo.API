@@ -69,3 +69,40 @@ body {
 .late-info {
     color: red;
 }
+.custom-button17 {
+    display: inline-block !important;
+    width: auto !important;
+    min-width: 120px;
+    max-width: 200px;
+    text-align: center;
+    padding: 0.5rem 1.5rem !important;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+.compact-task-button1 {
+    display: inline-block !important;
+    width: auto !important;
+    min-width: 120px;
+    max-width: 200px;
+    text-align: center;
+    padding: 0.5rem 1.5rem !important;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+.compact-task-button2 {
+    display: inline-block !important;
+    width: auto !important;
+    min-width: 120px;
+    max-width: 200px;
+    text-align: center;
+    padding: 0.5rem 1.5rem !important;
+    font-size: 1rem;
+    white-space: nowrap;
+    background-color: #f44336;
+    color: white;
+}
+    .compact-task-button2:hover
+
+    {
+        background-color: #e53935;
+    }
