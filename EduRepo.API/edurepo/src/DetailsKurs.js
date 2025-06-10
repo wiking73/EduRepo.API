@@ -126,7 +126,7 @@ function KursDetails() {
     assignAnswers();
 
     return (
-        (kurs.userName === name || role === "Student" ) ? (
+        (kurs.userName === name || role === "Student" || role === "Admin" ) ? (
             <div className="kurs-details">
                 <h4>{kurs.nazwa}</h4>
                 <h3>Szczegółowe Informacje</h3>
@@ -207,24 +207,27 @@ function KursDetails() {
                                                         className="custom-button17"
                                                         style={{ marginTop: '1rem' }}
                                                     />
+                                                <Link to={`/zadanie/edit/${zadanie.idZadania}`}>
+                                                    <Button
+                                                        content="Edytuj"
+                                                        size="small"
+                                                        color="blue"
+                                                        className="compact-task-button1"
+                                                        style={{ marginTop: '0.5rem' }}
+                                                    />
+                                                </Link>
                                                 </Link>
                                                 <div>
                                                     <Button
                                                         content="Usuń"
                                                         size="small"
                                                         color="red"
+                                                        className="compact-task-button2"
                                                         onClick={() => handleDeleteZadanie(zadanie.idZadania)}
                                                         style={{ marginTop: '1rem' }}
                                                     />
                                                 </div>
-                                                <Link to={`/zadanie/edit/${zadanie.idZadania}`}>
-                                                    <Button
-                                                        content="Edytuj"
-                                                        size="small"
-                                                        color="blue"
-                                                        style={{ marginTop: '0.5rem' }}
-                                                    />
-                                                </Link>
+                                               
                                             </>
                                         )}
                                     </List.Content>

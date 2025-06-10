@@ -82,10 +82,11 @@ const Odpowiedzi = () => {
                 ) : (
                     <p>Brak odpowiedzi do wyświetlenia.</p>
                 )}
+                <Link to={`/details/${id}`} className="btn-secondary">
+                    Powrót
+                </Link>
             </div>
-            <Link to={ `/details/${id}`} className="btn-secondary">
-                Powrót do kursu
-            </Link>
+            
         </div>
     );
 };

@@ -39,20 +39,25 @@ const Odpowiedzi = () => {
     }, [])
 
     return  (
-        <div className="bike-grid">
-            {kursy.map((kurs) => (
-                <div className="bike-container" key={kurs.idKursu}>
-                    <h3>{kurs.nazwa}</h3>
-                    <div>
-                        <Link to={`/details/${kurs.idKursu}`} state={true} className="bike-item-button">
-                            Szczegóły
-                        </Link>                      
-                    </div>
+        <div className="bike-list-background">
+            <div className="bike-list-container">
+                <div className="bike-grid">
+                    {kursy.map((kurs) => (
+                        <div className="bike-container" key={kurs.idKursu}>
+                            <h3>{kurs.nazwa}</h3>
+                            <div>
+                                <Link to={`/details/${kurs.idKursu}`} state={true} className="bike-item-button">
+                                    Szczegóły
+                                </Link>                      
+                            </div>
              
-            </div>))}
-            <Link to="/dashboard" className="btn btn-secondary">
-                Powrót
-            </Link>
+                        </div>))}
+                </div>
+
+                <Link to="/dashboard" className="btn btn-secondary">
+                    Powrót
+                </Link>
+            </div>
         </div>
     );
 };
