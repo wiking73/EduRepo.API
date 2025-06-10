@@ -31,15 +31,14 @@ namespace EduRepo.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateZadanie([FromForm] CreateCommand command, IFormFile zalacznik)
+        public async Task<IActionResult> CreateZadanie([FromForm] CreateCommand command, IFormFile? zalacznik)
         {
-            var fileName = "";
-
             if (zalacznik != null && zalacznik.Length > 0)
             {
                 var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
                 Directory.CreateDirectory(uploadsFolder);
-                fileName = $"{Guid.NewGuid()}_{zalacznik.FileName}";
+
+                var fileName = $"{Guid.NewGuid()}_{zalacznik.FileName}";
                 var fullPath = Path.Combine(uploadsFolder, fileName);
 
                 using var stream = new FileStream(fullPath, FileMode.Create);
@@ -47,18 +46,26 @@ namespace EduRepo.API.Controllers
 
                 command.PlikPomocniczy = $"/uploads/{fileName}";
             }
+            else
+            {
+                command.PlikPomocniczy = null; // jawnie ustaw na null, jeśli nie ma pliku
+            }
 
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateZadanie(int id, [FromBody] EditCommand command)
         {
-            var result = await _mediator.Send(new EditCommand { Id = id });
-            if (result == null) return NotFound();
+            if (id != command.Id)
+                command.Id = id;
+
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteZadanie(int id)

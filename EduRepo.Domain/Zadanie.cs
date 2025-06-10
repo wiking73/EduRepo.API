@@ -11,7 +11,7 @@ namespace EduRepo.Domain
         public string Nazwa { get; set; }
         public string Tresc { get; set; }
         public DateTime TerminOddania { get; set; }
-        public string PlikPomocniczy { get; set; }
+        public string? PlikPomocniczy { get; set; }
         public bool CzyObowiazkowe { get; set; }
         //public Kurs Kurs { get; set; }
         public string WlascicielId { get; set; }  // FK

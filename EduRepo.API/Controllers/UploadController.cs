@@ -60,7 +60,7 @@ namespace EduRepo.API.Controllers
                 return Unauthorized("Brak wymaganych danych w tokenie.");
             }
 
-            var kursFolder = $"{kurs.UserName}_{kurs.Nazwa}_{kurs.RokAkademicki}";
+            var kursFolder = $"{kurs.Wlasciciel.Nazwisko}_{kurs.Nazwa}_{kurs.RokAkademicki}";
             var studentFolder = $"{studentNazwisko}_{studentImie}_{studentAlbum}";
             var zadanieFolder = zadanie.Nazwa;
 
