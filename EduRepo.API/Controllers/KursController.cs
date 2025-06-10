@@ -171,7 +171,7 @@ namespace EduRepo.API.Controllers
             if (kurs.WlascicielId != userId)
                 return Forbid();
 
-            uczestnictwo.Status = StatusUczestnika.Odrzucono;
+            _context.Uczestnictwa.Remove(uczestnictwo);
             await _context.SaveChangesAsync();
 
             return Ok("Odrzucono zgłoszenie.");

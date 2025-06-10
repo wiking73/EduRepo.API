@@ -1,4 +1,4 @@
-﻿import { RouteObject, createBrowserRouter } from "react-router-dom";
+﻿import { RouteObject, createBrowserRouter, Navigate } from "react-router-dom";
 import App from "./App";
 import NavBar from "./Navbar";  
 import Dashboard from "./Dashboard";
@@ -18,11 +18,13 @@ import ZgloszeniaDoKursu from "./ZgloszeniaDoKursu";
 import UczestnicyKursu from "./UczestnicyKursu";
 import MojeKursy from "./MojeKursy";
 
+
 export const routes: RouteObject[] = [
     {
         path: "/",
         element: <App />,
         children: [
+            { index: true, element: <Navigate to="/dashboard" replace /> },
             { path: 'navbar', element: <NavBar /> },
             { path: 'dashboard', element: <Dashboard />},
             { path: 'kursy', element: <Kursy/>},
