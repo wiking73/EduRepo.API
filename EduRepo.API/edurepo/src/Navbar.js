@@ -17,7 +17,10 @@ const Logowanie = () => {
         username: '',
         phoneNumber: '',
         email: '',
-        password: ''
+        password: '',
+        imie: '',
+        nazwisko: '',
+        nrAlbumu: ''
     });
     const [error, setErrorMessage] = useState(null);
     const [success, setSuccessMessage] = useState(null);
@@ -184,6 +187,36 @@ const Logowanie = () => {
                                 className="email"
                                 placeholder="Email"
                                 value={registerInfo.email}
+                                onChange={handleRegisterInputChange}
+                                required
+                            />
+                            <input
+                                type="text"
+                                id="imie"
+                                name="imie"
+                                className="imie"
+                                placeholder="Imię"
+                                value={registerInfo.imie}
+                                onChange={handleRegisterInputChange}
+                                required
+                            />
+                            <input
+                                type="text"
+                                id="nazwisko"
+                                name="nazwisko"
+                                className="nazwisko"
+                                placeholder="Nazwisko"
+                                value={registerInfo.nazwisko}
+                                onChange={handleRegisterInputChange}
+                                required
+                            />
+                            <input
+                                type="text"
+                                id="nrAlbumu"
+                                name="nrAlbumu"
+                                className="nr-albumu"
+                                placeholder="Nr albumu"
+                                value={registerInfo.nrAlbumu}
                                 onChange={handleRegisterInputChange}
                                 required
                             />

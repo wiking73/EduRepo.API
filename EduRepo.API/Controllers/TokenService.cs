@@ -18,25 +18,26 @@ namespace EduRepo.API.Controllers
 
         public string CreateToken(AppUser user)
         {
-            // Dodajemy rolę użytkownika, jeśli istnieje
             var claims = new List<Claim> {
         new Claim(ClaimTypes.Name, user.UserName),
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),  // Zmienione na user.Id.ToString()
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
         new Claim(ClaimTypes.Email, user.Email),
-       new Claim(ClaimTypes.Role,
-    user.IsStudent ? "Student" :
-    user.IsTeacher ? "Teacher" :
-    "Admin")
+        new Claim(ClaimTypes.Role,
+            user.IsStudent ? "Student" :
+            user.IsTeacher ? "Teacher" :
+            "Admin"),
+        new Claim(ClaimTypes.GivenName, user.Imie),
+        new Claim(ClaimTypes.Surname, user.Nazwisko),
+        new Claim("albumNumber", user.NrAlbumu)
     };
 
-            // Pobierz klucz z konfiguracji (upewnij się, że masz to w appsettings.json)
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:TokenKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddDays(7), // Token wygasa po 7 dniach
+                Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = creds
             };
 

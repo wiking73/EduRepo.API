@@ -17,8 +17,11 @@ namespace EduRepo.API.Dto
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        
         public string Username { get; set; }
+
+        public string Imie { get; set; }
+        public string Nazwisko { get; set; }
+        public string NrAlbumu { get; set; }
     }
     public class ChangePasswordDto
     {

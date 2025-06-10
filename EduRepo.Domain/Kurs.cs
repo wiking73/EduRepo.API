@@ -13,6 +13,8 @@ namespace EduRepo.Domain
         public bool CzyZarchiwizowany { get; set; }
         //public enum KursStatusDolaczenia { Potwierdzony, Odrzucony }
         public string WlascicielId{ get; set; }  // FK
+        public AppUser Wlasciciel { get; set; }  // NAWIGACJA do użytkownika
+
         public string UserName { get; set; }
         public ICollection<Zadanie> Zadania { get; set; }
         public ICollection<Uczestnictwo> Uczestnicy { get; set; }

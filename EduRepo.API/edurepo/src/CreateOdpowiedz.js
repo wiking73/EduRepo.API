@@ -54,7 +54,7 @@ function CreateOdpowiedz() {
     const fetchUserData = () => {
         const userData = parseJwt(token);
         if (!userData || !userData.nameid) {
-            alert("Nie uda³o siê odczytaæ UserId z tokena.");
+            alert("Nie udaï¿½o siï¿½ odczytaï¿½ UserId z tokena.");
             return;
         }
         setUserId(userData.nameid);
@@ -64,7 +64,7 @@ function CreateOdpowiedz() {
     const fetchZadanie = async (idZadania) => {
         try {
             if (!token) {
-                setError('Musisz byæ zalogowany!');
+                setError('Musisz byï¿½ zalogowany!');
                 return;
             }
             const response = await axios.get(`https://localhost:7157/api/Zadanie/${idZadania}`, {
@@ -72,7 +72,7 @@ function CreateOdpowiedz() {
             })
             setZadanie(response.data)
         } catch (err) {
-            console.error('B³¹d pobierania zadania:', err);
+            console.error('Bï¿½ï¿½d pobierania zadania:', err);
         }
     };
 
@@ -117,20 +117,20 @@ function CreateOdpowiedz() {
         //    console.log(key, value);
         //}
 
-        axios.post('https://localhost:7157/api/Odpowiedz', formData, {
+        axios.post(`https://localhost:7157/api/upload/upload?idZadania=${IdZadania}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data"
             },
         })
-            .then(() => {
-                alert("Dodano zadanie");
-                navigate(`/details/${id}`)
-            })
-            .catch((error) => {
-                console.error('B³¹d podczas dodania Odpowiedzi:', error);
-                alert('Wyst¹pi³ b³¹d podczas dodania Odpowiedz.');
-                console.error('Szczegó³y b³êdu:', error.response.data);
-            });
+        .then(() => {
+            alert("Plik przesÅ‚any");
+            navigate(`/details/${id}`)
+        })
+        .catch((error) => {
+            console.error('BÅ‚Ä…d podczas przesyÅ‚ania pliku:', error);
+            alert('BÅ‚Ä…d przesyÅ‚ania pliku.');
+        });
     };
 
     return (
@@ -153,7 +153,7 @@ function CreateOdpowiedz() {
                     onChange={(e) => setFile(e.target.files[0])} required />
 
                 {/*<div className="form-group">*/}
-                {/*    <label>Treœæ:</label>*/}
+                {/*    <label>Treï¿½ï¿½:</label>*/}
                 {/*    <textarea*/}
                 {/*        name="tresc"*/}
                 {/*        value={zadanie.tresc}*/}

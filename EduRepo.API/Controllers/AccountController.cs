@@ -55,7 +55,10 @@ namespace EduRepo.Api.Controllers
                 UserName = registerDto.Username,
                 Email = registerDto.Email,
                 PasswordHash = passwordHash,
-                
+                Imie = registerDto.Imie,
+                Nazwisko = registerDto.Nazwisko,
+                NrAlbumu = registerDto.NrAlbumu,
+                IsStudent = true // lub false – zależnie od logiki rejestracji
             };
 
             _context.Users.Add(user);
